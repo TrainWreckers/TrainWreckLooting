@@ -1,0 +1,75 @@
+SCR_ChimeraCharacter : "{3ECA3A935BC069B9}Prefabs/Characters/Factions/OPFOR/USSR_Army/Character_USSR_BaseLoadout.et" {
+ ID "520EC961A090B1EE"
+ components {
+  SCR_EditableCharacterComponent "{520EA1D2F659C85C}" {
+   m_UIInfo SCR_EditableEntityUIInfo "{5298E609432D192D}" {
+    Name "#AR-Random_USSR_Soldier_Name"
+    Icon "{C431FD61793AA13F}UI/Textures/Editor/EditableEntities/Characters/EditableEntity_Random.edds"
+    m_Image "{1B567465314E8660}UI/Textures/EditorPreviews/Characters/OPFOR/USSR_Army/KLMK/Character_USSR_Randomized_KLMK.edds"
+    m_aAuthoredLabels + {
+     290
+    }
+   }
+   m_VariantData SCR_EditableEntityVariantData "{627631C3D4B7DD3E}" {
+    m_bRandomizeDefaultVariant 0
+    m_aVariants {
+     SCR_EditableEntityVariant "{627631C3D4B7DD43}" {
+      m_sVariantPrefab "{145DBC42B19FC4D6}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_Rifleman_KLMK.et"
+      m_iRandomizerWeight 14
+     }
+     SCR_EditableEntityVariant "{627631C3D4B7DD4B}" {
+      m_sVariantPrefab "{6B00D3FC285E0AE0}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_GL_KLMK.et"
+      m_iRandomizerWeight 3
+     }
+     SCR_EditableEntityVariant "{627631C3D4B7DD54}" {
+      m_sVariantPrefab "{E8EF64F8B943A507}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_AAT_KLMK.et"
+     }
+     SCR_EditableEntityVariant "{627631C3D4B7DD56}" {
+      m_sVariantPrefab "{F89D79B340033E32}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_AMG_KLMK.et"
+     }
+     SCR_EditableEntityVariant "{627631C3D4B7DD50}" {
+      m_sVariantPrefab "{862E3B66D0316F0A}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_AR_KLMK.et"
+     }
+     SCR_EditableEntityVariant "{627631C3D4B7DD52}" {
+      m_sVariantPrefab "{9A12B3F6ABDF70BE}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_AT_KLMK.et"
+     }
+     SCR_EditableEntityVariant "{627631C3D4B7DD5F}" {
+      m_sVariantPrefab "{D66C215D6F03EFFD}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_Medic_KLMK.et"
+     }
+     SCR_EditableEntityVariant "{627631C3D4B7DD58}" {
+      m_sVariantPrefab "{8A60AEBD529FEB8B}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_MG_KLMK.et"
+     }
+     SCR_EditableEntityVariant "{627631C3D4B7DD5A}" {
+      m_sVariantPrefab "{9C16A2371109644D}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_RTO_KLMK.et"
+     }
+     SCR_EditableEntityVariant "{627631C3D4B7DD64}" {
+      m_sVariantPrefab "{B056E800F6286831}Prefabs/Characters/Factions/OPFOR/USSR_Army/KLMK/Character_USSR_Sharpshooter_KLMK.et"
+     }
+    }
+   }
+  }
+  BaseLoadoutManagerComponent "{520EA1D2DB11821E}" {
+   Slots {
+    LoadoutSlotInfo Hat {
+     Prefab "{DD35D5EBA6364E77}Prefabs/Characters/HeadGear/Helmet_SSh68_01/Helmet_SSh68_01_cover_KLMK.et"
+    }
+    LoadoutSlotInfo Jacket {
+     Prefab ""
+    }
+    LoadoutSlotInfo Pants {
+     Prefab "{CF221A167DE87E57}Prefabs/Characters/Uniforms/Suit_KLMK/Suit_KLMK.et"
+    }
+   }
+  }
+  SCR_InventoryStorageManagerComponent "{520EA1D2DB118DE5}" {
+   InitialInventoryItems {
+    ItemsInitConfigurationItem "{5D7CC173E6675BF7}" {
+     TargetStorage "Prefabs/Characters/Uniforms/Suit_KLMK/Suit_KLMK.et"
+    }
+    ItemsInitConfigurationItem "{5D7CC173E6675BF5}" {
+     TargetStorage "Prefabs/Characters/Uniforms/Suit_KLMK/Suit_KLMK.et"
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,24 @@
+GenericEntity : "{10C26F96EF7A8CF5}Prefabs/Props/Core/Props_Base.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  SCR_UniversalInventoryStorageComponent "{627631B5B5B5D109}" {
+   Attributes SCR_ItemAttributeCollection "{627631B5B733506D}" {
+    ItemDisplayName UIInfo "{627631B5B8113E12}" {
+     Name "Bin"
+    }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   CapacityCoefficient 10000
+   m_fMaxWeight 10000
+  }
+  TW_LootableInventoryComponent "{627631B5A2F832AB}" {
+   m_LootItemTypes HEAL
+  }
+  SCR_InventoryStorageManagerComponent "{627631B5B2CADB04}" {
+  }
+  RplComponent "{627631B54F5A6172}" {
+  }
+ }
+}

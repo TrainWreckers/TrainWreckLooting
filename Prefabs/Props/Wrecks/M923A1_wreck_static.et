@@ -1,0 +1,45 @@
+GenericEntity : "{7783AE4B44D3CF29}Prefabs/Props/Wrecks/M923A1_wreck.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  SCR_UniversalInventoryStorageComponent "{62762031D40ED76C}" {
+   Attributes SCR_ItemAttributeCollection "{62762031D5BF57D5}" {
+    ItemDisplayName UIInfo "{62762031D76F1C08}" {
+     Name "Truck"
+    }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
+  }
+  TW_LootableInventoryComponent "{62762031E9FDE615}" {
+   m_LootItemTypes 556676
+  }
+  SCR_InventoryStorageManagerComponent "{62762031E849ED6C}" {
+  }
+  ActionsManagerComponent "{62762031C945FE99}" {
+   ActionContexts {
+    UserActionContext "{62762031CA298B01}" {
+     UIInfo UIInfo "{62762031CBD5F5DD}" {
+      Name "Open"
+     }
+     ContextName "default"
+     Position PointInfo "{6276203031ADE440}" {
+      Offset -0.0259 1.582 1.2498
+     }
+     Radius 1.2
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{627620307F7EF048}" {
+     ParentContextList {
+      "default"
+     }
+    }
+   }
+  }
+  RplComponent "{62762031E53CF68A}" {
+  }
+ }
+}

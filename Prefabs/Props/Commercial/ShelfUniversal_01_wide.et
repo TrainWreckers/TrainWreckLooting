@@ -1,0 +1,17 @@
+GenericEntity : "{B9B923210CF2325D}Prefabs/Props/Commercial/ShelfUniversal_01_Base.et" {
+ ID "519264AD80BE78E3"
+ components {
+  ActionsManagerComponent "{62722CD34983AAD4}" {
+   ActionContexts {
+    UserActionContext "{62722CD34BE35EF0}" {
+     Position PointInfo "{62722CD3B1C3217C}" {
+      Offset -0.738 1.0834 0.2228
+     }
+    }
+   }
+  }
+  RplComponent "{5624A88DC2D9928D}" {
+   Enabled 1
+  }
+ }
+}

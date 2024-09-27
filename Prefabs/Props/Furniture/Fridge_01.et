@@ -1,0 +1,49 @@
+GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et" {
+ ID "6093E737E30F72A1"
+ components {
+  SCR_UniversalInventoryStorageComponent "{62723E98B68BF350}" {
+   Attributes SCR_ItemAttributeCollection "{62723E98BB39753D}" {
+    ItemDisplayName UIInfo "{62723E98BC0BFB76}" {
+     Name "Open Fridge"
+    }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 50000
+   m_fMaxWeight 50000
+  }
+  TW_LootableInventoryComponent "{62723E98A10031C9}" {
+   m_LootItemTypes 1015358
+  }
+  SCR_InventoryStorageManagerComponent "{62723E98B42C0C22}" {
+  }
+  ActionsManagerComponent "{62723E986D7DF65B}" {
+   ActionContexts {
+    UserActionContext "{62723E986E463248}" {
+     UIInfo UIInfo "{62723E986F8677D2}" {
+      Name "Open"
+     }
+     ContextName "default"
+     Position PointInfo "{62723E9855A3F091}" {
+      Offset 0.3903 0.9944 0.3158
+     }
+     Radius 0.5
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{62723E984652C5D2}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{62723E984AFAB462}" {
+      Name "Open"
+     }
+    }
+   }
+  }
+  RplComponent "{5624A88DC2D9928D}" {
+   Enabled 1
+  }
+ }
+}

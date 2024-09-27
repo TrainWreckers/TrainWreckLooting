@@ -1,0 +1,34 @@
+GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  TW_LootableInventoryComponent "{627631B56DCB900F}" {
+   m_LootItemTypes HEAL
+  }
+  SCR_InventoryStorageManagerComponent "{627631B56BFD1050}" {
+  }
+  ActionsManagerComponent "{627631B550251CBE}" {
+   ActionContexts {
+    UserActionContext "{627631B5513BD10B}" {
+     UIInfo UIInfo "{627631B5528CF3E7}" {
+      Name "Cabinet"
+     }
+     ContextName "default"
+     Position PointInfo "{627631B5573E9170}" {
+      Offset 0 1.0339 0.1725
+     }
+     Radius 0.8
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{627631B5426DBF40}" {
+     ParentContextList {
+      "default"
+     }
+    }
+   }
+  }
+  RplComponent "{5624A88DC2D9928D}" {
+   Enabled 1
+  }
+ }
+}

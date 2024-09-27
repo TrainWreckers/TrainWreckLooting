@@ -1,0 +1,47 @@
+GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et" {
+ ID "5190C218D4A29A90"
+ components {
+  SCR_UniversalInventoryStorageComponent "{62722CD2D6D917FF}" {
+   Attributes SCR_ItemAttributeCollection "{62722CD2D9659AE2}" {
+    ItemDisplayName SCR_InventoryUIInfo "{62722CD2DB20056A}" {
+     Name "Filing Cabinet"
+    }
+   }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 50000
+   m_fMaxWeight 50000
+  }
+  TW_LootableInventoryComponent "{62722CD2EB822CF7}" {
+   m_LootItemTypes 1015308
+  }
+  SCR_InventoryStorageManagerComponent "{62722CD2C8DCC864}" {
+  }
+  ActionsManagerComponent "{62722CD2CB8EC0AF}" {
+   ActionContexts {
+    UserActionContext "{62722CD2CD1C7312}" {
+     UIInfo UIInfo "{62722CD2CF2A29FB}" {
+      Name "Open"
+     }
+     ContextName "default"
+     Position PointInfo "{62722CD334A9F831}" {
+      Offset 0 0.7585 0.0535
+     }
+     Radius 0.8
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{62722CD33D00E654}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{62722CD3205DE69E}" {
+      Name "Open"
+     }
+    }
+   }
+  }
+  RplComponent "{5624A88DC2D9928D}" {
+   Enabled 1
+  }
+ }
+}

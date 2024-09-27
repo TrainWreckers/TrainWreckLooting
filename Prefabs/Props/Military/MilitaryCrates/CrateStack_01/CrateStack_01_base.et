@@ -1,0 +1,22 @@
+GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  SCR_UniversalInventoryStorageComponent "{627631B5F9B672A1}" {
+   Attributes SCR_ItemAttributeCollection "{627631B5FB54468F}" {
+    ItemDisplayName UIInfo "{627631B5FC3C65AC}" {
+     Name "Crates"
+    }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
+  }
+  TW_LootableInventoryComponent "{627631B584629E14}" {
+   m_LootItemTypes 262974
+  }
+  SCR_InventoryStorageManagerComponent "{627631B5F79140AF}" {
+  }
+ }
+}
