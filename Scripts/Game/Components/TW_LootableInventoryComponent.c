@@ -24,16 +24,39 @@ class TW_LootableInventoryComponent : ScriptComponent
 	//! Player has interacted with storage container AND respawn timer has elapsed
 	bool CanRespawnLoot()
 	{
-		return m_HasBeenInteractedWith && s_GameMode.GetElapsedTime() >= m_RespawnLootAfterTime && m_RespawnLootAfterTime > 0;
+		return m_HasBeenInteractedWith && GetGameMode().GetElapsedTime() >= m_RespawnLootAfterTime && m_RespawnLootAfterTime > 0;
+	}
+	
+	void SetInteractedWith(bool value) 
+	{ 	
+		bool old = m_HasBeenInteractedWith;
+		m_HasBeenInteractedWith = value;
+		
+		if(value)
+		{
+			// We will not reregister the object if it's been interacted with already
+			if(!old)
+				TW_LootManager.RegisterInteractedContainer(this);
+			
+			// If we've interacted with we'll reset the timer
+			float elapsed = GetGameMode().GetElapsedTime();
+			m_RespawnLootAfterTime = elapsed + (TW_LootManager.GetRespawnAfterLastInteractionInMinutes() * 60);
+		}
 	}
 	
 	static SCR_BaseGameMode s_GameMode;
+	static SCR_BaseGameMode GetGameMode()
+	{
+		if(s_GameMode)
+			return s_GameMode;
+		
+		s_GameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());
+		return s_GameMode;
+	}
 	
 	override void OnPostInit(IEntity owner)
 	{
 		if(!GetGame().InPlayMode()) return;
-		
-		s_GameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());
 		
 		RplComponent rpl = RplComponent.Cast(owner.FindComponent(RplComponent));
 		

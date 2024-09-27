@@ -228,7 +228,6 @@ sealed class TW_LootManager
 		ref array<SCR_EntityCatalogEntry> catalogItems = GetMergedFactionCatalogs();
 		int entityCount = catalogItems.Count();
 		
-		ref set<string> currentPrefabs = new set<string>();
 		foreach(auto entry : catalogItems)
 		{
 			ref array<SCR_BaseEntityCatalogData> itemData = {};
@@ -254,7 +253,8 @@ sealed class TW_LootManager
 				if(s_GlobalItems.Contains(prefab))
 					continue;
 				
-				currentPrefabs.Insert(prefab);
+				s_GlobalItems.Insert(prefab);
+				
 				
 				arsenalItem.SetItemPrefab(prefab);
 				
@@ -330,7 +330,10 @@ sealed class TW_LootManager
 	static void UnregisterInteractedContainer(TW_LootableInventoryComponent container)
 	{
 		if(m_ContainerThresholds.Contains(container))
+		{
 			m_ContainerThresholds.Remove(container);
+			container.SetInteractedWith(false);
+		}
 	}
 	
 	private static void CheckPlayerLocations()
@@ -385,8 +388,8 @@ sealed class TW_LootManager
 	}
 	
 	static void RespawnLootProcessor()
-	{		
-		foreach(TW_LootableInventoryComponent container, int _ : m_ContainerThresholds)
+	{					
+		foreach(TW_LootableInventoryComponent container, int respawnedAmount : m_ContainerThresholds)
 		{
 			if(!container.CanRespawnLoot())
 				continue;
