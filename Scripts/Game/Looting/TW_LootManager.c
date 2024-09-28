@@ -49,9 +49,22 @@ sealed class TW_LootManager
 	//! Number of items that can respawn at most overtime
 	private static int m_RespawnLootItemThreshold = 4;
 	
+	//! Time in seconds a player must hold the interaction button to open an unsearched container
+	private static float m_LootContainerNotSearchedDuration = 5.0;
+	
+	//! Time in seconds a player must hold the interaction button to open a searched container
+	private static float m_LootContainerSearchedDuration = 0.5;
+	
+	
 	private static ref TW_GridCoordArrayManager<TW_LootableInventoryComponent> s_GlobalContainerGrid = new TW_GridCoordArrayManager<TW_LootableInventoryComponent>(100);
 	
 	static TW_GridCoordArrayManager<TW_LootableInventoryComponent> GetContainerGrid() { return s_GlobalContainerGrid; }
+	
+	//! Time in seconds opening an unsearched container
+	static float GetNotSearchedActionDuration() { return m_LootContainerNotSearchedDuration; }
+	
+	//! Time in seconds opening a searched container will take
+	static float GetSearchedActionDuration() { return m_LootContainerSearchedDuration; }	
 	
 	static float GetRandomAmmoPercent() { return Math.RandomFloatInclusive(m_MinimumAmmoPercent, m_MaximumAmmoPercent) / m_MaximumAmmoPercent; }
 	
@@ -310,7 +323,7 @@ sealed class TW_LootManager
 		
 		if(IsLootEnabled)
 		{
-			SpawnLoot();
+			// SpawnLoot();
 			GetGame().GetCallqueue().CallLater(CheckPlayerLocations, 1000 * 10, true);
 			GetGame().GetCallqueue().CallLater(RespawnLootProcessor, 1000 * GetRespawnCheckInterval(), true);
 		}
@@ -391,6 +404,13 @@ sealed class TW_LootManager
 	{					
 		foreach(TW_LootableInventoryComponent container, int respawnedAmount : m_ContainerThresholds)
 		{
+			if(!container)
+			{
+				m_ContainerThresholds.Remove(container);
+				PrintFormat("TrainWreckLooting: Null container: %1", respawnedAmount, LogLevel.WARNING);
+				continue;
+			}
+			
 			if(!container.CanRespawnLoot())
 				continue;
 			
@@ -456,6 +476,35 @@ sealed class TW_LootManager
 			m_ContainerThresholds.Set(container, m_ContainerThresholds.Get(container) + 1);
 		
 		return result;
+	}
+	
+	//! Trickle spawn loot into a container
+	static void TrickleSpawnLootInContainer(TW_LootableInventoryComponent container, int remainingAmount)
+	{
+		if(!IsLootEnabled || !container || remainingAmount < 0) 
+			return;
+		
+		TW_LootConfigItem arsenalItem = TW_LootManager.GetRandomByFlag(container.GetTypeFlags());
+		
+		if(!arsenalItem)
+		{
+			GetGame().GetCallqueue().CallLater(TrickleSpawnLootInContainer, 250, false, container, remainingAmount - 1);
+			return;
+		}
+		
+		if(remainingAmount <= 0) 
+			return;
+		
+		int seedPercentage = Math.RandomIntInclusive(0, 100);
+		if(arsenalItem.chanceToSpawn < seedPercentage)
+		{
+			int itemCount = Math.RandomIntInclusive(1, arsenalItem.randomSpawnCount);
+			bool success = container.InsertItem(arsenalItem);
+			if(!success)
+				remainingAmount += 1;
+		}
+		
+		GetGame().GetCallqueue().CallLater(TrickleSpawnLootInContainer, 250, false, container, remainingAmount - 1);
 	}
 	
 	//! Spawn loot in designated container
@@ -542,6 +591,8 @@ sealed class TW_LootManager
 		saveContext.WriteValue("respawnAfterLastInteractionInMinutes", m_RespawnAfterLastInteractionInMinutes);
 		saveContext.WriteValue("respawnLootItemThreshold", m_RespawnLootItemThreshold);
 		saveContext.WriteValue("respawnLootRadius", m_RespawnLootRadius);		
+		saveContext.WriteValue("lootActionUnsearchedDurationInSeconds", m_LootContainerNotSearchedDuration);
+		saveContext.WriteValue("lootActionSearchedDurationInSeconds", m_LootContainerSearchedDuration);
 		
 		foreach(SCR_EArsenalItemType type, ref array<ref TW_LootConfigItem> items : s_LootTable)
 		{
@@ -584,6 +635,8 @@ sealed class TW_LootManager
 		loadContext.ReadValue("respawnAfterLAstInteractionInMinutes", m_RespawnAfterLastInteractionInMinutes);
 		loadContext.ReadValue("respawnLootItemThreshold", m_RespawnLootItemThreshold);
 		loadContext.ReadValue("respawnLootRadius", m_RespawnLootRadius);
+		loadContext.ReadValue("lootActionUnsearchedDurationInSeconds", m_LootContainerNotSearchedDuration);
+		loadContext.ReadValue("lootActionSearchedDurationInSeconds", m_LootContainerSearchedDuration);
 		
 		foreach(SCR_EArsenalItemType itemType : itemTypes)
 		{

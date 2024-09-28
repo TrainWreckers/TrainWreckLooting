@@ -17,7 +17,11 @@ class TW_LootableInventoryComponent : ScriptComponent
 	BaseUniversalInventoryStorageComponent GetStorage() { return m_Storage; }
 	
 	protected bool m_HasBeenInteractedWith = false;
-	protected int m_RespawnLootAfterTime = -1;	
+	protected int m_RespawnLootAfterTime = -1;
+	
+	protected ref ScriptInvoker<float> m_OnLootReset = new ScriptInvoker<float>();
+	
+	ScriptInvoker<float> GetOnLootReset() { return m_OnLootReset; }
 	
 	bool HasBeenInteractedWith() { return m_HasBeenInteractedWith; }
 	
@@ -25,7 +29,7 @@ class TW_LootableInventoryComponent : ScriptComponent
 	bool CanRespawnLoot()
 	{
 		return m_HasBeenInteractedWith && GetGameMode().GetElapsedTime() >= m_RespawnLootAfterTime && m_RespawnLootAfterTime > 0;
-	}
+	}		
 	
 	void SetInteractedWith(bool value) 
 	{ 	
@@ -36,11 +40,25 @@ class TW_LootableInventoryComponent : ScriptComponent
 		{
 			// We will not reregister the object if it's been interacted with already
 			if(!old)
+			{
 				TW_LootManager.RegisterInteractedContainer(this);
+				TW_LootManager.TrickleSpawnLootInContainer(this, TW_LootManager.GetRespawnLootItemThreshold());
+			}
 			
 			// If we've interacted with we'll reset the timer
 			float elapsed = GetGameMode().GetElapsedTime();
 			m_RespawnLootAfterTime = elapsed + (TW_LootManager.GetRespawnAfterLastInteractionInMinutes() * 60);
+			GetOnLootReset().Invoke(TW_LootManager.GetSearchedActionDuration());
+		}
+		else
+		{
+			ref array<IEntity> items = {};
+			GetStorageManager().GetItems(items);
+			
+			foreach(IEntity item : items)
+				GetStorageManager().TryDeleteItem(item);
+			
+			GetOnLootReset().Invoke(TW_LootManager.GetNotSearchedActionDuration());						
 		}
 	}
 	

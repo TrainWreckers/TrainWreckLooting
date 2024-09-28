@@ -32,12 +32,12 @@ GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et
     }
    }
    additionalActions {
-    SCR_OpenStorageAction "{62722CD0CB53E352}" {
+    SCR_OpenStorageAction "{6278527A1A1133C6}" {
      ParentContextList {
       "default"
      }
-     UIInfo UIInfo "{62722CD0CCC5CFB5}" {
-      Name "Open"
+     UIInfo UIInfo "{6278527A53CCBECB}" {
+      Name "Search"
      }
     }
    }
