@@ -23,7 +23,7 @@ GenericEntity : "{10C26F96EF7A8CF5}Prefabs/Props/Core/Props_Base.et" {
      }
      ContextName "default"
      Position PointInfo "{62722CD242F466C1}" {
-      Offset 0 0.4811 0
+      Offset -0.0025 0.4811 0.1797
      }
      Radius 0.8
     }
@@ -42,4 +42,5 @@ GenericEntity : "{10C26F96EF7A8CF5}Prefabs/Props/Core/Props_Base.et" {
   RplComponent "{627030267B5433BA}" {
   }
  }
+ coords 0 0 0
 }
