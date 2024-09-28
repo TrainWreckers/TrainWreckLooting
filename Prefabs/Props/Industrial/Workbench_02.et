@@ -20,9 +20,6 @@ GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et
   ActionsManagerComponent "{62755779E825A6E2}" {
    ActionContexts {
     UserActionContext "{62755779E93D5A45}" {
-     UIInfo UIInfo "{62755779EA829E44}" {
-      Name "Open Bench"
-     }
      ContextName "default"
      Position PointInfo "{62755779EEB4C63D}" {
       Offset 0 1.0068 0.2275
@@ -34,6 +31,8 @@ GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et
     SCR_OpenStorageAction "{62755779DC1894AF}" {
      ParentContextList {
       "default"
+     }
+     UIInfo UIInfo "{6278E23820F10868}" {
      }
     }
    }

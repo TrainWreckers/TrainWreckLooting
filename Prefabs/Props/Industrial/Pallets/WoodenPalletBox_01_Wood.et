@@ -21,9 +21,6 @@ GenericEntity : "{51B08BDA20AF8FF7}Prefabs/Props/Industrial/Pallets/WoodenPallet
   ActionsManagerComponent "{6275577D6D558222}" {
    ActionContexts {
     UserActionContext "{6275577D6E401527}" {
-     UIInfo UIInfo "{6275577D6FAFE820}" {
-      Name "Container"
-     }
      ContextName "default"
      Position PointInfo "{6275577D54602DE6}" {
       Offset 0 0.8932 0
@@ -35,6 +32,8 @@ GenericEntity : "{51B08BDA20AF8FF7}Prefabs/Props/Industrial/Pallets/WoodenPallet
     SCR_OpenStorageAction "{6275577D5AF723F3}" {
      ParentContextList {
       "default"
+     }
+     UIInfo UIInfo "{6278E23806205E94}" {
      }
     }
    }

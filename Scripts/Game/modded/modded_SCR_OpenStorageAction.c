@@ -4,6 +4,8 @@ modded class SCR_OpenStorageAction
 {	
 	protected TW_LootableInventoryComponent m_Container;
 	
+	protected float m_SearchedTime, m_UnsearchedTime;
+	
 	override void Init(IEntity pOwnerEntity, GenericComponent pManagerComponent)
 	{
 		super.Init(pOwnerEntity, pManagerComponent);				
@@ -13,7 +15,19 @@ modded class SCR_OpenStorageAction
 			return;
 		
 		m_Container.GetOnLootReset().Insert(OnLootReset);
-		SetActionDuration(TW_LootManager.GetNotSearchedActionDuration());
+		
+		vector size = SCR_EntityHelper.GetEntitySize(pOwnerEntity);
+		float x = size[0];
+		float y = size[1];
+		float z = size[2];
+		
+		float unsearchRatio = TW_LootManager.GetUnlootedTimeRatio();
+		float searchRatio = TW_LootManager.GetSearchedTimeRatio();
+		
+		m_UnsearchedTime= (x * unsearchRatio) + (y * unsearchRatio) + (z * unsearchRatio);
+		m_SearchedTime = (x * searchRatio) + (y * searchRatio) + (z * searchRatio);
+		
+		SetActionDuration(m_UnsearchedTime);
 		
 		if(GetUIInfo())	
 			GetUIInfo().SetName("Search");
@@ -25,21 +39,25 @@ modded class SCR_OpenStorageAction
 		if ( !vicinity )
 			return;
 		
-		if(m_Container && !m_Container.HasBeenInteractedWith())
-		{
+		if(m_Container)
 			m_Container.SetInteractedWith(true);
-			if(GetUIInfo())
-				GetUIInfo().SetName("Open");
-		}
-			
 		manager.SetStorageToOpen(pOwnerEntity);
 		manager.OpenInventory();		
 	}
 	
-	protected void OnLootReset(float timer)
-	{
-		SetActionDuration(timer);
-		if(GetUIInfo())
-			GetUIInfo().SetName("Search");
+	protected void OnLootReset(bool hasBeenSearched)
+	{		
+		string text = "Search";
+		
+		if(hasBeenSearched)
+		{
+			text = "Open";
+			SetActionDuration(m_SearchedTime);
+		}
+		else 
+			SetActionDuration(m_UnsearchedTime);
+		
+		if(GetUIInfo())		
+			GetUIInfo().SetName(text);
 	}
 };

@@ -21,9 +21,6 @@ GenericEntity : "{EB084C400AABD1D3}Prefabs/Props/Wrecks/M151A2_wreck.et" {
   ActionsManagerComponent "{627620318092F92F}" {
    ActionContexts {
     UserActionContext "{62762031819874AB}" {
-     UIInfo UIInfo "{62762031831B53DF}" {
-      Name "Open  Jeep"
-     }
      ContextName "default"
      Position PointInfo "{627620318CC8CD65}" {
       Offset 0 0.9902 0
@@ -35,6 +32,8 @@ GenericEntity : "{EB084C400AABD1D3}Prefabs/Props/Wrecks/M151A2_wreck.et" {
     SCR_OpenStorageAction "{62762031F3CEA3C4}" {
      ParentContextList {
       "default"
+     }
+     UIInfo UIInfo "{6278E23F7C99366F}" {
      }
     }
    }

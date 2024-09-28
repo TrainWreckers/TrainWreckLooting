@@ -21,9 +21,6 @@ GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et
   ActionsManagerComponent "{627557784CC2ACA6}" {
    ActionContexts {
     UserActionContext "{627557784D9E6FB6}" {
-     UIInfo UIInfo "{627557784F1776BD}" {
-      Name "Open Toolbox"
-     }
      ContextName "default"
      Position PointInfo "{62755778B47A7B3F}" {
       Offset 0 0.0559 0
@@ -35,6 +32,8 @@ GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et
     SCR_OpenStorageAction "{62755778BB7E7ADC}" {
      ParentContextList {
       "default"
+     }
+     UIInfo UIInfo "{6278E23819DA6AF7}" {
      }
     }
    }

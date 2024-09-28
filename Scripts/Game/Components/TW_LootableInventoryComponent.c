@@ -19,9 +19,9 @@ class TW_LootableInventoryComponent : ScriptComponent
 	protected bool m_HasBeenInteractedWith = false;
 	protected int m_RespawnLootAfterTime = -1;
 	
-	protected ref ScriptInvoker<float> m_OnLootReset = new ScriptInvoker<float>();
+	protected ref ScriptInvoker<bool> m_OnLootReset = new ScriptInvoker<bool>();
 	
-	ScriptInvoker<float> GetOnLootReset() { return m_OnLootReset; }
+	ScriptInvoker<bool> GetOnLootReset() { return m_OnLootReset; }
 	
 	bool HasBeenInteractedWith() { return m_HasBeenInteractedWith; }
 	
@@ -48,17 +48,25 @@ class TW_LootableInventoryComponent : ScriptComponent
 			// If we've interacted with we'll reset the timer
 			float elapsed = GetGameMode().GetElapsedTime();
 			m_RespawnLootAfterTime = elapsed + (TW_LootManager.GetRespawnAfterLastInteractionInMinutes() * 60);
-			GetOnLootReset().Invoke(TW_LootManager.GetSearchedActionDuration());
+			GetOnLootReset().Invoke(true);
 		}
 		else
 		{
+			/*
+				RespawnLootProcessor will call this method with FALSE
+				When resetting state to "Not interacted with" we need to
+				delete all the items that were currently in the container
+			
+				That way when player returns to loot the container they have
+				to do a "long press" to search, and items will trickle spawn in
+			*/
 			ref array<IEntity> items = {};
 			GetStorageManager().GetItems(items);
 			
 			foreach(IEntity item : items)
 				GetStorageManager().TryDeleteItem(item);
 			
-			GetOnLootReset().Invoke(TW_LootManager.GetNotSearchedActionDuration());						
+			GetOnLootReset().Invoke(false);						
 		}
 	}
 	

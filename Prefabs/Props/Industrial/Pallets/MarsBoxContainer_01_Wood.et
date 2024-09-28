@@ -1,3 +1,13 @@
 GenericEntity : "{84B029EBE9BD61C8}Prefabs/Props/Industrial/Pallets/MarsBoxContainer_01.et" {
  ID "F0DBA538AC2A0552"
+ components {
+  ActionsManagerComponent "{6275577E7E893D24}" {
+   additionalActions {
+    SCR_OpenStorageAction "{6275577E51D342A9}" {
+     UIInfo UIInfo "{6278E2380D47D457}" {
+     }
+    }
+   }
+  }
+ }
 }

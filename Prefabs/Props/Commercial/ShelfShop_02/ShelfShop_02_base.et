@@ -19,9 +19,6 @@ GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et
   ActionsManagerComponent "{62722CD300076631}" {
    ActionContexts {
     UserActionContext "{62722CD3010D2FAB}" {
-     UIInfo UIInfo "{62722CD3030E2F0F}" {
-      Name "Open"
-     }
      ContextName "default"
      Position PointInfo "{62722CD30970D2E0}" {
       Offset -0.5741 0.4381 0.114

@@ -1,6 +1,15 @@
 GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et" {
  ID "F0DBA538AC2A0552"
  components {
+  SCR_UniversalInventoryStorageComponent "{6278E23F168911DA}" {
+   Attributes SCR_ItemAttributeCollection "{6278E23F1811506F}" {
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
+  }
   TW_LootableInventoryComponent "{627631B56DCB900F}" {
    m_LootItemTypes HEAL
   }
@@ -9,9 +18,6 @@ GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et
   ActionsManagerComponent "{627631B550251CBE}" {
    ActionContexts {
     UserActionContext "{627631B5513BD10B}" {
-     UIInfo UIInfo "{627631B5528CF3E7}" {
-      Name "Cabinet"
-     }
      ContextName "default"
      Position PointInfo "{627631B5573E9170}" {
       Offset 0 1.0339 0.1725
@@ -23,6 +29,8 @@ GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et
     SCR_OpenStorageAction "{627631B5426DBF40}" {
      ParentContextList {
       "default"
+     }
+     UIInfo UIInfo "{6278E23F042816C3}" {
      }
     }
    }

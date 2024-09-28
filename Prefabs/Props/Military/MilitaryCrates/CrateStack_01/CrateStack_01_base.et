@@ -18,5 +18,25 @@ GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et
   }
   SCR_InventoryStorageManagerComponent "{627631B5F79140AF}" {
   }
+  ActionsManagerComponent "{6278E23882032E18}" {
+   ActionContexts {
+    UserActionContext "{6278E23883EFA46A}" {
+     ContextName "default"
+     Position PointInfo "{6278E238887B86CC}" {
+      Offset 0 0.5366 0
+     }
+     Radius 1.2
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{6278E238F2ADFED7}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{6278E238F4CFD40A}" {
+     }
+    }
+   }
+  }
  }
 }

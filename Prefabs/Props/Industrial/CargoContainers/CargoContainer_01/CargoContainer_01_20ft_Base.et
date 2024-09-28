@@ -23,9 +23,6 @@ GenericEntity : "{70384CA135D9DBE8}Prefabs/Props/Industrial/CargoContainers/Carg
   ActionsManagerComponent "{62752CA24ADCEA16}" {
    ActionContexts {
     UserActionContext "{62752CA24C545E44}" {
-     UIInfo UIInfo "{62752CA2B0565D14}" {
-      Name "Open Container"
-     }
      ContextName "default"
      Position PointInfo "{62752CA2B91D3D0F}" {
       Offset 0 1.2702 3.0124
@@ -37,6 +34,8 @@ GenericEntity : "{70384CA135D9DBE8}Prefabs/Props/Industrial/CargoContainers/Carg
     SCR_OpenStorageAction "{62752CA2AB4EBDC2}" {
      ParentContextList {
       "default"
+     }
+     UIInfo UIInfo "{6278E2386892C07B}" {
      }
     }
    }

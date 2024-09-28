@@ -21,9 +21,6 @@ GenericEntity : "{84CBCE9163176B3E}Prefabs/Props/Wrecks/S105_wreck.et" {
   ActionsManagerComponent "{6276203004C4D418}" {
    ActionContexts {
     UserActionContext "{6276203005F90B09}" {
-     UIInfo UIInfo "{6276203007132BF9}" {
-      Name "Open Car"
-     }
      ContextName "default"
      Position PointInfo "{627620300D230345}" {
       Offset 0 0.9136 0
@@ -35,6 +32,8 @@ GenericEntity : "{84CBCE9163176B3E}Prefabs/Props/Wrecks/S105_wreck.et" {
     SCR_OpenStorageAction "{62762030740C72F6}" {
      ParentContextList {
       "default"
+     }
+     UIInfo UIInfo "{6278E23F657B4397}" {
      }
     }
    }

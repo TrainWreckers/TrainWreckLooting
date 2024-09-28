@@ -21,9 +21,6 @@ GenericEntity : "{10C26F96EF7A8CF5}Prefabs/Props/Core/Props_Base.et" {
   ActionsManagerComponent "{6275577EB3D0DA52}" {
    ActionContexts {
     UserActionContext "{6275577EB4C9605F}" {
-     UIInfo UIInfo "{6275577EB7A64313}" {
-      Name "Container"
-     }
      ContextName "default"
      Position PointInfo "{6275577EBA1780AB}" {
       Offset 0 1.0048 0
@@ -35,6 +32,8 @@ GenericEntity : "{10C26F96EF7A8CF5}Prefabs/Props/Core/Props_Base.et" {
     SCR_OpenStorageAction "{6275577EA6F6CC33}" {
      ParentContextList {
       "default"
+     }
+     UIInfo UIInfo "{6278E23874E2C91B}" {
      }
     }
    }

@@ -21,9 +21,6 @@ GenericEntity : "{7783AE4B44D3CF29}Prefabs/Props/Wrecks/M923A1_wreck.et" {
   ActionsManagerComponent "{62762031C945FE99}" {
    ActionContexts {
     UserActionContext "{62762031CA298B01}" {
-     UIInfo UIInfo "{62762031CBD5F5DD}" {
-      Name "Open"
-     }
      ContextName "default"
      Position PointInfo "{6276203031ADE440}" {
       Offset -0.0259 1.582 1.2498
@@ -35,6 +32,8 @@ GenericEntity : "{7783AE4B44D3CF29}Prefabs/Props/Wrecks/M923A1_wreck.et" {
     SCR_OpenStorageAction "{627620307F7EF048}" {
      ParentContextList {
       "default"
+     }
+     UIInfo UIInfo "{6278E23F61F5A1AC}" {
      }
     }
    }

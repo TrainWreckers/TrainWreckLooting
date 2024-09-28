@@ -21,9 +21,6 @@ StaticModelEntity : "{5EC6836A5694F691}Prefabs/Props/Military/Furniture/Furnitur
   ActionsManagerComponent "{627631B41F93BCDB}" {
    ActionContexts {
     UserActionContext "{627631B400909583}" {
-     UIInfo UIInfo "{627631B4021D5D0C}" {
-      Name "Open"
-     }
      ContextName "default"
      Position PointInfo "{627631B4085837DD}" {
       Offset 0.3416 0.5974 0.1235
@@ -35,6 +32,8 @@ StaticModelEntity : "{5EC6836A5694F691}Prefabs/Props/Military/Furniture/Furnitur
     SCR_OpenStorageAction "{627631B471FEB086}" {
      ParentContextList {
       "default"
+     }
+     UIInfo UIInfo "{6278E238E5B4E9AF}" {
      }
     }
    }

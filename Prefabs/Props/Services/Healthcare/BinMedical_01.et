@@ -18,6 +18,26 @@ GenericEntity : "{10C26F96EF7A8CF5}Prefabs/Props/Core/Props_Base.et" {
   }
   SCR_InventoryStorageManagerComponent "{627631B5B2CADB04}" {
   }
+  ActionsManagerComponent "{6278E23F312BC1AA}" {
+   ActionContexts {
+    UserActionContext "{6278E23F324C9742}" {
+     ContextName "default"
+     Position PointInfo "{6278E23F37DD0371}" {
+      Offset 0 0.4985 0
+     }
+     Radius 0.8
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{6278E23F3FEC44DE}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{6278E23F211C911F}" {
+     }
+    }
+   }
+  }
   RplComponent "{627631B54F5A6172}" {
   }
  }

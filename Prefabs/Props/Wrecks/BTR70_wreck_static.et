@@ -21,9 +21,6 @@ GenericEntity : "{75FEF1CA582431F3}Prefabs/Props/Wrecks/BTR70_wreck.et" {
   ActionsManagerComponent "{627620316A48C52F}" {
    ActionContexts {
     UserActionContext "{627620316B505FB1}" {
-     UIInfo UIInfo "{627620316CC504D0}" {
-      Name "BTR"
-     }
      ContextName "default"
      Position PointInfo "{6276203151409C69}" {
       Offset -1.2669 0.9098 -0.156
@@ -35,6 +32,8 @@ GenericEntity : "{75FEF1CA582431F3}Prefabs/Props/Wrecks/BTR70_wreck.et" {
     SCR_OpenStorageAction "{6276203148F3FD97}" {
      ParentContextList {
       "default"
+     }
+     UIInfo UIInfo "{6278E23F778BADD1}" {
      }
     }
    }

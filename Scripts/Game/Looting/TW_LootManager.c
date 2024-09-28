@@ -49,22 +49,18 @@ sealed class TW_LootManager
 	//! Number of items that can respawn at most overtime
 	private static int m_RespawnLootItemThreshold = 4;
 	
-	//! Time in seconds a player must hold the interaction button to open an unsearched container
-	private static float m_LootContainerNotSearchedDuration = 5.0;
+	//! Ratio to apply to entity sizes for unsearched containers
+	private static float m_UnlootedTimeRatio = 1.2;
 	
-	//! Time in seconds a player must hold the interaction button to open a searched container
-	private static float m_LootContainerSearchedDuration = 0.5;
-	
+	//! Ratio to apply to entity sizes for searched containers
+	private static float m_SearchedTimeRatio = 0.25;
 	
 	private static ref TW_GridCoordArrayManager<TW_LootableInventoryComponent> s_GlobalContainerGrid = new TW_GridCoordArrayManager<TW_LootableInventoryComponent>(100);
 	
 	static TW_GridCoordArrayManager<TW_LootableInventoryComponent> GetContainerGrid() { return s_GlobalContainerGrid; }
 	
-	//! Time in seconds opening an unsearched container
-	static float GetNotSearchedActionDuration() { return m_LootContainerNotSearchedDuration; }
-	
-	//! Time in seconds opening a searched container will take
-	static float GetSearchedActionDuration() { return m_LootContainerSearchedDuration; }	
+	static float GetUnlootedTimeRatio() { return m_UnlootedTimeRatio; }
+	static float GetSearchedTimeRatio() { return m_SearchedTimeRatio; }
 	
 	static float GetRandomAmmoPercent() { return Math.RandomFloatInclusive(m_MinimumAmmoPercent, m_MaximumAmmoPercent) / m_MaximumAmmoPercent; }
 	
@@ -232,6 +228,8 @@ sealed class TW_LootManager
 	{
 		SCR_Enum.GetEnumValues(SCR_EArsenalItemType, s_ArsenalItemTypes);
 		
+		// If lootmap already exists -- load everything from file
+		// Then merge things that are in-game
 		if(HasLootTable())
 		{
 			Print(string.Format("TrainWreck: Detected loot table %1", LootFileName));
@@ -323,7 +321,6 @@ sealed class TW_LootManager
 		
 		if(IsLootEnabled)
 		{
-			// SpawnLoot();
 			GetGame().GetCallqueue().CallLater(CheckPlayerLocations, 1000 * 10, true);
 			GetGame().GetCallqueue().CallLater(RespawnLootProcessor, 1000 * GetRespawnCheckInterval(), true);
 		}
@@ -332,21 +329,23 @@ sealed class TW_LootManager
 	private static ref set<string> m_PlayerLocations = new set<string>();
 	private static ref set<string> m_AntiSpawnPlayerLocations = new set<string>();
 	private static ref array<int> m_PlayerIds = new array<int>();
-	private static ref map<TW_LootableInventoryComponent, int> m_ContainerThresholds = new map<TW_LootableInventoryComponent, int>();
+	private static ref set<TW_LootableInventoryComponent> m_InteractedWithContainers = new set<TW_LootableInventoryComponent>();
+	private static int m_RespawnLootProcessor_ContainerIndex = -1;
+	private static int m_RespawnLootProcessor_BatchSize = 10;
 	
 	static void RegisterInteractedContainer(TW_LootableInventoryComponent container)
 	{
-		if(!m_ContainerThresholds.Contains(container))
-			m_ContainerThresholds.Insert(container, 0);
+		if(!m_InteractedWithContainers.Contains(container))
+			m_InteractedWithContainers.Insert(container);
 	}
 	
 	static void UnregisterInteractedContainer(TW_LootableInventoryComponent container)
 	{
-		if(m_ContainerThresholds.Contains(container))
+		if(m_InteractedWithContainers.Contains(container))
 		{
-			m_ContainerThresholds.Remove(container);
+			m_InteractedWithContainers.RemoveItem(container);
 			container.SetInteractedWith(false);
-		}
+		}		
 	}
 	
 	private static void CheckPlayerLocations()
@@ -400,84 +399,66 @@ sealed class TW_LootManager
 		}				
 	}
 	
+	private static int GetNextIndex(int current, int length)
+	{
+		current += 1;
+		
+		if(current >= length || current < 0)
+			return 0;
+		
+		return current;
+	}
+	
+	private static int GetPreviousIndex(int current, int length)
+	{
+		current -= 1;
+		
+		if(current < 0)
+			current = length - 1;
+		
+		return current;
+	}
+	
 	static void RespawnLootProcessor()
-	{					
-		foreach(TW_LootableInventoryComponent container, int respawnedAmount : m_ContainerThresholds)
+	{
+		int length = m_InteractedWithContainers.Count();
+		
+		// Nothing to process if we don't have containers to check
+		if(length == 0) 
+			return;	
+		
+		int processLength = m_RespawnLootProcessor_BatchSize;
+		
+		if(processLength > length)
+			processLength = length;
+		
+		// We want to make sure if we hit the upper boundary
+		// we rollover to the beginning
+		for(int i = 0; i < processLength; i++)
 		{
+			m_RespawnLootProcessor_ContainerIndex = GetNextIndex(m_RespawnLootProcessor_ContainerIndex, length);
+			TW_LootableInventoryComponent container = m_InteractedWithContainers.Get(m_RespawnLootProcessor_ContainerIndex);
+			
 			if(!container)
 			{
-				m_ContainerThresholds.Remove(container);
-				PrintFormat("TrainWreckLooting: Null container: %1", respawnedAmount, LogLevel.WARNING);
+				m_InteractedWithContainers.Remove(m_RespawnLootProcessor_ContainerIndex);
+				length -= 1;
+				m_RespawnLootProcessor_ContainerIndex = GetPreviousIndex(m_RespawnLootProcessor_ContainerIndex, length);
 				continue;
 			}
 			
 			if(!container.CanRespawnLoot())
 				continue;
 			
-			// Give some randomness to how loot spawns - this is the trickle spawn
-			GetGame().GetCallqueue().CallLater(SpawnLootInContainerLimited, Math.RandomInt(100, 5000), false, container);
-		}
+			container.SetInteractedWith(false);
+			m_InteractedWithContainers.Remove(m_RespawnLootProcessor_ContainerIndex);
+			
+			length -= 1;
+			
+			m_RespawnLootProcessor_ContainerIndex = GetPreviousIndex(m_RespawnLootProcessor_ContainerIndex, length);
+		}		
 	}
 		
-	//! Spawn loot globally
-	static void SpawnLoot()
-	{
-		if(!IsLootEnabled) 
-		{
-			Print("TrainWreckLooting: Looting is disabled", LogLevel.WARNING);
-			return;
-		}
-		
-		ref array<TW_LootableInventoryComponent> allContainers = {};
-		int count = TW_LootManager.GetContainerGrid().GetAllItems(allContainers);
-		
-		PrintFormat("TrainWreckLooting: There are %1 loot containers registered", count);
-		
-		int invalidCount = 0;
-		foreach(TW_LootableInventoryComponent container : allContainers)
-			if(container)
-				SpawnLootInContainer(container);	
-			else
-			{
-				invalidCount++;
-				PrintFormat("TrainWreckLooting: Invalid containers (%1)", invalidCount, LogLevel.ERROR);
-			}
-	}
-	
-	//! Potentially spawns a single item in a container, returning whether it was successful or not
-	static bool SpawnLootInContainerLimited(TW_LootableInventoryComponent container)
-	{
-		if(!IsLootEnabled)
-			return false;
-		
-		if(!container)
-		 	return false;
-		
-		if(!m_ContainerThresholds.Contains(container))
-			return false;
-		
-		if(m_ContainerThresholds.Get(container) >= GetRespawnLootItemThreshold())
-		{
-			UnregisterInteractedContainer(container);
-			return false;
-		}
-		
-		auto arsenalItem = TW_LootManager.GetRandomByFlag(container.GetTypeFlags());
-		if(!arsenalItem)
-			return false;
-		
-		float seedPercentage = Math.RandomFloat(0.001, 100);
-		if(arsenalItem.chanceToSpawn > seedPercentage)
-			return false;
-		
-		bool result = container.InsertItem(arsenalItem);
-		
-		if(result)
-			m_ContainerThresholds.Set(container, m_ContainerThresholds.Get(container) + 1);
-		
-		return result;
-	}
-	
 	//! Trickle spawn loot into a container
 	static void TrickleSpawnLootInContainer(TW_LootableInventoryComponent container, int remainingAmount)
 	{
@@ -591,11 +572,14 @@ sealed class TW_LootManager
 		saveContext.WriteValue("respawnAfterLastInteractionInMinutes", m_RespawnAfterLastInteractionInMinutes);
 		saveContext.WriteValue("respawnLootItemThreshold", m_RespawnLootItemThreshold);
 		saveContext.WriteValue("respawnLootRadius", m_RespawnLootRadius);		
-		saveContext.WriteValue("lootActionUnsearchedDurationInSeconds", m_LootContainerNotSearchedDuration);
-		saveContext.WriteValue("lootActionSearchedDurationInSeconds", m_LootContainerSearchedDuration);
+		saveContext.WriteValue("unsearchedTimeRatio", m_UnlootedTimeRatio);
+		saveContext.WriteValue("searchedTimeRatio", m_SearchedTimeRatio);
+		saveContext.WriteValue("respawnLootProcessorBatchSize", m_RespawnLootProcessor_BatchSize);
 		
 		foreach(SCR_EArsenalItemType type, ref array<ref TW_LootConfigItem> items : s_LootTable)
-		{
+		{	
+			PrintFormat("TrainWreckLooting: Type: %1, Amount %2 -- Saving", type, items.Count());
+			
 			ref array<ref TW_LootConfigItem> typeLoot = {};			
 			saveContext.WriteValue(TW_Util.ArsenalTypeAsString(type), items);
 		}
@@ -635,8 +619,9 @@ sealed class TW_LootManager
 		loadContext.ReadValue("respawnAfterLAstInteractionInMinutes", m_RespawnAfterLastInteractionInMinutes);
 		loadContext.ReadValue("respawnLootItemThreshold", m_RespawnLootItemThreshold);
 		loadContext.ReadValue("respawnLootRadius", m_RespawnLootRadius);
-		loadContext.ReadValue("lootActionUnsearchedDurationInSeconds", m_LootContainerNotSearchedDuration);
-		loadContext.ReadValue("lootActionSearchedDurationInSeconds", m_LootContainerSearchedDuration);
+		loadContext.ReadValue("unsearchedTimeRatio", m_UnlootedTimeRatio);
+		loadContext.ReadValue("searchedTimeRatio", m_SearchedTimeRatio);
+		loadContext.ReadValue("respawnLootProcessorBatchSize", m_RespawnLootProcessor_BatchSize);
 		
 		foreach(SCR_EArsenalItemType itemType : itemTypes)
 		{
@@ -676,12 +661,16 @@ sealed class TW_LootManager
 				
 				if(!s_GlobalItems.Contains(item.resourceName))
 					s_GlobalItems.Insert(item.resourceName);
+				else
+					continue;
 				
 				s_LootTable.Get(type).Insert(item);
 			}
 			else
 				PrintFormat("TrainWreckLooting: The following resource is invalid (maybe mod is not loaded?): %1", item.resourceName, LogLevel.WARNING);
 		}
+		
+		PrintFormat("TrainWreckLooting: Type %1, Amount: %2", type, s_LootTable.Get(type).Count());
 		return true;
 	}
 };
