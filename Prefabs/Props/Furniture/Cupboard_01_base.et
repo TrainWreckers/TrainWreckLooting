@@ -1,7 +1,0 @@
-GenericEntity : "{10C26F96EF7A8CF5}Prefabs/Props/Core/Props_Base.et" {
- ID "6093E737EE16D317"
- components {
-  TW_LootableInventoryComponent "{62703024FC24B1BB}" {
-  }
- }
-}

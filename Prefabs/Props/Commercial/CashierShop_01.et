@@ -1,3 +1,47 @@
 GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et" {
  ID "F0DBA538AC2A0552"
+ components {
+  SCR_UniversalInventoryStorageComponent "{627B0C221C68A5D1}" {
+  }
+  SCR_UniversalInventoryStorageComponent "{627B0C269B99F5AE}" {
+   Attributes SCR_ItemAttributeCollection "{627B0C26863917AB}" {
+    ItemDisplayName UIInfo "{627B0C26875A60E2}" {
+     Name "Register"
+    }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
+  }
+  TW_LootableInventoryComponent "{627B0C26B5DCBD23}" {
+   m_LootItemTypes 65540
+  }
+  SCR_InventoryStorageManagerComponent "{627B0C26A72C91DE}" {
+  }
+  ActionsManagerComponent "{627B0C26AE25B08E}" {
+   ActionContexts {
+    UserActionContext "{627B0C26A815EC88}" {
+     ContextName "default"
+     Position PointInfo "{627B0C26D659FB82}" {
+      Offset 0 0.2574 0
+     }
+     Radius 0.8
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{627B0C26DDEA976D}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{627B0C26D9606941}" {
+     }
+    }
+   }
+  }
+  RplComponent "{5624A88DC2D9928D}" {
+   Enabled 1
+  }
+ }
 }

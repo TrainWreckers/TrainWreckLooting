@@ -1,6 +1,23 @@
 GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et" {
  ID "F0DBA538AC2A0552"
  components {
+  SCR_UniversalInventoryStorageComponent "{627B0C2952316EF5}" {
+   Attributes SCR_ItemAttributeCollection "{627B0C2953996145}" {
+    ItemDisplayName UIInfo "{627B0C295CA9F795}" {
+     Name "Basket"
+    }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
+  }
+  TW_LootableInventoryComponent "{627B0C2940AF7DEE}" {
+   m_LootItemTypes 556160
+  }
+  SCR_InventoryStorageManagerComponent "{627B0C2949042B06}" {
+  }
   ActionsManagerComponent "{627631B4E086DEB4}" {
    ActionContexts {
     UserActionContext "{627631B4E26CD3D4}" {
@@ -18,6 +35,8 @@ GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et
     SCR_OpenStorageAction "{627631B4D06978F7}" {
      ParentContextList {
       "default"
+     }
+     UIInfo UIInfo "{627B0C296C23E74A}" {
      }
     }
    }

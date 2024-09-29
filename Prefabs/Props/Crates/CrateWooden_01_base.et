@@ -6,10 +6,12 @@ GenericEntity : "{10C26F96EF7A8CF5}Prefabs/Props/Core/Props_Base.et" {
     ItemDisplayName SCR_InventoryUIInfo "{62703027CBE35476}" {
      Name "Box"
     }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
    }
    UseCapacityCoefficient 0
-   MaxCumulativeVolume 50000
-   m_fMaxWeight 50000
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
   }
   TW_LootableInventoryComponent "{6270302437F87AE7}" {
    m_LootItemTypes 1048574
@@ -19,9 +21,6 @@ GenericEntity : "{10C26F96EF7A8CF5}Prefabs/Props/Core/Props_Base.et" {
   ActionsManagerComponent "{62722CD38BFCE2EF}" {
    ActionContexts {
     UserActionContext "{62722CD38CF45B0B}" {
-     UIInfo UIInfo "{62722CD38EF31021}" {
-      Name "Open"
-     }
      ContextName "default"
      Position PointInfo "{62722CD3F4B90030}" {
       Offset 0 0.6563 0

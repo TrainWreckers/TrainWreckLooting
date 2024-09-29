@@ -14,27 +14,26 @@ GenericEntity : "{4A0EB5570B2BB36C}Prefabs/Props/Wrecks/Ural4320_wreck.et" {
    m_fMaxWeight 10000
   }
   TW_LootableInventoryComponent "{62762034DA36317E}" {
-   m_LootItemTypes 753280
+   m_LootItemTypes 197196
   }
   SCR_InventoryStorageManagerComponent "{62762030A165D69E}" {
   }
   ActionsManagerComponent "{6276203B17469049}" {
    ActionContexts {
     UserActionContext "{6276203BBB76CDAD}" {
-     UIInfo UIInfo "{6276203BBD5BAFFF}" {
-      Name "Open"
-     }
      ContextName "default"
      Position PointInfo "{6276203BA0D89C0C}" {
-      Offset 0 2.0891 1.4077
+      Offset -0.8676 1.616 1.4077
      }
-     Radius 1.2
+     Radius 0.8
     }
    }
    additionalActions {
     SCR_OpenStorageAction "{6276203B90F995D3}" {
      ParentContextList {
       "default"
+     }
+     UIInfo UIInfo "{627B0C3426F9970A}" {
      }
     }
    }

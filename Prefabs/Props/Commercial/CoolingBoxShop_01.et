@@ -1,3 +1,45 @@
 GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et" {
  ID "F0DBA538AC2A0552"
+ components {
+  SCR_UniversalInventoryStorageComponent "{627B0C26C0A26975}" {
+   Attributes SCR_ItemAttributeCollection "{627B0C26C2A3DA96}" {
+    ItemDisplayName UIInfo "{627B0C26C3AE3D2C}" {
+     Name "Cooling Box"
+    }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
+  }
+  TW_LootableInventoryComponent "{627B0C26F8DC666E}" {
+   m_LootItemTypes 131902
+  }
+  SCR_InventoryStorageManagerComponent "{627B0C253DA72471}" {
+  }
+  ActionsManagerComponent "{627B0C253898B648}" {
+   ActionContexts {
+    UserActionContext "{627B0C25398DB2F3}" {
+     ContextName "default"
+     Position PointInfo "{627B0C252006D23C}" {
+      Offset 0 0.6901 -0.0781
+     }
+     Radius 0.8
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{627B0C255F39E25E}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{627B0C255BB9EDE6}" {
+     }
+    }
+   }
+  }
+  RplComponent "{5624A88DC2D9928D}" {
+   Enabled 1
+  }
+ }
 }

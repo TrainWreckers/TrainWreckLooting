@@ -1,0 +1,45 @@
+GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  SCR_UniversalInventoryStorageComponent "{627B0C37BD1F83F5}" {
+   Attributes SCR_ItemAttributeCollection "{627B0C37BFDCBFAF}" {
+    ItemDisplayName UIInfo "{627B0C37B8DEFB28}" {
+     Name "Desk"
+    }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
+  }
+  TW_LootableInventoryComponent "{627B0C37AC07F52D}" {
+   m_LootItemTypes 98828
+  }
+  SCR_InventoryStorageManagerComponent "{627B0C37D357CF23}" {
+  }
+  ActionsManagerComponent "{627B0C37DD95347E}" {
+   ActionContexts {
+    UserActionContext "{627B0C37DE6610E0}" {
+     ContextName "default"
+     Position PointInfo "{627B0C37DA998DB9}" {
+      Offset 0 0.8393 0.2449
+     }
+     Radius 0.8
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{627B0C37CCCD34C2}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{627B0C37CFD181DE}" {
+     }
+    }
+   }
+  }
+  RplComponent "{5624A88DC2D9928D}" {
+   Enabled 1
+  }
+ }
+}

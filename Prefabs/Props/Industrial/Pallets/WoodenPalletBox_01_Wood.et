@@ -14,19 +14,16 @@ GenericEntity : "{51B08BDA20AF8FF7}Prefabs/Props/Industrial/Pallets/WoodenPallet
    m_fMaxWeight 10000
   }
   TW_LootableInventoryComponent "{6275577E93BD7693}" {
-   m_LootItemTypes 1015436
+   m_LootItemTypes 271166
   }
   SCR_InventoryStorageManagerComponent "{6275577E9200A77D}" {
   }
   ActionsManagerComponent "{6275577D6D558222}" {
    ActionContexts {
     UserActionContext "{6275577D6E401527}" {
-     UIInfo UIInfo "{6275577D6FAFE820}" {
-      Name "Container"
-     }
      ContextName "default"
      Position PointInfo "{6275577D54602DE6}" {
-      Offset 0 0.8932 0
+      Offset 0 0.8339 0
      }
      Radius 0.8
     }
@@ -35,6 +32,8 @@ GenericEntity : "{51B08BDA20AF8FF7}Prefabs/Props/Industrial/Pallets/WoodenPallet
     SCR_OpenStorageAction "{6275577D5AF723F3}" {
      ParentContextList {
       "default"
+     }
+     UIInfo UIInfo "{627B0C3270FADCDE}" {
      }
     }
    }

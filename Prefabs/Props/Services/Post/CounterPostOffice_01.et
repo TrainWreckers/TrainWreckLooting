@@ -1,0 +1,45 @@
+GenericEntity : "{9BBC77EACCC3E442}Prefabs/Props/Services/Post/CounterPostOffice_01_base.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  SCR_UniversalInventoryStorageComponent "{627B0C37F5C2DD74}" {
+   Attributes SCR_ItemAttributeCollection "{627B0C37F6EBA4E6}" {
+    ItemDisplayName UIInfo "{627B0C37F7E85BF0}" {
+     Name "Counter"
+    }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
+  }
+  TW_LootableInventoryComponent "{627B0C37FA05BCE9}" {
+   m_LootItemTypes 622382
+  }
+  SCR_InventoryStorageManagerComponent "{627B0C37ED1ED7E9}" {
+  }
+  ActionsManagerComponent "{627B0C37EF275676}" {
+   ActionContexts {
+    UserActionContext "{627B0C37E81B71F8}" {
+     ContextName "default"
+     Position PointInfo "{627B0C37EBA43D3B}" {
+      Offset 0.7608 0.7921 -0.3999
+     }
+     Radius 0.8
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{627B0C3618917B4F}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{627B0C361B7609D9}" {
+     }
+    }
+   }
+  }
+  RplComponent "{5624A88DC2D9928D}" {
+   Enabled 1
+  }
+ }
+}

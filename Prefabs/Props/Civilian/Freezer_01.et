@@ -4,6 +4,7 @@ GenericEntity : "{10C26F96EF7A8CF5}Prefabs/Props/Core/Props_Base.et" {
   SCR_UniversalInventoryStorageComponent "{62703026412B35FD}" {
    Attributes SCR_ItemAttributeCollection "{6270302643836CAA}" {
     ItemDisplayName SCR_InventoryUIInfo "{627030264AE3437F}" {
+     Name "Freezer"
     }
    }
    UseCapacityCoefficient 0
@@ -11,16 +12,13 @@ GenericEntity : "{10C26F96EF7A8CF5}Prefabs/Props/Core/Props_Base.et" {
    m_fMaxWeight 50000
   }
   TW_LootableInventoryComponent "{62703026625E7EB8}" {
-   m_LootItemTypes 1048270
+   m_LootItemTypes 393740
   }
   SCR_InventoryStorageManagerComponent "{6270302684C47B49}" {
   }
   ActionsManagerComponent "{62722CD2577194AA}" {
    ActionContexts {
     UserActionContext "{62722CD2597C6D9E}" {
-     UIInfo UIInfo "{62722CD25BA4EBC8}" {
-      Name "Open"
-     }
      ContextName "default"
      Position PointInfo "{62722CD242F466C1}" {
       Offset -0.0025 0.4811 0.1797
@@ -29,12 +27,11 @@ GenericEntity : "{10C26F96EF7A8CF5}Prefabs/Props/Core/Props_Base.et" {
     }
    }
    additionalActions {
-    SCR_OpenStorageAction "{62722CD2936A16F9}" {
+    SCR_OpenStorageAction "{627B0C22F38912B7}" {
      ParentContextList {
       "default"
      }
-     UIInfo UIInfo "{62722CD2986B4FCC}" {
-      Name "Open Storage"
+     UIInfo UIInfo "{627B0C22F8B4EAFE}" {
      }
     }
    }

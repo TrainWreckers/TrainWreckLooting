@@ -1,0 +1,45 @@
+GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  SCR_UniversalInventoryStorageComponent "{627B0C25436CBDE3}" {
+   Attributes SCR_ItemAttributeCollection "{627B0C254D020C4A}" {
+    ItemDisplayName UIInfo "{627B0C254E0057DF}" {
+     Name "Counter"
+    }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
+  }
+  TW_LootableInventoryComponent "{627B0C25730DCA1A}" {
+   m_LootItemTypes 753598
+  }
+  SCR_InventoryStorageManagerComponent "{627B0C25A9DAAD3B}" {
+  }
+  ActionsManagerComponent "{627B0C25D5393330}" {
+   ActionContexts {
+    UserActionContext "{627B0C25D7443007}" {
+     ContextName "default"
+     Position PointInfo "{627B0C25DD55FDC2}" {
+      Offset 0 0.7024 -0.2155
+     }
+     Radius 0.8
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{627B0C25F1D0BC49}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{627B0C25FC360365}" {
+     }
+    }
+   }
+  }
+  RplComponent "{5624A88DC2D9928D}" {
+   Enabled 1
+  }
+ }
+}

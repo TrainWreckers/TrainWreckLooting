@@ -1,0 +1,44 @@
+GenericEntity : "{10C26F96EF7A8CF5}Prefabs/Props/Core/Props_Base.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  SCR_UniversalInventoryStorageComponent "{627B0C33861AB52B}" {
+   Attributes SCR_ItemAttributeCollection "{627B0C33874D2BF8}" {
+    ItemDisplayName UIInfo "{627B0C33802A62D4}" {
+     Name "Oven"
+    }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
+  }
+  TW_LootableInventoryComponent "{627B0C338F61E98A}" {
+   m_LootItemTypes 328220
+  }
+  SCR_InventoryStorageManagerComponent "{627B0C33BD3231E8}" {
+  }
+  ActionsManagerComponent "{627B0C33B8EC4571}" {
+   ActionContexts {
+    UserActionContext "{627B0C33BA1B0556}" {
+     ContextName "default"
+     Position PointInfo "{627B0C33A7847015}" {
+      Offset -0.6203 1.0896 0.7934
+     }
+     Radius 0.8
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{627B0C33D72E250B}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{627B0C33D2C93FFA}" {
+     }
+    }
+   }
+  }
+  RplComponent "{627B0C339B6148B1}" {
+  }
+ }
+}

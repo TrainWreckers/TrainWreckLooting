@@ -6,25 +6,24 @@ GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et
     ItemDisplayName SCR_InventoryUIInfo "{627030248B24DA81}" {
      Name "Clock"
     }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
    }
    UseCapacityCoefficient 0
-   MaxCumulativeVolume 50000
-   m_fMaxWeight 50000
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
   }
   TW_LootableInventoryComponent "{6270302498AC88C4}" {
-   m_LootItemTypes 394038
+   m_LootItemTypes 459574
   }
   SCR_InventoryStorageManagerComponent "{62703024868CE165}" {
   }
   ActionsManagerComponent "{62722CD0B82E6BF4}" {
    ActionContexts {
     UserActionContext "{62722CD0B917BEBE}" {
-     UIInfo UIInfo "{62722CD0BB6E24FA}" {
-      Name "Open"
-     }
      ContextName "default"
      Position PointInfo "{62722CD0A0D9F613}" {
-      Offset 0.1122 0.7966 0
+      Offset 0.1122 0.7966 0.1665
      }
      Radius 0.8
     }

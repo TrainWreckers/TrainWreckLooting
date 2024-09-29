@@ -10,23 +10,20 @@ GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et
     m_SlotType SLOT_ANY
    }
    UseCapacityCoefficient 0
-   MaxCumulativeVolume 50000
-   m_fMaxWeight 50000
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
   }
   TW_LootableInventoryComponent "{62723E99884AE806}" {
-   m_LootItemTypes 1048510
+   m_LootItemTypes 622526
   }
   SCR_InventoryStorageManagerComponent "{62723E99F5FBD432}" {
   }
   ActionsManagerComponent "{62723E99E4313802}" {
    ActionContexts {
     UserActionContext "{62723E99E52A192E}" {
-     UIInfo UIInfo "{62723E99E6F88AC6}" {
-      Name "Open"
-     }
      ContextName "default"
      Position PointInfo "{62723E99EAE655A6}" {
-      Offset -0.7108 0.711 0.541
+      Offset -0.7456 1.0823 0.7476
      }
      Radius 0.8
     }

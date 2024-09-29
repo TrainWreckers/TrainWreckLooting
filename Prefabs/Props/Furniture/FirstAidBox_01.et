@@ -6,10 +6,12 @@ GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et
     ItemDisplayName SCR_InventoryUIInfo "{627030257206CFFE}" {
      Name "First Aid Box"
     }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
    }
    UseCapacityCoefficient 0
-   MaxCumulativeVolume 50000
-   m_fMaxWeight 50000
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
   }
   TW_LootableInventoryComponent "{627030250C51F03F}" {
    m_LootItemTypes HEAL
@@ -19,12 +21,9 @@ GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et
   ActionsManagerComponent "{62722CD1335AD925}" {
    ActionContexts {
     UserActionContext "{62722CD1347A3B86}" {
-     UIInfo UIInfo "{62722CD135EC08E1}" {
-      Name "Open"
-     }
      ContextName "default"
      Position PointInfo "{62722CD1384EF0B9}" {
-      Offset 0 0.1238 0
+      Offset 0 0.278 0.0702
      }
      Radius 0.8
     }

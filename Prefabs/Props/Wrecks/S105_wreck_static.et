@@ -14,27 +14,26 @@ GenericEntity : "{84CBCE9163176B3E}Prefabs/Props/Wrecks/S105_wreck.et" {
    m_fMaxWeight 10000
   }
   TW_LootableInventoryComponent "{62762030106ACC86}" {
-   m_LootItemTypes 556160
+   m_LootItemTypes 883852
   }
   SCR_InventoryStorageManagerComponent "{627620307A616FB4}" {
   }
   ActionsManagerComponent "{6276203004C4D418}" {
    ActionContexts {
     UserActionContext "{6276203005F90B09}" {
-     UIInfo UIInfo "{6276203007132BF9}" {
-      Name "Open Car"
-     }
      ContextName "default"
      Position PointInfo "{627620300D230345}" {
-      Offset 0 0.9136 0
+      Offset 0 0.7854 -1.9969
      }
-     Radius 1.2
+     Radius 0.8
     }
    }
    additionalActions {
     SCR_OpenStorageAction "{62762030740C72F6}" {
      ParentContextList {
       "default"
+     }
+     UIInfo UIInfo "{627B0C35E0BC7CE6}" {
      }
     }
    }

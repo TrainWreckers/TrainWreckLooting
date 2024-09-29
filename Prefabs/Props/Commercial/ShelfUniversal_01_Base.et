@@ -6,22 +6,21 @@ GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et
     ItemDisplayName SCR_InventoryUIInfo "{627030271C809960}" {
      Name "Shelf"
     }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
    }
    UseCapacityCoefficient 0
-   MaxCumulativeVolume 50000
-   m_fMaxWeight 50000
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
   }
   TW_LootableInventoryComponent "{627030272FE958CA}" {
-   m_LootItemTypes 1015742
+   m_LootItemTypes 753598
   }
   SCR_InventoryStorageManagerComponent "{6270302706143A4C}" {
   }
   ActionsManagerComponent "{62722CD34983AAD4}" {
    ActionContexts {
     UserActionContext "{62722CD34BE35EF0}" {
-     UIInfo UIInfo "{62722CD34E65B703}" {
-      Name "Open"
-     }
      ContextName "default"
      Position PointInfo "{62722CD3B1C3217C}" {
       Offset -0.5146 1.0834 0.2317
@@ -31,6 +30,9 @@ GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et
    }
    additionalActions {
     SCR_OpenStorageAction "{62722CD3B9ACC73E}" {
+     ParentContextList {
+      "default"
+     }
      UIInfo UIInfo "{62722CD3BB9E1C4C}" {
       Name "Open"
      }

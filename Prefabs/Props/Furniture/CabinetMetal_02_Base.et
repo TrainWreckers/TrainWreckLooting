@@ -6,25 +6,24 @@ GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et
     ItemDisplayName SCR_InventoryUIInfo "{627030244C29D346}" {
      Name "Cabinet"
     }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
    }
    UseCapacityCoefficient 0
-   MaxCumulativeVolume 50000
-   m_fMaxWeight 50000
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
   }
   TW_LootableInventoryComponent "{62703024400C50BA}" {
-   m_LootItemTypes 1048574
+   m_LootItemTypes 622526
   }
   SCR_InventoryStorageManagerComponent "{62703024B42DE4B1}" {
   }
   ActionsManagerComponent "{62722CD0681B116E}" {
    ActionContexts {
     UserActionContext "{62722CD069E140BF}" {
-     UIInfo UIInfo "{62722CD06AAE7168}" {
-      Name "Open"
-     }
      ContextName "default"
      Position PointInfo "{62722CD06EFE0A94}" {
-      Offset -0.7183 0.7782 0.2727
+      Offset -0.7644 1.0557 0.2727
      }
      Radius 0.8
     }

@@ -6,23 +6,22 @@ GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et
     ItemDisplayName SCR_InventoryUIInfo "{62703024AFB286CA}" {
      Name "Chest"
     }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
    }
    UseCapacityCoefficient 0
    CapacityCoefficient 50000
-   MaxCumulativeVolume 50000
-   m_fMaxWeight 50000
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
   }
   TW_LootableInventoryComponent "{62703024BE35E914}" {
-   m_LootItemTypes 1015436
+   m_LootItemTypes 197132
   }
   SCR_InventoryStorageManagerComponent "{62703024ABB6C706}" {
   }
   ActionsManagerComponent "{62722CD042CA6241}" {
    ActionContexts {
     UserActionContext "{62722CD043A51469}" {
-     UIInfo UIInfo "{62722CD045FF35CB}" {
-      Name "Open"
-     }
      ContextName "default"
      Position PointInfo "{62722CD049F3E126}" {
       Offset 0 0.1793 0

@@ -14,19 +14,16 @@ GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et
    m_fMaxWeight 10000
   }
   TW_LootableInventoryComponent "{627631B613BC05EF}" {
-   m_LootItemTypes 1015566
+   m_LootItemTypes 622526
   }
   SCR_InventoryStorageManagerComponent "{627631B61236FC34}" {
   }
   ActionsManagerComponent "{627631B60C869D17}" {
    ActionContexts {
     UserActionContext "{627631B60D9D0BC4}" {
-     UIInfo UIInfo "{627631B60F2D3B83}" {
-      Name "Open"
-     }
      ContextName "default"
      Position PointInfo "{627631B674462A0D}" {
-      Offset -0.7193 0.8117 0.5843
+      Offset -0.7634 0.8117 0.601
      }
      Radius 0.8
     }
@@ -35,6 +32,8 @@ GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et
     SCR_OpenStorageAction "{627631B67E74B629}" {
      ParentContextList {
       "default"
+     }
+     UIInfo UIInfo "{627B0C28E55D4B03}" {
      }
     }
    }

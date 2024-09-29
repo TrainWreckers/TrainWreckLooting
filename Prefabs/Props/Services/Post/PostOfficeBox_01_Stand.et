@@ -1,0 +1,45 @@
+SCR_DestructibleEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et" {
+ ID "51A4CC6263B8A7BF"
+ components {
+  SCR_UniversalInventoryStorageComponent "{627B0C36E2D46707}" {
+   Attributes SCR_ItemAttributeCollection "{627B0C36EC219DC0}" {
+    ItemDisplayName UIInfo "{627B0C36ED7DF519}" {
+     Name "Mailbox"
+    }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
+  }
+  TW_LootableInventoryComponent "{627B0C3517542269}" {
+   m_LootItemTypes 66060
+  }
+  SCR_InventoryStorageManagerComponent "{627B0C351DCA132C}" {
+  }
+  ActionsManagerComponent "{627B0C351FFFB9D3}" {
+   ActionContexts {
+    UserActionContext "{627B0C3518CB43D6}" {
+     ContextName "default"
+     Position PointInfo "{627B0C35044B58AB}" {
+      Offset -0.2891 1.0413 0
+     }
+     Radius 0.5
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{627B0C35034AF7A2}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{627B0C350E0B773C}" {
+     }
+    }
+   }
+  }
+  RplComponent "{5624A88DC2D9928D}" {
+   Enabled 1
+  }
+ }
+}

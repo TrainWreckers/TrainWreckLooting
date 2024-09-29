@@ -4,7 +4,7 @@ GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et
   SCR_UniversalInventoryStorageComponent "{627631B50B7521C1}" {
    Attributes SCR_ItemAttributeCollection "{627631B50C903026}" {
     ItemDisplayName UIInfo "{627631B50F22FA81}" {
-     Name "Cabinet"
+     Name "Medical Cabinet"
     }
     m_Size SLOT_3x3
     m_SlotType SLOT_ANY
@@ -21,12 +21,9 @@ GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et
   ActionsManagerComponent "{627631B52407B4D5}" {
    ActionContexts {
     UserActionContext "{627631B5259311B3}" {
-     UIInfo UIInfo "{627631B527166198}" {
-      Name "Open Cabinet"
-     }
      ContextName "default"
      Position PointInfo "{627631B51016B299}" {
-      Offset 0 0.993 0.1863
+      Offset 0 0.993 0.246
      }
      Radius 0.8
     }
@@ -35,6 +32,8 @@ GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et
     SCR_OpenStorageAction "{627631B51ADC0351}" {
      ParentContextList {
       "default"
+     }
+     UIInfo UIInfo "{627B0C3789600A97}" {
      }
     }
    }

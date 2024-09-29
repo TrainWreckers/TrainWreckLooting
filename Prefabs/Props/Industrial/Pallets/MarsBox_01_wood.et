@@ -1,0 +1,43 @@
+GenericEntity : "{6E6CBE3556D6E381}Prefabs/Props/Industrial/Pallets/MarsBox_01_Base.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  SCR_UniversalInventoryStorageComponent "{627B0C33C42023C6}" {
+   Attributes SCR_ItemAttributeCollection "{627B0C33C59EEFDC}" {
+    ItemDisplayName UIInfo "{627B0C33C66FE938}" {
+     Name "Box"
+    }
+    m_Size SLOT_3x3
+   }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
+  }
+  TW_LootableInventoryComponent "{627B0C33F5DCE4A6}" {
+   m_LootItemTypes 262958
+  }
+  SCR_InventoryStorageManagerComponent "{627B0C33E53734E7}" {
+  }
+  ActionsManagerComponent "{627B0C33E7E34803}" {
+   ActionContexts {
+    UserActionContext "{627B0C33E12D8678}" {
+     ContextName "default"
+     Position PointInfo "{627B0C33EC7FCEDA}" {
+      Offset 0 0.4489 0
+     }
+     Radius 0.8
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{627B0C32153A06A2}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{627B0C32111AD7D4}" {
+     }
+    }
+   }
+  }
+  RplComponent "{627B0C33D964E2A9}" {
+  }
+ }
+}

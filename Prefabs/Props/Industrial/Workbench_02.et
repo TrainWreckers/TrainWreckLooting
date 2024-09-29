@@ -13,19 +13,16 @@ GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et
    MaxCumulativeVolume 10000
   }
   TW_LootableInventoryComponent "{62755779AF2DD10D}" {
-   m_LootItemTypes 753156
+   m_LootItemTypes 622084
   }
   SCR_InventoryStorageManagerComponent "{62755779E62A1ACB}" {
   }
   ActionsManagerComponent "{62755779E825A6E2}" {
    ActionContexts {
     UserActionContext "{62755779E93D5A45}" {
-     UIInfo UIInfo "{62755779EA829E44}" {
-      Name "Open Bench"
-     }
      ContextName "default"
      Position PointInfo "{62755779EEB4C63D}" {
-      Offset 0 1.0068 0.2275
+      Offset 0 1.0068 0.3361
      }
      Radius 0.8
     }
@@ -34,6 +31,8 @@ GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et
     SCR_OpenStorageAction "{62755779DC1894AF}" {
      ParentContextList {
       "default"
+     }
+     UIInfo UIInfo "{627B0C2CFAE30F90}" {
      }
     }
    }

@@ -1,0 +1,44 @@
+GenericEntity : "{10C26F96EF7A8CF5}Prefabs/Props/Core/Props_Base.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  SCR_UniversalInventoryStorageComponent "{627B0C327AB51841}" {
+   Attributes SCR_ItemAttributeCollection "{627B0C3265B60784}" {
+    ItemDisplayName UIInfo "{627B0C32669A31F9}" {
+     Name "Stove"
+    }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
+  }
+  TW_LootableInventoryComponent "{627B0C329446F0C9}" {
+   m_LootItemTypes 328204
+  }
+  SCR_InventoryStorageManagerComponent "{627B0C3298A1B214}" {
+  }
+  ActionsManagerComponent "{627B0C329B18949A}" {
+   ActionContexts {
+    UserActionContext "{627B0C328432BFE5}" {
+     ContextName "default"
+     Position PointInfo "{627B0C32873644E8}" {
+      Offset -0.6207 0.9214 0.7578
+     }
+     Radius 0.89
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{627B0C32B7B0CBE7}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{627B0C32B2C22234}" {
+     }
+    }
+   }
+  }
+  RplComponent "{627B0C327F18A9D9}" {
+  }
+ }
+}
