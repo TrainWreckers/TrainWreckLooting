@@ -16,7 +16,9 @@ class TW_LootableInventoryComponent : ScriptComponent
 	InventoryStorageManagerComponent GetStorageManager() { return m_StorageManager; }
 	BaseUniversalInventoryStorageComponent GetStorage() { return m_Storage; }
 	
+	[RplProp()]
 	protected bool m_HasBeenInteractedWith = false;
+	
 	protected int m_RespawnLootAfterTime = -1;
 	
 	protected ref ScriptInvoker<bool> m_OnLootReset = new ScriptInvoker<bool>();

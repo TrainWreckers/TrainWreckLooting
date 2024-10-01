@@ -40,7 +40,13 @@ modded class SCR_OpenStorageAction
 			return;
 		
 		if(m_Container)
-			m_Container.SetInteractedWith(true);
+		{
+			SCR_PlayerController controller = SCR_PlayerController.Cast(SCR_PlayerController.s_pLocalPlayerController);
+			
+			if(controller)
+				controller.OnOpenLootableStorageContainer(m_Container);
+		}
+		
 		manager.SetStorageToOpen(pOwnerEntity);
 		manager.OpenInventory();		
 	}
