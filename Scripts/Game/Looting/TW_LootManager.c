@@ -266,7 +266,6 @@ sealed class TW_LootManager
 				
 				s_GlobalItems.Insert(prefab);
 				
-				
 				arsenalItem.SetItemPrefab(prefab);
 				
 				int defaultCount = 1;
@@ -279,7 +278,7 @@ sealed class TW_LootManager
 					defaultChance = 5;	
 				
 				if(prefab.Contains("RearmingKit") || prefab.Contains("MedicalKit"))
-					arsenalItem.SetShouldSpawn(false);				
+					arsenalItem.SetShouldSpawn(false);		
 				
 				arsenalItem.SetItemMaxSpawnCount(defaultCount);
 				arsenalItem.SetItemChanceToSpawn(defaultChance);

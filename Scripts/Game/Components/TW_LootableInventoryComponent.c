@@ -38,6 +38,12 @@ class TW_LootableInventoryComponent : ScriptComponent
 		bool old = m_HasBeenInteractedWith;
 		m_HasBeenInteractedWith = value;
 		
+		if(!m_Rpl.IsMaster() || !m_Rpl.IsOwner())
+		{
+			GetOnLootReset().Invoke(value);
+			return;
+		}
+		
 		if(value)
 		{
 			// We will not reregister the object if it's been interacted with already
@@ -82,16 +88,17 @@ class TW_LootableInventoryComponent : ScriptComponent
 		return s_GameMode;
 	}
 	
+	private RplComponent m_Rpl;
 	override void OnPostInit(IEntity owner)
 	{
 		if(!GetGame().InPlayMode()) return;
 		
-		RplComponent rpl = RplComponent.Cast(owner.FindComponent(RplComponent));
+		m_Rpl = RplComponent.Cast(owner.FindComponent(RplComponent));
 		
-		if(!rpl)
+		if(!m_Rpl)
 			return;
 		
-		if(!rpl.IsMaster())
+		if(!m_Rpl.IsMaster())
 			return;
 		
 		TW_LootManager.RegisterLootableContainer(this);
