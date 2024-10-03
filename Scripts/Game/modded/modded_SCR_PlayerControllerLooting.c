@@ -3,7 +3,6 @@ modded class SCR_PlayerController
 	void OnOpenLootableStorageContainer(TW_LootableInventoryComponent component)
 	{		
 		Rpc(RplAsk_Server_OpenStorageContainer, TW_Global.GetEntityRplId(component.GetOwner()));
-		component.SetInteractedWith(true); // should only set things locally and that's it
 	}
 	
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]

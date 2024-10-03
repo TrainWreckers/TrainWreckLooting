@@ -10,6 +10,7 @@ class TW_LootableInventoryComponent : ScriptComponent
 	
 	private InventoryStorageManagerComponent m_StorageManager;
 	private BaseUniversalInventoryStorageComponent m_Storage;
+	private RplComponent m_Rpl;
 	
 	SCR_EArsenalItemType GetTypeFlags() { return m_LootItemTypes; }
 	SCR_EArsenalItemMode GetModeFlags() { return m_LootItemModes; }
@@ -31,7 +32,21 @@ class TW_LootableInventoryComponent : ScriptComponent
 	bool CanRespawnLoot()
 	{
 		return m_HasBeenInteractedWith && GetGameMode().GetElapsedTime() >= m_RespawnLootAfterTime && m_RespawnLootAfterTime > 0;
-	}		
+	}
+	
+	[RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
+	private void RPCAsk_Broadcast_InteractionUpdate(RplId containerId, bool value)
+	{
+		IEntity entity = TW_Global.GetEntityByRplId(containerId);
+		
+		if(!entity) return;
+		
+		TW_LootableInventoryComponent container = TW<TW_LootableInventoryComponent>.Find(entity);
+		
+		if(!container) return;
+		
+		container.SetInteractedWith(value);
+	}
 	
 	void SetInteractedWith(bool value) 
 	{ 	
@@ -57,6 +72,7 @@ class TW_LootableInventoryComponent : ScriptComponent
 			float elapsed = GetGameMode().GetElapsedTime();
 			m_RespawnLootAfterTime = elapsed + (TW_LootManager.GetRespawnAfterLastInteractionInMinutes() * 60);
 			GetOnLootReset().Invoke(true);
+			Rpc(RPCAsk_Broadcast_InteractionUpdate, m_Rpl.Id(), true);
 		}
 		else
 		{
@@ -74,7 +90,8 @@ class TW_LootableInventoryComponent : ScriptComponent
 			foreach(IEntity item : items)
 				GetStorageManager().TryDeleteItem(item);
 			
-			GetOnLootReset().Invoke(false);						
+			GetOnLootReset().Invoke(false);
+			Rpc(RPCAsk_Broadcast_InteractionUpdate, m_Rpl.Id(), false);
 		}
 	}
 	
@@ -87,8 +104,7 @@ class TW_LootableInventoryComponent : ScriptComponent
 		s_GameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());
 		return s_GameMode;
 	}
-	
-	private RplComponent m_Rpl;
+		
 	override void OnPostInit(IEntity owner)
 	{
 		if(!GetGame().InPlayMode()) return;
