@@ -554,6 +554,23 @@ sealed class TW_LootManager
 		return items.GetRandomElement();
 	}
 	
+	static int GetWeapons(notnull array<ref TW_LootConfigItem> weapons)
+	{
+		int count = 0;
+		foreach(SCR_EArsenalItemType type, ref array<ref TW_LootConfigItem>> items : s_LootTable)
+		{
+			foreach(TW_LootConfigItem item : items)
+			{				
+				if(!SCR_BaseContainerTools.FindComponentSource(Resource.Load(item.resourceName), "BaseWeaponComponent"))
+					continue;
+				weapons.Insert(item);
+				count++;
+			}
+		}
+		
+		return count;
+	}
+	
 	private static bool OutputLootTableFile()
 	{
 		ContainerSerializationSaveContext saveContext = new ContainerSerializationSaveContext();
@@ -615,7 +632,7 @@ sealed class TW_LootManager
 		loadContext.ReadValue("gridSize", m_GridSize);
 		loadContext.ReadValue("deadZoneGridRadius", m_DeadZoneRadius);
 		loadContext.ReadValue("respawnLootTimerInSeconds", m_RespawnLootTimerInSeconds);
-		loadContext.ReadValue("respawnAfterLAstInteractionInMinutes", m_RespawnAfterLastInteractionInMinutes);
+		loadContext.ReadValue("respawnAfterLastInteractionInMinutes", m_RespawnAfterLastInteractionInMinutes);
 		loadContext.ReadValue("respawnLootItemThreshold", m_RespawnLootItemThreshold);
 		loadContext.ReadValue("respawnLootRadius", m_RespawnLootRadius);
 		loadContext.ReadValue("unsearchedTimeRatio", m_UnlootedTimeRatio);
