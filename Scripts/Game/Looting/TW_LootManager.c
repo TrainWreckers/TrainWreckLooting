@@ -316,7 +316,8 @@ sealed class TW_LootManager
 		s_GlobalContainerGrid = new TW_GridCoordArrayManager<TW_LootableInventoryComponent>(m_GridSize);
 		
 		foreach(TW_LootableInventoryComponent container : entries)
-			s_GlobalContainerGrid.InsertByWorld(container.GetOwner().GetOrigin(), container);
+			if(container)
+				s_GlobalContainerGrid.InsertByWorld(container.GetOwner().GetOrigin(), container);
 		
 		if(IsLootEnabled)
 		{
@@ -577,9 +578,9 @@ sealed class TW_LootManager
 		PrettyJsonSaveContainer prettyContainer = new PrettyJsonSaveContainer();
 		saveContext.SetContainer(prettyContainer);
 		
-		saveContext.WriteValue("magazineMinAmmoPercent", 80);
-		saveContext.WriteValue("magazineMaxAmmoPercent", 100);
-		saveContext.WriteValue("shouldSpawnMagazine", true);
+		saveContext.WriteValue("magazineMinAmmoPercent", m_MinimumAmmoPercent);
+		saveContext.WriteValue("magazineMaxAmmoPercent", m_MaximumAmmoPercent);
+		saveContext.WriteValue("shouldSpawnMagazine", ShouldSpawnMagazine);
 		saveContext.WriteValue("isLootEnabled", IsLootEnabled);
 		saveContext.WriteValue("isRespawnLootEnabled", m_IsLootRespawnable);
 		saveContext.WriteValue("gridSize", m_GridSize);
