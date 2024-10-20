@@ -1,0 +1,41 @@
+GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et" {
+ ID "6093E737C43F5C45"
+ components {
+  SCR_UniversalInventoryStorageComponent "{62A936333E48248C}" {
+   Attributes SCR_ItemAttributeCollection "{62A936333F82389F}" {
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
+  }
+  TW_LootableInventoryComponent "{62A9363322D6F2E9}" {
+   m_LootItemTypes 294016
+  }
+  SCR_InventoryStorageManagerComponent "{62A93633571078BD}" {
+  }
+  ActionsManagerComponent "{62A9363351DA9788}" {
+   ActionContexts {
+    UserActionContext "{62A936335C13AC2F}" {
+     ContextName "default"
+     Position PointInfo "{62A93633586E9CB3}" {
+      Offset -0.3894 0.5597 0.6912
+     }
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{62A936334CC48E63}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{62A936334B18BD15}" {
+     }
+    }
+   }
+  }
+  RplComponent "{5624A88DC2D9928D}" {
+   Enabled 1
+  }
+ }
+}

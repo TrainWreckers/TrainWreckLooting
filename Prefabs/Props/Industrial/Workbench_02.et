@@ -11,6 +11,7 @@ GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et
    }
    UseCapacityCoefficient 0
    MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
   }
   TW_LootableInventoryComponent "{62755779AF2DD10D}" {
    m_LootItemTypes 622084
