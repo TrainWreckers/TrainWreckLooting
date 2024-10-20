@@ -2,7 +2,15 @@ enum TW_ResourceNameType
 {
 	ResourceName,
 	DisplayName
-}
+};
+
+class ScavLootSettings
+{
+	float spawnWithBackpackChance = 0.1;
+	float spawnWithTwoWeaponsChance = 0.1;
+	float spawnWithHealChance = 0.25;
+	float spawnWithVestChance = 0.3;
+};
 
 sealed class TW_LootManager 
 {
@@ -55,12 +63,16 @@ sealed class TW_LootManager
 	//! Ratio to apply to entity sizes for searched containers
 	private static float m_SearchedTimeRatio = 0.25;
 	
+	private static ref ScavLootSettings m_ScavSettings = new ScavLootSettings();
+	
 	private static ref TW_GridCoordArrayManager<TW_LootableInventoryComponent> s_GlobalContainerGrid = new TW_GridCoordArrayManager<TW_LootableInventoryComponent>(100);
 	
 	static TW_GridCoordArrayManager<TW_LootableInventoryComponent> GetContainerGrid() { return s_GlobalContainerGrid; }
 	
 	static float GetUnlootedTimeRatio() { return m_UnlootedTimeRatio; }
 	static float GetSearchedTimeRatio() { return m_SearchedTimeRatio; }
+	
+	static ScavLootSettings GetScavSettings() { return m_ScavSettings; }
 	
 	static float GetRandomAmmoPercent() { return Math.RandomFloatInclusive(m_MinimumAmmoPercent, m_MaximumAmmoPercent) / m_MaximumAmmoPercent; }
 	
@@ -562,12 +574,42 @@ sealed class TW_LootManager
 		{
 			foreach(TW_LootConfigItem item : items)
 			{				
-				if(!SCR_BaseContainerTools.FindComponentSource(Resource.Load(item.resourceName), "BaseWeaponComponent"))
+				if(!SCR_BaseContainerTools.FindComponentSource(Resource.Load(item.resourceName), "WeaponComponent"))
+				{
 					continue;
+				}
 				weapons.Insert(item);
 				count++;
 			}
 		}
+		
+		return count;
+	}
+	
+	static int GetPrefabsOfType(SCR_EArsenalItemType type, notnull array<ref TW_LootConfigItem> items, string ensureHasComponent = string.Empty)
+	{
+		int count = 0;
+		ref array<ref TW_LootConfigItem> configs = {};
+		
+		foreach(SCR_EArsenalItemType flagType : s_ArsenalItemTypes)
+		{
+			if(SCR_Enum.HasFlag(type, flagType))
+			{
+				configs.Clear();
+				configs = s_LootTable.Get(flagType);
+				
+				foreach(auto config : configs)
+				{
+					if(ensureHasComponent != string.Empty)
+					{
+						if(!SCR_BaseContainerTools.FindComponentSource(Resource.Load(config.resourceName), ensureHasComponent))
+							continue;
+					}
+					count++;
+					items.Insert(config);
+				}
+			}
+		}	
 		
 		return count;
 	}
@@ -578,6 +620,7 @@ sealed class TW_LootManager
 		PrettyJsonSaveContainer prettyContainer = new PrettyJsonSaveContainer();
 		saveContext.SetContainer(prettyContainer);
 		
+		saveContext.WriteValue("scavSettings", m_ScavSettings);
 		saveContext.WriteValue("magazineMinAmmoPercent", m_MinimumAmmoPercent);
 		saveContext.WriteValue("magazineMaxAmmoPercent", m_MaximumAmmoPercent);
 		saveContext.WriteValue("shouldSpawnMagazine", ShouldSpawnMagazine);
@@ -639,6 +682,7 @@ sealed class TW_LootManager
 		loadContext.ReadValue("unsearchedTimeRatio", m_UnlootedTimeRatio);
 		loadContext.ReadValue("searchedTimeRatio", m_SearchedTimeRatio);
 		loadContext.ReadValue("respawnLootProcessorBatchSize", m_RespawnLootProcessor_BatchSize);
+		loadContext.ReadValue("scavSettings", m_ScavSettings);
 		
 		foreach(SCR_EArsenalItemType itemType : itemTypes)
 		{
