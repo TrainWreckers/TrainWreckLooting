@@ -12,6 +12,27 @@ class ScavLootSettings
 	float spawnWithVestChance = 0.3;
 };
 
+class WeightedType<Class T>
+{
+	private ref array<T> items = {};
+	private ref array<float> weights = {};
+	
+	T GetRandomItem()
+	{
+		if(items.IsEmpty() || weights.IsEmpty())
+			return null;
+		
+		int index = SCR_ArrayHelper.GetWeightedIndex(weights, Math.RandomFloat01());
+		return items.Get(index);
+	}
+	
+	void Add(T item, float weight)
+	{
+		items.Insert(item);
+		weights.Insert(weight);
+	}
+};
+
 sealed class TW_LootManager 
 {
 	// Provide the ability to grab 
@@ -58,10 +79,11 @@ sealed class TW_LootManager
 	private static int m_RespawnLootItemThreshold = 4;
 	
 	//! Ratio to apply to entity sizes for unsearched containers
-	private static float m_UnlootedTimeRatio = 1.2;
+	private static float m_UnlootedTimeRatio = 0.50;
 	
 	//! Ratio to apply to entity sizes for searched containers
-	private static float m_SearchedTimeRatio = 0.25;
+	private static float m_SearchedTimeRatio = 0.1;
+	
 	
 	private static ref ScavLootSettings m_ScavSettings = new ScavLootSettings();
 	
@@ -310,6 +332,24 @@ sealed class TW_LootManager
 		if(!success)
 			Print(string.Format("TrainWreck: Failed to write %1", LootFileName), LogLevel.ERROR);
 		IngestLootTableFromFile();
+		
+		foreach(SCR_EArsenalItemType type, ref array<ref TW_LootConfigItem> items : s_LootTable)
+		{
+			int count = items.Count();
+			
+			for(int i = 0; i < count; i++)
+			{
+				ref TW_LootConfigItem configItem = items.Get(i);
+				if(configItem.isEnabled) 
+					continue;
+				
+				PrintFormat("TrainWreck-Looting: Removing '%1'. Enabled(%2) | Chance(%3)", configItem.resourceName, configItem.isEnabled, configItem.chanceToSpawn);
+				items.RemoveItem(configItem);
+				i -= 1;
+				count -= 1;
+			}
+		}
+		
 	}
 	
 	//! Initialize the entire loot system
@@ -477,7 +517,9 @@ sealed class TW_LootManager
 		if(!IsLootEnabled || !container || remainingAmount < 0) 
 			return;
 		
-		TW_LootConfigItem arsenalItem = TW_LootManager.GetRandomByFlag(container.GetTypeFlags());
+		ref WeightedType<ref TW_LootConfigItem> pool = new WeightedType<ref TW_LootConfigItem>();
+		GetLootPoolForContainer(container.GetTypeFlags(), pool);
+		TW_LootConfigItem arsenalItem = pool.GetRandomItem();
 		
 		if(!arsenalItem)
 		{
@@ -487,15 +529,9 @@ sealed class TW_LootManager
 		
 		if(remainingAmount <= 0) 
 			return;
-		
-		int seedPercentage = Math.RandomIntInclusive(0, 100);
-		if(arsenalItem.chanceToSpawn < seedPercentage)
-		{
-			int itemCount = Math.RandomIntInclusive(1, arsenalItem.randomSpawnCount);
-			bool success = container.InsertItem(arsenalItem);
-			if(!success)
-				remainingAmount += 1;
-		}
+	
+		int itemCount = Math.RandomIntInclusive(1, arsenalItem.randomSpawnCount);
+		container.InsertItem(arsenalItem);
 		
 		GetGame().GetCallqueue().CallLater(TrickleSpawnLootInContainer, 250, false, container, remainingAmount - 1);
 	}
@@ -509,21 +545,19 @@ sealed class TW_LootManager
 		if(!container) 
 			return;
 			
-		int spawnCount = Math.RandomIntInclusive(1, 6);
+		int spawnCount = Math.RandomIntInclusive(1, 4);
+		
+		ref WeightedType<ref TW_LootConfigItem> pool = new WeightedType<ref TW_LootConfigItem>();
+		GetLootPoolForContainer(container.GetTypeFlags(), pool);
 		
 		// How many different things are we going to try spawning?								
 		for(int i = 0; i < spawnCount; i++)
-		{	
-			TW_LootConfigItem arsenalItem = TW_LootManager.GetRandomByFlag(container.GetTypeFlags());						
-			
+		{				
+			ref TW_LootConfigItem arsenalItem = pool.GetRandomItem();
+								
 			if(!arsenalItem)
-				break;
-			
-			// Are we going to spawn the selected item?
-			int seedPercentage = Math.RandomIntInclusive(0, 100);
-			if(arsenalItem.chanceToSpawn > seedPercentage)
 				continue;
-				
+			
 			// Add item a random amount of times to the container based on settings
 			int itemCount = Math.RandomIntInclusive(1, arsenalItem.randomSpawnCount);
 			bool tryAgain = false;
@@ -544,11 +578,11 @@ sealed class TW_LootManager
 	}
 	
 	static TW_LootConfigItem GetRandomByFlag(int type)
-	{
-		array<SCR_EArsenalItemType> selectedItems = {};
-		
+	{				
 		if(type <= 0)
 			return null;
+		
+		array<SCR_EArsenalItemType> selectedItems = {};
 		
 		foreach(SCR_EArsenalItemType itemType : s_ArsenalItemTypes)
 			if(SCR_Enum.HasFlag(type, itemType) && s_LootTable.Contains(itemType))
@@ -564,7 +598,24 @@ sealed class TW_LootManager
 		if(!items || items.IsEmpty())
 			return null;
 		
-		return items.GetRandomElement();
+		ref TW_LootConfigItem item = items.GetRandomElement();
+		
+		if(item.isEnabled) return item;
+		return null;
+	}
+	
+	static void GetLootPoolForContainer(SCR_EArsenalItemType flags, notnull out WeightedType<ref TW_LootConfigItem> pool)
+	{		
+		foreach(SCR_EArsenalItemType itemType : s_ArsenalItemTypes)
+		{
+			if(SCR_Enum.HasFlag(flags, itemType) && s_LootTable.Contains(itemType))
+			{
+				ref array<ref TW_LootConfigItem> entries = s_LootTable.Get(itemType);				
+				foreach(TW_LootConfigItem item : entries)
+					if(item.isEnabled && item.chanceToSpawn > 0)
+						pool.Add(item, item.chanceToSpawn);
+			}
+		}
 	}
 	
 	static int GetWeapons(notnull array<ref TW_LootConfigItem> weapons)
@@ -621,7 +672,7 @@ sealed class TW_LootManager
 		saveContext.SetContainer(prettyContainer);
 		
 		saveContext.WriteValue("scavSettings", m_ScavSettings);
-		saveContext.WriteValue("magazineMinAmmoPercent", m_MinimumAmmoPercent);
+		saveContext.WriteValue("magazineMinAmmoPercent", m_MinimumAmmoPercent);		
 		saveContext.WriteValue("magazineMaxAmmoPercent", m_MaximumAmmoPercent);
 		saveContext.WriteValue("shouldSpawnMagazine", ShouldSpawnMagazine);
 		saveContext.WriteValue("isLootEnabled", IsLootEnabled);
@@ -634,11 +685,11 @@ sealed class TW_LootManager
 		saveContext.WriteValue("respawnLootRadius", m_RespawnLootRadius);		
 		saveContext.WriteValue("unsearchedTimeRatio", m_UnlootedTimeRatio);
 		saveContext.WriteValue("searchedTimeRatio", m_SearchedTimeRatio);
-		saveContext.WriteValue("respawnLootProcessorBatchSize", m_RespawnLootProcessor_BatchSize);
+		saveContext.WriteValue("respawnLootProcessorBatchSize", m_RespawnLootProcessor_BatchSize);		
 		
 		foreach(SCR_EArsenalItemType type, ref array<ref TW_LootConfigItem> items : s_LootTable)
 		{	
-			PrintFormat("TrainWreckLooting: Type: %1, Amount %2 -- Saving", type, items.Count());
+			PrintFormat("TrainWreckLooting: Type: %1, Amount %2 -- Saving", TW_Util.ArsenalTypeAsString(type), items.Count());
 			
 			ref array<ref TW_LootConfigItem> typeLoot = {};			
 			saveContext.WriteValue(TW_Util.ArsenalTypeAsString(type), items);
@@ -698,7 +749,7 @@ sealed class TW_LootManager
 	
 	private static bool LoadSection(notnull SCR_JsonLoadContext context, SCR_EArsenalItemType type)
 	{
-		array<ref TW_LootConfigItem> items = {};
+		ref array<ref TW_LootConfigItem> items = {};
 		string keyValue = TW_Util.ArsenalTypeAsString(type);
 		
 		bool success = context.ReadValue(keyValue, items);
