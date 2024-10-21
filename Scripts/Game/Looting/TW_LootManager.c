@@ -768,9 +768,6 @@ sealed class TW_LootManager
 			Resource resource = Resource.Load(item.resourceName);
 			if(resource.IsValid())
 			{
-				if(!item.isEnabled)
-					continue;
-				
 				if(!s_GlobalItems.Contains(item.resourceName))
 					s_GlobalItems.Insert(item.resourceName);
 				else
