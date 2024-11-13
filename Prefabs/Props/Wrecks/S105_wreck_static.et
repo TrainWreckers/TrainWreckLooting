@@ -1,0 +1,44 @@
+GenericEntity : "{84CBCE9163176B3E}Prefabs/Props/Wrecks/S105_wreck.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  SCR_UniversalInventoryStorageComponent "{6276203017A14B43}" {
+   Attributes SCR_ItemAttributeCollection "{6276203019198DFC}" {
+    ItemDisplayName UIInfo "{627620301AF92973}" {
+     Name "Car"
+    }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
+  }
+  TW_LootableInventoryComponent "{62762030106ACC86}" {
+   m_LootItemTypes 883852
+  }
+  SCR_InventoryStorageManagerComponent "{627620307A616FB4}" {
+  }
+  ActionsManagerComponent "{6276203004C4D418}" {
+   ActionContexts {
+    UserActionContext "{6276203005F90B09}" {
+     ContextName "default"
+     Position PointInfo "{627620300D230345}" {
+      Offset 0 0.7854 -1.9969
+     }
+     Radius 0.8
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{62762030740C72F6}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{627B0C35E0BC7CE6}" {
+     }
+    }
+   }
+  }
+  RplComponent "{627620302EA16B17}" {
+  }
+ }
+}

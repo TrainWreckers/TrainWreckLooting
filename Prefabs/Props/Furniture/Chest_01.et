@@ -1,0 +1,47 @@
+GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  SCR_UniversalInventoryStorageComponent "{62703024AD381188}" {
+   Attributes SCR_ItemAttributeCollection "{62703024AEC6764A}" {
+    ItemDisplayName SCR_InventoryUIInfo "{62703024AFB286CA}" {
+     Name "Chest"
+    }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   CapacityCoefficient 50000
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
+  }
+  TW_LootableInventoryComponent "{62703024BE35E914}" {
+   m_LootItemTypes 197132
+  }
+  SCR_InventoryStorageManagerComponent "{62703024ABB6C706}" {
+  }
+  ActionsManagerComponent "{62722CD042CA6241}" {
+   ActionContexts {
+    UserActionContext "{62722CD043A51469}" {
+     ContextName "default"
+     Position PointInfo "{62722CD049F3E126}" {
+      Offset 0 0.1793 0
+     }
+     Radius 0.8
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{62722CD04EC562A5}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{62722CD0B022848E}" {
+      Name "Open"
+     }
+    }
+   }
+  }
+  RplComponent "{5624A88DC2D9928D}" {
+   Enabled 1
+  }
+ }
+}

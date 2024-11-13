@@ -1,0 +1,46 @@
+GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et" {
+ ID "6093E737EE16D317"
+ components {
+  SCR_UniversalInventoryStorageComponent "{627631B7902676CC}" {
+   Attributes SCR_ItemAttributeCollection "{627631B791A10AEF}" {
+    ItemDisplayName UIInfo "{627631B792C1CCA8}" {
+     Name "Cupboard"
+    }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   CapacityCoefficient 1000009984
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
+  }
+  TW_LootableInventoryComponent "{627631B758B3BFBF}" {
+   m_LootItemTypes 622092
+  }
+  SCR_InventoryStorageManagerComponent "{627631B74B7E6127}" {
+  }
+  ActionsManagerComponent "{627631B74C91ED05}" {
+   ActionContexts {
+    UserActionContext "{627631B74D90CA4A}" {
+     ContextName "default"
+     Position PointInfo "{627631B7B4EB956A}" {
+      Offset -0.7914 0.3859 0.7556
+     }
+     Radius 0.8
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{627631B7A0D66A99}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{627B0C286CBC6560}" {
+     }
+    }
+   }
+  }
+  RplComponent "{5624A88DC2D9928D}" {
+   Enabled 1
+  }
+ }
+}

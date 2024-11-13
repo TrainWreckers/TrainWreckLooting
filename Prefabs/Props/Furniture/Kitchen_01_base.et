@@ -1,0 +1,46 @@
+GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et" {
+ ID "6093E737DD535EDA"
+ components {
+  SCR_UniversalInventoryStorageComponent "{62723E98EF986C3E}" {
+   Attributes SCR_ItemAttributeCollection "{62723E98D1E96294}" {
+    ItemDisplayName UIInfo "{62723E98D3B37F08}" {
+     Name "Open Cabinets"
+    }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
+  }
+  TW_LootableInventoryComponent "{62723E98E0B2D7F0}" {
+   m_LootItemTypes 328206
+  }
+  SCR_InventoryStorageManagerComponent "{62723E98EE6E7756}" {
+  }
+  ActionsManagerComponent "{62723E98DE48B77E}" {
+   ActionContexts {
+    UserActionContext "{62723E98DF4A91FF}" {
+     ContextName "default"
+     Position PointInfo "{62723E98C439E6B0}" {
+      Offset -1.0964 0.9926 0.6519
+     }
+     Radius 0.8
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{62723E9930734CAB}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{62723E99342CC47F}" {
+      Name "Open"
+     }
+    }
+   }
+  }
+  RplComponent "{5624A88DC2D9928D}" {
+   Enabled 1
+  }
+ }
+}

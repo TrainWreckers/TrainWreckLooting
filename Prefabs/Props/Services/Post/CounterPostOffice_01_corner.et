@@ -1,0 +1,14 @@
+GenericEntity : "{9BBC77EACCC3E442}Prefabs/Props/Services/Post/CounterPostOffice_01_base.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  ActionsManagerComponent "{627B0C36507E3F99}" {
+   ActionContexts {
+    UserActionContext "{627B0C36514082BB}" {
+     Position PointInfo "{627B0C36580D775C}" {
+      Offset 0.393 0.7564 -0.4397
+     }
+    }
+   }
+  }
+ }
+}

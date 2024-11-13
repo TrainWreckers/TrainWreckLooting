@@ -1,0 +1,45 @@
+GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  SCR_UniversalInventoryStorageComponent "{627631B4BD5615E6}" {
+   Attributes SCR_ItemAttributeCollection "{627631B4BEF8B982}" {
+    ItemDisplayName UIInfo "{627631B4BF1A1A35}" {
+     Name "Crates"
+    }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
+  }
+  TW_LootableInventoryComponent "{627631B4B4E9D7F9}" {
+   m_LootItemTypes 786350
+  }
+  SCR_InventoryStorageManagerComponent "{627631B499D833E5}" {
+  }
+  ActionsManagerComponent "{627631B4A88C61EE}" {
+   ActionContexts {
+    UserActionContext "{627631B4A9DCB51E}" {
+     ContextName "default"
+     Position PointInfo "{627631B4AF71A19F}" {
+      Offset 0 0.5879 0
+     }
+     Radius 1
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{627B0C301611F525}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{627B0C30108204E5}" {
+     }
+    }
+   }
+  }
+  RplComponent "{5624A88DC2D9928D}" {
+   Enabled 1
+  }
+ }
+}

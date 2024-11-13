@@ -1,0 +1,13 @@
+GenericEntity : "{7E2EC66747A3FBA3}Prefabs/Props/Crates/CrateWooden_02/CrateWooden_02_base.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  SCR_UniversalInventoryStorageComponent "{6270302783535E8C}" {
+   Attributes SCR_ItemAttributeCollection "{6270302784723CC5}" {
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
+  }
+ }
+}

@@ -1,0 +1,17 @@
+GenericEntity : "{751C45A8DEFBEB7E}Prefabs/Props/Commercial/ShelfShop_02/ShelfShop_02_base.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  TW_LootableInventoryComponent "{6270302749B30358}" {
+   m_LootItemTypes 753294
+  }
+  ActionsManagerComponent "{62722CD300076631}" {
+   ActionContexts {
+    UserActionContext "{62722CD3010D2FAB}" {
+     Position PointInfo "{62722CD30970D2E0}" {
+      Offset -0.3472 0.4381 0.1914
+     }
+    }
+   }
+  }
+ }
+}

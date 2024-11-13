@@ -1,0 +1,46 @@
+GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  SCR_UniversalInventoryStorageComponent "{627631B6C9486FD1}" {
+   Attributes SCR_ItemAttributeCollection "{627631B6CAD6E7AA}" {
+    ItemDisplayName UIInfo "{627631B6CBD2E8E2}" {
+     Name "Cabinet"
+    }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
+  }
+  TW_LootableInventoryComponent "{627631B6DCB377A1}" {
+   m_LootItemTypes 617998
+  }
+  SCR_InventoryStorageManagerComponent "{627631B13541DB63}" {
+  }
+  ActionsManagerComponent "{627631B1373E3375}" {
+   ActionContexts {
+    UserActionContext "{627631B13832E1CA}" {
+     ContextName "default"
+     Position PointInfo "{627631B13EF7BA95}" {
+      Offset -0.605 0.4122 0.4685
+     }
+     Radius 0.8
+     Height 0
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{627631B128F2B235}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{627B0C2D6B03E7B4}" {
+     }
+    }
+   }
+  }
+  RplComponent "{5624A88DC2D9928D}" {
+   Enabled 1
+  }
+ }
+}

@@ -1,0 +1,43 @@
+GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  SCR_UniversalInventoryStorageComponent "{62703026EE8CBB7C}" {
+   Attributes SCR_ItemAttributeCollection "{62703026D1444FD0}" {
+    ItemDisplayName SCR_InventoryUIInfo "{62703026D2E7118E}" {
+     Name "Shopping Cart"
+    }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
+  }
+  TW_LootableInventoryComponent "{62703026FB01208E}" {
+   m_LootItemTypes 605836
+  }
+  SCR_InventoryStorageManagerComponent "{62703026DE6512C0}" {
+  }
+  ActionsManagerComponent "{62722CD3A3880D26}" {
+   ActionContexts {
+    UserActionContext "{62722CD3A54B6E07}" {
+     ContextName "default"
+     Position PointInfo "{62722CD3ABE3525E}" {
+      Offset 0 0.7045 0
+     }
+     Radius 0.8
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{62722CD397739C8A}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{62722CD39B9CA933}" {
+      Name "Open"
+     }
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,45 @@
+GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et" {
+ ID "51927750E4E34B7F"
+ components {
+  SCR_UniversalInventoryStorageComponent "{627AE16E9364F4AD}" {
+   Attributes SCR_ItemAttributeCollection "{627AE16E9D33478F}" {
+    ItemDisplayName UIInfo "{627AE16E990E2110}" {
+     Name "ATCPanel"
+    }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
+  }
+  TW_LootableInventoryComponent "{627AE16EC899F70F}" {
+   m_LootItemTypes 590340
+  }
+  SCR_InventoryStorageManagerComponent "{627AE16C2BF802ED}" {
+  }
+  ActionsManagerComponent "{627AE16C5C253F47}" {
+   ActionContexts {
+    UserActionContext "{627AE16C5DC20E65}" {
+     ContextName "default"
+     Position PointInfo "{627AE16CB4C399EF}" {
+      Offset -0.0712 0.8467 0.3058
+     }
+     Radius 0.8
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{627B0C23D030B601}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{627B0C23DC574B25}" {
+     }
+    }
+   }
+  }
+  RplComponent "{5624A88DC2D9928D}" {
+   Enabled 1
+  }
+ }
+}

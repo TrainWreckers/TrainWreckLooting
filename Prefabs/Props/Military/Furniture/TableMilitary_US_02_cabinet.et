@@ -1,0 +1,42 @@
+StaticModelEntity : "{5EC6836A5694F691}Prefabs/Props/Military/Furniture/FurnitureMilitary_base.et" {
+ ID "5272E314F01B2DBE"
+ components {
+  SCR_UniversalInventoryStorageComponent "{627631B5C34561DD}" {
+   Attributes SCR_ItemAttributeCollection "{627631B5C4E59FFD}" {
+    ItemDisplayName UIInfo "{627631B5C5EBBAA8}" {
+     Name "Cabinet"
+    }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
+  }
+  TW_LootableInventoryComponent "{627631B5E9B6369C}" {
+   m_LootItemTypes 622220
+  }
+  SCR_InventoryStorageManagerComponent "{627631B5C102C89D}" {
+  }
+  ActionsManagerComponent "{627631B41F93BCDB}" {
+   ActionContexts {
+    UserActionContext "{627631B400909583}" {
+     ContextName "default"
+     Position PointInfo "{627631B4085837DD}" {
+      Offset 0.3416 0.6955 0.2056
+     }
+     Radius 0.8
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{627631B471FEB086}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{627B0C3046F3BBF4}" {
+     }
+    }
+   }
+  }
+ }
+}

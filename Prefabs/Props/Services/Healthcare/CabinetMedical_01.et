@@ -1,0 +1,45 @@
+GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  SCR_UniversalInventoryStorageComponent "{627B0C3766FCE853}" {
+   Attributes SCR_ItemAttributeCollection "{627B0C3760B29031}" {
+    ItemDisplayName UIInfo "{627B0C3761957CFA}" {
+     Name "Medical Cabinet"
+    }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
+  }
+  TW_LootableInventoryComponent "{627631B56DCB900F}" {
+   m_LootItemTypes HEAL
+  }
+  SCR_InventoryStorageManagerComponent "{627631B56BFD1050}" {
+  }
+  ActionsManagerComponent "{627631B550251CBE}" {
+   ActionContexts {
+    UserActionContext "{627631B5513BD10B}" {
+     ContextName "default"
+     Position PointInfo "{627631B5573E9170}" {
+      Offset 0 1.0339 0.2577
+     }
+     Radius 0.8
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{627631B5426DBF40}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{627B0C379E56B6DB}" {
+     }
+    }
+   }
+  }
+  RplComponent "{5624A88DC2D9928D}" {
+   Enabled 1
+  }
+ }
+}

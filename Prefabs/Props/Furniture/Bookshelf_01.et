@@ -1,0 +1,46 @@
+GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et" {
+ ID "6093E7379D01B0FF"
+ components {
+  SCR_UniversalInventoryStorageComponent "{627030241E4D8755}" {
+   Attributes SCR_ItemAttributeCollection "{627030241FAE9A7F}" {
+    ItemDisplayName SCR_InventoryUIInfo "{6270302400B6CE38}" {
+     Name "Bookshelf"
+    }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
+  }
+  TW_LootableInventoryComponent "{627030242C039662}" {
+   m_LootItemTypes 753582
+  }
+  SCR_InventoryStorageManagerComponent "{627030241C36460C}" {
+  }
+  ActionsManagerComponent "{62722CD038DBFA8B}" {
+   ActionContexts {
+    UserActionContext "{62722CD039D3333D}" {
+     ContextName "default"
+     Position PointInfo "{62722CD03FDF81A9}" {
+      Offset -0.7482 0.755 0.3701
+     }
+     Radius 0.8
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{62722CD028CAB126}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{62722CD02BF92924}" {
+      Name "Open"
+     }
+    }
+   }
+  }
+  RplComponent "{5624A88DC2D9928D}" {
+   Enabled 1
+  }
+ }
+}

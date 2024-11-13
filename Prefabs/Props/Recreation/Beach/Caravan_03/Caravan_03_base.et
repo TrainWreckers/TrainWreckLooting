@@ -1,0 +1,45 @@
+SCR_DestructibleBuildingEntity : "{A43A100E3C377DB2}Prefabs/Structures/Core/Building_Base.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  SCR_UniversalInventoryStorageComponent "{627B0C30D9ADDD04}" {
+   Attributes SCR_ItemAttributeCollection "{627B0C30DB05819E}" {
+    ItemDisplayName UIInfo "{627B0C30C40F4C32}" {
+     Name "Caravan"
+    }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
+  }
+  TW_LootableInventoryComponent "{627B0C30CCBB6195}" {
+   m_LootItemTypes 1048494
+  }
+  SCR_InventoryStorageManagerComponent "{627B0C30F8BDD86A}" {
+  }
+  ActionsManagerComponent "{627B0C30FBD410A2}" {
+   ActionContexts {
+    UserActionContext "{627B0C30E5836854}" {
+     ContextName "default"
+     Position PointInfo "{627B0C30E0D84B9A}" {
+      Offset -0.0255 1.4226 -1.2306
+     }
+     Radius 0.8
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{627B0C37138478E1}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{627B0C371EEB71AA}" {
+     }
+    }
+   }
+  }
+  RplComponent "{50A4E7C9B5728062}" {
+   Enabled 1
+  }
+ }
+}

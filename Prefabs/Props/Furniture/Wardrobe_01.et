@@ -1,0 +1,46 @@
+GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et" {
+ ID "6093E737C84B2A8E"
+ components {
+  SCR_UniversalInventoryStorageComponent "{62723E99F81D1D81}" {
+   Attributes SCR_ItemAttributeCollection "{62723E99F98DEBAC}" {
+    ItemDisplayName UIInfo "{62723E99FAB11221}" {
+     Name "Wardrobe"
+    }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
+  }
+  TW_LootableInventoryComponent "{62723E99884AE806}" {
+   m_LootItemTypes 622526
+  }
+  SCR_InventoryStorageManagerComponent "{62723E99F5FBD432}" {
+  }
+  ActionsManagerComponent "{62723E99E4313802}" {
+   ActionContexts {
+    UserActionContext "{62723E99E52A192E}" {
+     ContextName "default"
+     Position PointInfo "{62723E99EAE655A6}" {
+      Offset -0.7456 1.0823 0.7476
+     }
+     Radius 0.8
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{62723E99D5CF1A5E}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{62723E99D86A946A}" {
+      Name "Open"
+     }
+    }
+   }
+  }
+  RplComponent "{5624A88DC2D9928D}" {
+   Enabled 1
+  }
+ }
+}

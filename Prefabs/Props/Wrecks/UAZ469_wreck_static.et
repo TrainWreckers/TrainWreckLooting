@@ -1,0 +1,44 @@
+GenericEntity : "{6BDDFE9FA1D4B2F0}Prefabs/Props/Wrecks/UAZ469_wreck.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  SCR_UniversalInventoryStorageComponent "{62762030557A0FBF}" {
+   Attributes SCR_ItemAttributeCollection "{6276203056AA2148}" {
+    ItemDisplayName UIInfo "{627620305A4F9C1A}" {
+     Name "Jeep"
+    }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
+  }
+  TW_LootableInventoryComponent "{62762030691574B8}" {
+   m_LootItemTypes 1048574
+  }
+  SCR_InventoryStorageManagerComponent "{6276203043688F40}" {
+  }
+  ActionsManagerComponent "{627620304516042A}" {
+   ActionContexts {
+    UserActionContext "{6276203046E80014}" {
+     ContextName "default"
+     Position PointInfo "{627620304D7EF57E}" {
+      Offset 0 1.2033 0
+     }
+     Radius 1.1
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{62762030B6B138F1}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{627B0C3404BE7D03}" {
+     }
+    }
+   }
+  }
+  RplComponent "{62762030679D2529}" {
+  }
+ }
+}

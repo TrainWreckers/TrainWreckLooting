@@ -1,0 +1,17 @@
+GenericEntity : "{4AD200C829CAFE34}Prefabs/Props/Furniture/CupboardOld_01_base.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  TW_LootableInventoryComponent "{62703024C2421120}" {
+   m_LootItemTypes 622222
+  }
+  ActionsManagerComponent "{62722CD089E09F84}" {
+   ActionContexts {
+    UserActionContext "{62722CD08A09F681}" {
+     Position PointInfo "{62722CD08DD92F59}" {
+      Offset -0.6722 0.8557 0.648
+     }
+    }
+   }
+  }
+ }
+}

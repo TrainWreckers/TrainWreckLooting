@@ -1,0 +1,44 @@
+GenericEntity : "{EB084C400AABD1D3}Prefabs/Props/Wrecks/M151A2_wreck.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  SCR_UniversalInventoryStorageComponent "{62762031956C124B}" {
+   Attributes SCR_ItemAttributeCollection "{6276203196A4F8C7}" {
+    ItemDisplayName UIInfo "{6276203197D644CD}" {
+     Name "Jeep"
+    }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
+  }
+  TW_LootableInventoryComponent "{62762031AB89D437}" {
+   m_LootItemTypes 1048574
+  }
+  SCR_InventoryStorageManagerComponent "{62762031AAC14829}" {
+  }
+  ActionsManagerComponent "{627620318092F92F}" {
+   ActionContexts {
+    UserActionContext "{62762031819874AB}" {
+     ContextName "default"
+     Position PointInfo "{627620318CC8CD65}" {
+      Offset 0 0.9902 0
+     }
+     Radius 0.8
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{62762031F3CEA3C4}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{627B0C356C1840A3}" {
+     }
+    }
+   }
+  }
+  RplComponent "{62762031B031AD1A}" {
+  }
+ }
+}

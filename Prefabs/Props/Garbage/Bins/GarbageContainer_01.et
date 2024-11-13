@@ -1,0 +1,43 @@
+GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et" {
+ ID "6222A6AEF7BE1153"
+ components {
+  SCR_UniversalInventoryStorageComponent "{62723E9E0C8A35E4}" {
+   Attributes SCR_ItemAttributeCollection "{62723E9E0FC5506E}" {
+    ItemDisplayName UIInfo "{62723E9E70CB13ED}" {
+     Name "Garbage Bin"
+    }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
+  }
+  TW_LootableInventoryComponent "{62723E9E1D87B40A}" {
+   m_LootItemTypes 1015742
+  }
+  SCR_InventoryStorageManagerComponent "{62723E9E0A940DFC}" {
+  }
+  ActionsManagerComponent "{62723E9E7CD7FCAF}" {
+   ActionContexts {
+    UserActionContext "{62723E9E7DC18F70}" {
+     ContextName "default"
+     Position PointInfo "{62723E9E61E8637F}" {
+      Offset 0 1.0195 0.0693
+     }
+     Radius 0.8
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{62723E9E6ED4FB5E}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{62723E9E527E673E}" {
+      Name "Open"
+     }
+    }
+   }
+  }
+ }
+}

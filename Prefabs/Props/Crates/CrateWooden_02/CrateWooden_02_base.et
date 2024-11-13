@@ -1,0 +1,43 @@
+GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  SCR_UniversalInventoryStorageComponent "{6270302783535E8C}" {
+   Attributes SCR_ItemAttributeCollection "{6270302784723CC5}" {
+    ItemDisplayName SCR_InventoryUIInfo "{62703027855F0DB2}" {
+     Name "Box"
+    }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
+  }
+  TW_LootableInventoryComponent "{6270302797FF2266}" {
+   m_LootItemTypes 1048574
+  }
+  SCR_InventoryStorageManagerComponent "{627030278FE5B563}" {
+  }
+  ActionsManagerComponent "{62722CD3DCA5E74A}" {
+   ActionContexts {
+    UserActionContext "{62722CD3DDF19DC8}" {
+     ContextName "default"
+     Position PointInfo "{62722CD3C29A2778}" {
+      Offset 0 0.8298 0
+     }
+     Radius 0.8
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{62722CD3C75F1D8D}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{62722CD3CAB15D52}" {
+      Name "Open"
+     }
+    }
+   }
+  }
+ }
+}

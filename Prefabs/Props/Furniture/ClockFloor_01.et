@@ -1,0 +1,46 @@
+GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  SCR_UniversalInventoryStorageComponent "{627030248811EC54}" {
+   Attributes SCR_ItemAttributeCollection "{6270302489A91340}" {
+    ItemDisplayName SCR_InventoryUIInfo "{627030248B24DA81}" {
+     Name "Clock"
+    }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
+  }
+  TW_LootableInventoryComponent "{6270302498AC88C4}" {
+   m_LootItemTypes 459574
+  }
+  SCR_InventoryStorageManagerComponent "{62703024868CE165}" {
+  }
+  ActionsManagerComponent "{62722CD0B82E6BF4}" {
+   ActionContexts {
+    UserActionContext "{62722CD0B917BEBE}" {
+     ContextName "default"
+     Position PointInfo "{62722CD0A0D9F613}" {
+      Offset 0.1122 0.7966 0.1665
+     }
+     Radius 0.8
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{62722CD0AA178487}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{62722CD0AC32626E}" {
+      Name "Open"
+     }
+    }
+   }
+  }
+  RplComponent "{5624A88DC2D9928D}" {
+   Enabled 1
+  }
+ }
+}

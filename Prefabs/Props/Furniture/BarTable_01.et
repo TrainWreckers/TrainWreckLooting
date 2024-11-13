@@ -1,0 +1,42 @@
+GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  SCR_UniversalInventoryStorageComponent "{627B0C2AEBE605D5}" {
+   Attributes SCR_ItemAttributeCollection "{627B0C29156340E9}" {
+    ItemDisplayName UIInfo "{627B0C29167CB1D9}" {
+     Name "Bar"
+    }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
+  }
+  TW_LootableInventoryComponent "{627B0C2919D9F7D3}" {
+   m_LootItemTypes 328510
+  }
+  SCR_InventoryStorageManagerComponent "{627B0C290A5741B8}" {
+  }
+  ActionsManagerComponent "{627B0C2935BA921D}" {
+   ActionContexts {
+    UserActionContext "{627B0C29368EADCA}" {
+     ContextName "default"
+     Position PointInfo "{627B0C2932A581BE}" {
+      Offset 0 0.6626 0
+     }
+     Radius 0.8
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{627B0C292D15E81F}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{627B0C292AFFB772}" {
+     }
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,44 @@
+GenericEntity : "{4A0EB5570B2BB36C}Prefabs/Props/Wrecks/Ural4320_wreck.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  SCR_UniversalInventoryStorageComponent "{62762030A30ED30A}" {
+   Attributes SCR_ItemAttributeCollection "{6276203521F47F5C}" {
+    ItemDisplayName UIInfo "{6276203BF21110E9}" {
+     Name "Truck"
+    }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
+  }
+  TW_LootableInventoryComponent "{62762034DA36317E}" {
+   m_LootItemTypes 197196
+  }
+  SCR_InventoryStorageManagerComponent "{62762030A165D69E}" {
+  }
+  ActionsManagerComponent "{6276203B17469049}" {
+   ActionContexts {
+    UserActionContext "{6276203BBB76CDAD}" {
+     ContextName "default"
+     Position PointInfo "{6276203BA0D89C0C}" {
+      Offset -0.8676 1.616 1.4077
+     }
+     Radius 0.8
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{6276203B90F995D3}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{627B0C3426F9970A}" {
+     }
+    }
+   }
+  }
+  RplComponent "{62762030BF7254DA}" {
+  }
+ }
+}

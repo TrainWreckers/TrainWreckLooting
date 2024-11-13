@@ -1,0 +1,44 @@
+GenericEntity : "{10C26F96EF7A8CF5}Prefabs/Props/Core/Props_Base.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  SCR_UniversalInventoryStorageComponent "{627631B5B5B5D109}" {
+   Attributes SCR_ItemAttributeCollection "{627631B5B733506D}" {
+    ItemDisplayName UIInfo "{627631B5B8113E12}" {
+     Name "Medical Bin"
+    }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   CapacityCoefficient 10000
+   m_fMaxWeight 10000
+  }
+  TW_LootableInventoryComponent "{627631B5A2F832AB}" {
+   m_LootItemTypes HEAL
+  }
+  SCR_InventoryStorageManagerComponent "{627631B5B2CADB04}" {
+  }
+  ActionsManagerComponent "{627B0C374C5B93E2}" {
+   ActionContexts {
+    UserActionContext "{627B0C374D67E45E}" {
+     ContextName "default"
+     Position PointInfo "{627B0C3748A0A5E6}" {
+      Offset 0 0.4691 0
+     }
+     Radius 0.8
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{627B0C3776651025}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{627B0C3772042D51}" {
+     }
+    }
+   }
+  }
+  RplComponent "{627631B54F5A6172}" {
+  }
+ }
+}

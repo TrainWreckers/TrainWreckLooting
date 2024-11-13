@@ -1,0 +1,42 @@
+GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  SCR_UniversalInventoryStorageComponent "{627B0C27C7635308}" {
+   Attributes SCR_ItemAttributeCollection "{627B0C27CBBFEF05}" {
+    ItemDisplayName UIInfo "{627B0C27F501AC8C}" {
+     Name "Suitcase"
+    }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
+  }
+  TW_LootableInventoryComponent "{627B0C2636990127}" {
+   m_LootItemTypes 534532
+  }
+  SCR_InventoryStorageManagerComponent "{627B0C2656E7C41D}" {
+  }
+  ActionsManagerComponent "{627B0C265D768E3D}" {
+   ActionContexts {
+    UserActionContext "{627B0C265EDBFBB9}" {
+     ContextName "default"
+     Position PointInfo "{627B0C266F4AD533}" {
+      Offset 0 0.323 0
+     }
+     Radius 0.8
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{627B0C2674752D2A}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{627B0C267A89452C}" {
+     }
+    }
+   }
+  }
+ }
+}

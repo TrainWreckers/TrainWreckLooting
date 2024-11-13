@@ -1,0 +1,46 @@
+GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  SCR_UniversalInventoryStorageComponent "{62755779CCFD5EB6}" {
+   Attributes SCR_ItemAttributeCollection "{62755779CE48A707}" {
+    ItemDisplayName UIInfo "{62755779CF4A9A51}" {
+     Name "Workbench"
+    }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   CapacityCoefficient 10000
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
+  }
+  TW_LootableInventoryComponent "{627557783F7EF6A2}" {
+   m_LootItemTypes 786350
+  }
+  SCR_InventoryStorageManagerComponent "{627557783DEAEEA4}" {
+  }
+  ActionsManagerComponent "{6275577829D55FF9}" {
+   ActionContexts {
+    UserActionContext "{627557782AD6F5C2}" {
+     ContextName "default"
+     Position PointInfo "{627557782FD3596A}" {
+      Offset -0.0497 0.9582 0.4792
+     }
+     Radius 0.8
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{627B0C2CDE956019}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{627B0C2CD9A92D2E}" {
+     }
+    }
+   }
+  }
+  RplComponent "{5624A88DC2D9928D}" {
+   Enabled 1
+  }
+ }
+}

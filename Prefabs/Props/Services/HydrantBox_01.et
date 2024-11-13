@@ -1,0 +1,45 @@
+GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et" {
+ ID "52428C45C6CA4132"
+ components {
+  SCR_UniversalInventoryStorageComponent "{627B0C370C3E683B}" {
+   Attributes SCR_ItemAttributeCollection "{627B0C370D6048C8}" {
+    ItemDisplayName UIInfo "{627B0C370EF3629C}" {
+     Name "Hospital Box"
+    }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
+  }
+  TW_LootableInventoryComponent "{627B0C373CE9139E}" {
+   m_LootItemTypes HEAL
+  }
+  SCR_InventoryStorageManagerComponent "{627B0C373890782C}" {
+  }
+  ActionsManagerComponent "{627B0C373AA7E916}" {
+   ActionContexts {
+    UserActionContext "{627B0C373BC67663}" {
+     ContextName "default"
+     Position PointInfo "{627B0C37218C6B6A}" {
+      Offset 0 0 0.2945
+     }
+     Radius 0.8
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{627B0C37543CB2FC}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{627B0C375798B0A5}" {
+     }
+    }
+   }
+  }
+  RplComponent "{5624A88DC2D9928D}" {
+   Enabled 1
+  }
+ }
+}

@@ -1,0 +1,8 @@
+GameProject {
+ ID "TrainWreckLooting"
+ GUID "626E39840DDC4323"
+ TITLE "TrainWreckLooting"
+ Dependencies {
+  "61F8FB543ECB6949" "58D0FB3206B6F859"
+ }
+}

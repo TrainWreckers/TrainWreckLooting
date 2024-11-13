@@ -1,0 +1,46 @@
+GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et" {
+ ID "6093E737E789436F"
+ components {
+  SCR_UniversalInventoryStorageComponent "{6270302514BC18C6}" {
+   Attributes SCR_ItemAttributeCollection "{6270302516017098}" {
+    ItemDisplayName SCR_InventoryUIInfo "{6270302517FE12C3}" {
+     Name "Dresser"
+    }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 50000
+   m_fMaxWeight 50000
+  }
+  TW_LootableInventoryComponent "{627030251EFA4986}" {
+   m_LootItemTypes 622510
+  }
+  SCR_InventoryStorageManagerComponent "{627030251CB05D5C}" {
+  }
+  ActionsManagerComponent "{62722CD0DDD1701D}" {
+   ActionContexts {
+    UserActionContext "{62722CD0DEDAD4F2}" {
+     ContextName "default"
+     Position PointInfo "{62722CD0C3760EE5}" {
+      Offset -0.7653 0.7403 0.7222
+     }
+     Radius 0.8
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{6278527A1A1133C6}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{6278527A53CCBECB}" {
+      Name "Search"
+     }
+    }
+   }
+  }
+  RplComponent "{5624A88DC2D9928D}" {
+   Enabled 1
+  }
+ }
+}

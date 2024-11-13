@@ -1,0 +1,43 @@
+GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  SCR_UniversalInventoryStorageComponent "{62723E991F31EF47}" {
+   Attributes SCR_ItemAttributeCollection "{62723E99008E88D5}" {
+    ItemDisplayName UIInfo "{62723E99019AB600}" {
+     Name "Nightstand"
+    }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
+  }
+  TW_LootableInventoryComponent "{62723E996EB1E7D9}" {
+   m_LootItemTypes 66060
+  }
+  SCR_InventoryStorageManagerComponent "{62723E991D1E681F}" {
+  }
+  ActionsManagerComponent "{62723E99713C1F8C}" {
+   ActionContexts {
+    UserActionContext "{62723E9972521959}" {
+     ContextName "default"
+     Position PointInfo "{62723E9976B4A365}" {
+      Offset 0 0.5538 0.21
+     }
+     Radius 0.8
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{62723E99616830BB}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{62723E996546C373}" {
+      Name "Open"
+     }
+    }
+   }
+  }
+ }
+}

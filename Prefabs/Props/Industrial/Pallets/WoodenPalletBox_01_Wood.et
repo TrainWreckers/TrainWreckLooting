@@ -1,0 +1,44 @@
+GenericEntity : "{51B08BDA20AF8FF7}Prefabs/Props/Industrial/Pallets/WoodenPalletBox_01.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  SCR_UniversalInventoryStorageComponent "{6275577E81B8B1A9}" {
+   Attributes SCR_ItemAttributeCollection "{6275577E86A3D948}" {
+    ItemDisplayName UIInfo "{6275577E87B58B3C}" {
+     Name "Container"
+    }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
+  }
+  TW_LootableInventoryComponent "{6275577E93BD7693}" {
+   m_LootItemTypes 271166
+  }
+  SCR_InventoryStorageManagerComponent "{6275577E9200A77D}" {
+  }
+  ActionsManagerComponent "{6275577D6D558222}" {
+   ActionContexts {
+    UserActionContext "{6275577D6E401527}" {
+     ContextName "default"
+     Position PointInfo "{6275577D54602DE6}" {
+      Offset 0 0.8339 0
+     }
+     Radius 0.8
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{6275577D5AF723F3}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{627B0C3270FADCDE}" {
+     }
+    }
+   }
+  }
+  RplComponent "{6275577EAFB4559F}" {
+  }
+ }
+}

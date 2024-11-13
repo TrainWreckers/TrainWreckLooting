@@ -1,0 +1,45 @@
+GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  SCR_UniversalInventoryStorageComponent "{627557799F007E9C}" {
+   Attributes SCR_ItemAttributeCollection "{6275577980A84E12}" {
+    ItemDisplayName UIInfo "{627557798208655B}" {
+     Name "Bench"
+    }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
+  }
+  TW_LootableInventoryComponent "{62755779AF2DD10D}" {
+   m_LootItemTypes 622084
+  }
+  SCR_InventoryStorageManagerComponent "{62755779E62A1ACB}" {
+  }
+  ActionsManagerComponent "{62755779E825A6E2}" {
+   ActionContexts {
+    UserActionContext "{62755779E93D5A45}" {
+     ContextName "default"
+     Position PointInfo "{62755779EEB4C63D}" {
+      Offset 0 1.0068 0.3361
+     }
+     Radius 0.8
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{62755779DC1894AF}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{627B0C2CFAE30F90}" {
+     }
+    }
+   }
+  }
+  RplComponent "{5624A88DC2D9928D}" {
+   Enabled 1
+  }
+ }
+}

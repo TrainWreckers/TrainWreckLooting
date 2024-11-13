@@ -1,0 +1,44 @@
+GenericEntity : "{75FEF1CA582431F3}Prefabs/Props/Wrecks/BTR70_wreck.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  SCR_UniversalInventoryStorageComponent "{62762031B666E77B}" {
+   Attributes SCR_ItemAttributeCollection "{62762031B7070836}" {
+    ItemDisplayName UIInfo "{62762031B819F759}" {
+     Name "BTR"
+    }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
+  }
+  TW_LootableInventoryComponent "{6276203175209B4C}" {
+   m_LootItemTypes 1048574
+  }
+  SCR_InventoryStorageManagerComponent "{62762031A66F2AE0}" {
+  }
+  ActionsManagerComponent "{627620316A48C52F}" {
+   ActionContexts {
+    UserActionContext "{627620316B505FB1}" {
+     ContextName "default"
+     Position PointInfo "{6276203151409C69}" {
+      Offset -1.2669 0.9098 -0.156
+     }
+     Radius 0.8
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{6276203148F3FD97}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{627B0C35717747FA}" {
+     }
+    }
+   }
+  }
+  RplComponent "{6276203171F68F1D}" {
+  }
+ }
+}

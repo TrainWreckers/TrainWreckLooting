@@ -1,0 +1,46 @@
+GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  SCR_UniversalInventoryStorageComponent "{627030250FFAF2D9}" {
+   Attributes SCR_ItemAttributeCollection "{62703025709548F0}" {
+    ItemDisplayName SCR_InventoryUIInfo "{627030257206CFFE}" {
+     Name "First Aid Box"
+    }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
+  }
+  TW_LootableInventoryComponent "{627030250C51F03F}" {
+   m_LootItemTypes HEAL
+  }
+  SCR_InventoryStorageManagerComponent "{62703025782F9B09}" {
+  }
+  ActionsManagerComponent "{62722CD1335AD925}" {
+   ActionContexts {
+    UserActionContext "{62722CD1347A3B86}" {
+     ContextName "default"
+     Position PointInfo "{62722CD1384EF0B9}" {
+      Offset 0 0.278 0.0702
+     }
+     Radius 0.8
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{62722CD1212740A6}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{62722CD124A68581}" {
+      Name "Open"
+     }
+    }
+   }
+  }
+  RplComponent "{5624A88DC2D9928D}" {
+   Enabled 1
+  }
+ }
+}

@@ -1,0 +1,44 @@
+GenericEntity : "{10C26F96EF7A8CF5}Prefabs/Props/Core/Props_Base.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  SCR_UniversalInventoryStorageComponent "{627B0C31099866AE}" {
+   Attributes SCR_ItemAttributeCollection "{627B0C310AA6559E}" {
+    ItemDisplayName UIInfo "{627B0C3134468830}" {
+     Name "Kitchen"
+    }
+    m_Size SLOT_3x3
+    m_SlotType SLOT_ANY
+   }
+   UseCapacityCoefficient 0
+   MaxCumulativeVolume 10000
+   m_fMaxWeight 10000
+  }
+  TW_LootableInventoryComponent "{627B0C313CA14241}" {
+   m_LootItemTypes 328204
+  }
+  SCR_InventoryStorageManagerComponent "{627B0C3120E800CA}" {
+  }
+  ActionsManagerComponent "{627B0C312F0A3852}" {
+   ActionContexts {
+    UserActionContext "{627B0C312831F31F}" {
+     ContextName "default"
+     Position PointInfo "{627B0C3156404BEB}" {
+      Offset 0.0288 1.1248 -1.1236
+     }
+     Radius 1
+    }
+   }
+   additionalActions {
+    SCR_OpenStorageAction "{627B0C314C275883}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{627B0C314F39DA21}" {
+     }
+    }
+   }
+  }
+  RplComponent "{627B0C3107EC31A0}" {
+  }
+ }
+}
