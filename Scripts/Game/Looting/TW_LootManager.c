@@ -12,27 +12,6 @@ class ScavLootSettings
 	float spawnWithVestChance = 0.3;
 };
 
-class WeightedType<Class T>
-{
-	private ref array<T> items = {};
-	private ref array<float> weights = {};
-	
-	T GetRandomItem()
-	{
-		if(items.IsEmpty() || weights.IsEmpty())
-			return null;
-		
-		int index = SCR_ArrayHelper.GetWeightedIndex(weights, Math.RandomFloat01());
-		return items.Get(index);
-	}
-	
-	void Add(T item, float weight)
-	{
-		items.Insert(item);
-		weights.Insert(weight);
-	}
-};
-
 sealed class TW_LootManager 
 {
 	// Provide the ability to grab 
