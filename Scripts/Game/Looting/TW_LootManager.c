@@ -46,7 +46,7 @@ sealed class TW_LootManager
 	private static int m_RespawnLootRadius = 5;
 	
 	// Can loot respawn
-	private static int m_IsLootRespawnable = true;
+	private static bool m_IsLootRespawnable = true;
 	
 	//! Loot timer will check statuses at this interval
 	private static int m_RespawnLootTimerInSeconds = 10;

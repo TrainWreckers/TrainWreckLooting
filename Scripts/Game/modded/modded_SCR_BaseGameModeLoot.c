@@ -10,7 +10,12 @@ modded class SCR_BaseGameMode
 		if(!m_RplComponent || !m_RplComponent.IsMaster())
 			return;
 		
-		// This shall automatically initialize all the things for us
+		Event_OnGameInitializePlugins.Insert(InitializeLootManager);		
+	}
+	
+	private void InitializeLootManager()
+	{
+		Print("TrainWreck: Initializing Loot Manager");
 		TW_LootManager.Initialize();
 	}
 };
