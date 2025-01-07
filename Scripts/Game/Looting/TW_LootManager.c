@@ -4,86 +4,71 @@ enum TW_ResourceNameType
 	DisplayName
 };
 
-class ScavLootSettings
-{
-	float spawnWithBackpackChance = 0.1;
-	float spawnWithTwoWeaponsChance = 0.1;
-	float spawnWithHealChance = 0.25;
-	float spawnWithVestChance = 0.3;
-};
 
 sealed class TW_LootManager 
 {
+	private static TW_LootManager s_Instance;
+	static TW_LootManager GetInstance() { return s_Instance; }
+	
+	void TW_LootManager()
+	{
+		if(s_Instance)
+		{
+			PrintFormat("TrainWreck: TW_LootManager -> Instance of Loot Manager already exists", LogLevel.ERROR);
+			return;
+		}
+		
+		s_Instance = this;
+	}
+	
 	// Provide the ability to grab 
 	private static ref map<SCR_EArsenalItemType, ref array<ref TW_LootConfigItem>> s_LootTable = new map<SCR_EArsenalItemType, ref array<ref TW_LootConfigItem>>();
 	
 	// This should contain the resource names of all items that are valid for saving/loading 
 	private static ref set<string> s_GlobalItems = new set<string>();
-	
-	private static ref array<SCR_EArsenalItemType> s_ArsenalItemTypes = {};
-	
-	static const string LootFileName = "$profile:lootmap.json";	
-	
-	//! Should magazines spawn with weapons
-	static bool ShouldSpawnMagazine = true;
-	
-	//! Is the loot system enabled
-	static bool IsLootEnabled = true;
-	
-	//! Minimum percentage of ammo magazines can spawn with (if spawn with magazine is enabled)
-	private static int m_MinimumAmmoPercent = 80;
-	
-	//! Maximum percentage of ammo magazines can spawn with (if spawn with magazine is enabled)
-	private static int m_MaximumAmmoPercent = 100;
-	
-	//! Size of grid squares the loot system shall utilize
-	private static int m_GridSize = 100;
-	
-	//! Loot will not respawn within this amount of grid squares around player
-	private static int m_DeadZoneRadius = 1;
-	
-	//! Loot will respawn outside the dead zone and within this amount of grid squares
-	private static int m_RespawnLootRadius = 5;
-	
-	// Can loot respawn
-	private static bool m_IsLootRespawnable = true;
-	
-	//! Loot timer will check statuses at this interval
-	private static int m_RespawnLootTimerInSeconds = 10;
-	
-	//! Time since last player interaction before being considered for loot respawn
-	private static int m_RespawnAfterLastInteractionInMinutes = 1;
-	
-	//! Number of items that can respawn at most overtime
-	private static int m_RespawnLootItemThreshold = 4;
-	
-	//! Ratio to apply to entity sizes for unsearched containers
-	private static float m_UnlootedTimeRatio = 0.50;
-	
-	//! Ratio to apply to entity sizes for searched containers
-	private static float m_SearchedTimeRatio = 0.1;
-	
-	
-	private static ref ScavLootSettings m_ScavSettings = new ScavLootSettings();
-	
 	private static ref TW_GridCoordArrayManager<TW_LootableInventoryComponent> s_GlobalContainerGrid = new TW_GridCoordArrayManager<TW_LootableInventoryComponent>(100);
-	
+	private static ref array<SCR_EArsenalItemType> s_ArsenalItemTypes = {};
 	static TW_GridCoordArrayManager<TW_LootableInventoryComponent> GetContainerGrid() { return s_GlobalContainerGrid; }
 	
-	static float GetUnlootedTimeRatio() { return m_UnlootedTimeRatio; }
-	static float GetSearchedTimeRatio() { return m_SearchedTimeRatio; }
+	private static bool HasLoaded = false;
+	static const string LootFileName = "$profile:lootmap.json";	
 	
-	static ScavLootSettings GetScavSettings() { return m_ScavSettings; }
+	private ref LootManagerSettings m_Settings;
+		
+	LootManagerSettings GetLootSettings() { return m_Settings; }
+	bool ShouldSpawnMagazine() { return m_Settings.ShouldSpawnMagazine; }
+	float GetUnlootedTimeRatio() 
+	{ 
+		if(!m_Settings || !m_Settings.RespawnSettings)
+		{
+			PrintFormat("TrainWreck: RespawnSettings not set", LogLevel.WARNING);
+			return 0.5;
+		}
+		
+		return m_Settings.RespawnSettings.UnlootedTimeRatio; 
+	}
+	float GetSearchedTimeRatio() 
+	{ 
+		if(!m_Settings || !m_Settings.RespawnSettings)
+		{
+			PrintFormat("TrainWreck: RespawnSettings not set", LogLevel.WARNING);
+			return 0.5;
+		}
+		
+		return m_Settings.RespawnSettings.SearchedTimeRatio; 
+	}
 	
-	static float GetRandomAmmoPercent() { return Math.RandomFloatInclusive(m_MinimumAmmoPercent, m_MaximumAmmoPercent) / m_MaximumAmmoPercent; }
+	ScavLootSettings GetScavSettings() { return m_Settings.ScavSettings; }
+	
+	float GetRandomAmmoPercent() { return m_Settings.AmmoPercentageSetting.GetRandomPercentage() / m_Settings.AmmoPercentageSetting.Max; }
 	
 	//! Time after last player interaction loot can start to respawn
-	static int GetRespawnAfterLastInteractionInMinutes() { return m_RespawnAfterLastInteractionInMinutes; }
+	int GetRespawnAfterLastInteractionInMinutes() { return m_Settings.RespawnSettings.RespawnAfterLastInteractionInMinutes; }
 	
 	//! Number of items that can respawn, at most, overtime
-	static int GetRespawnLootItemThreshold() { return m_RespawnLootItemThreshold; }
+	int GetRespawnLootItemThreshold() { return m_Settings.RespawnSettings.NumberOfItemsToSpawnPerContainer; }
 	
-	static int GetRespawnCheckInterval() { return m_RespawnLootTimerInSeconds; }
+	int GetRespawnCheckInterval() { return m_Settings.RespawnSettings.RespawnLootTimerInSeconds; }
 
 	static void RegisterLootableContainer(TW_LootableInventoryComponent container)
 	{
@@ -127,7 +112,7 @@ sealed class TW_LootManager
 		return false;
 	}
 			
-	static void SelectRandomPrefabsFromFlags(SCR_EArsenalItemType flags, int count, notnull map<string, int> selected, TW_ResourceNameType type = TW_ResourceNameType.DisplayName)
+	void SelectRandomPrefabsFromFlags(SCR_EArsenalItemType flags, int count, notnull map<string, int> selected, TW_ResourceNameType type = TW_ResourceNameType.DisplayName)
 	{
 		int selectedCount = 0;
 		
@@ -168,7 +153,7 @@ sealed class TW_LootManager
 			SelectRandomPrefabsFromFlags(flags, count - selectedCount, selected, type);
 	}
 	
-	static int SelectRandomPrefabsFromType(SCR_EArsenalItemType flag, int randomCount, notnull array<ResourceName> selected)
+	int SelectRandomPrefabsFromType(SCR_EArsenalItemType flag, int randomCount, notnull array<ResourceName> selected)
 	{
 		if(!s_LootTable.Contains(flag))
 			return 0;
@@ -197,7 +182,7 @@ sealed class TW_LootManager
 		return count;
 	}
 	
-	static array<SCR_EntityCatalogEntry> GetMergedFactionCatalogs()
+	array<SCR_EntityCatalogEntry> GetMergedFactionCatalogs()
 	{		
 		SCR_FactionManager manager = SCR_FactionManager.Cast(GetGame().GetFactionManager());
 		
@@ -237,7 +222,7 @@ sealed class TW_LootManager
 		return entries;
 	}
 	
-	static void InitializeLootTable()
+	void InitializeLootTable()
 	{
 		SCR_Enum.GetEnumValues(SCR_EArsenalItemType, s_ArsenalItemTypes);
 		
@@ -246,8 +231,9 @@ sealed class TW_LootManager
 		if(HasLootTable())
 		{
 			Print(string.Format("TrainWreck: Detected loot table %1", LootFileName));
-			IngestLootTableFromFile();
+			IngestLootTableFromFile(m_Settings);
 		}
+		else m_Settings = new LootManagerSettings();			
 		
 		ref array<SCR_EntityCatalogEntry> catalogItems = GetMergedFactionCatalogs();
 		int entityCount = catalogItems.Count();
@@ -310,7 +296,8 @@ sealed class TW_LootManager
 		bool success = OutputLootTableFile();
 		if(!success)
 			Print(string.Format("TrainWreck: Failed to write %1", LootFileName), LogLevel.ERROR);
-		IngestLootTableFromFile();
+		
+		HasLoaded = true;
 		
 		foreach(SCR_EArsenalItemType type, ref array<ref TW_LootConfigItem> items : s_LootTable)
 		{
@@ -332,25 +319,26 @@ sealed class TW_LootManager
 	}
 	
 	//! Initialize the entire loot system
-	static void Initialize()
+	void Initialize()
 	{
-		GetGame().GetCallqueue().CallLater(DelayInitialize, 5000, false);
+		SCR_BaseGameMode gameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());
+		
+		gameMode.GetOnInitializePlugins().Insert(InitializeLootTable);
+		gameMode.GetOnGameStart().Insert(DelayInitialize);
 	}
 	
-	private static void DelayInitialize()
+	private void DelayInitialize()
 	{
-		InitializeLootTable();
-		
 		ref array<TW_LootableInventoryComponent> entries = {};
 		int count = s_GlobalContainerGrid.GetAllItems(entries);
 		
-		s_GlobalContainerGrid = new TW_GridCoordArrayManager<TW_LootableInventoryComponent>(m_GridSize);
+		s_GlobalContainerGrid = new TW_GridCoordArrayManager<TW_LootableInventoryComponent>(m_Settings.RespawnSettings.GridSize);
 		
 		foreach(TW_LootableInventoryComponent container : entries)
 			if(container)
 				s_GlobalContainerGrid.InsertByWorld(container.GetOwner().GetOrigin(), container);
 		
-		if(IsLootEnabled)
+		if(m_Settings.RespawnSettings.IsLootRespawnable)
 		{
 			GetGame().GetCallqueue().CallLater(CheckPlayerLocations, 1000 * 10, true);
 			GetGame().GetCallqueue().CallLater(RespawnLootProcessor, 1000 * GetRespawnCheckInterval(), true);
@@ -379,7 +367,7 @@ sealed class TW_LootManager
 		}		
 	}
 	
-	private static void CheckPlayerLocations()
+	private void CheckPlayerLocations()
 	{
 		ref set<string> currentPlayerChunks = new set<string>();
 		
@@ -400,8 +388,8 @@ sealed class TW_LootManager
 				continue;
 			
 			chunksAroundPlayer.Clear();
-			TW_Util.AddSurroundingGridSquares(m_AntiSpawnPlayerLocations, player.GetOrigin(), m_DeadZoneRadius, m_GridSize);
-			TW_Util.AddSurroundingGridSquares(chunksAroundPlayer, player.GetOrigin(), m_RespawnLootRadius, m_GridSize);	
+			TW_Util.AddSurroundingGridSquares(m_AntiSpawnPlayerLocations, player.GetOrigin(), m_Settings.RespawnSettings.DeadZoneRadius, m_Settings.RespawnSettings.GridSize);
+			TW_Util.AddSurroundingGridSquares(chunksAroundPlayer, player.GetOrigin(), m_Settings.RespawnSettings.RespawnLootRadius, m_Settings.RespawnSettings.GridSize);	
 			
 			foreach(string chunk : chunksAroundPlayer)
 			{
@@ -491,9 +479,9 @@ sealed class TW_LootManager
 	}
 		
 	//! Trickle spawn loot into a container
-	static void TrickleSpawnLootInContainer(TW_LootableInventoryComponent container, int remainingAmount)
+	void TrickleSpawnLootInContainer(TW_LootableInventoryComponent container, int remainingAmount)
 	{
-		if(!IsLootEnabled || !container || remainingAmount < 0) 
+		if(!m_Settings.IsLootEnabled|| !container || remainingAmount < 0) 
 			return;
 		
 		ref WeightedType<ref TW_LootConfigItem> pool = new WeightedType<ref TW_LootConfigItem>();
@@ -516,9 +504,9 @@ sealed class TW_LootManager
 	}
 	
 	//! Spawn loot in designated container
-	static void SpawnLootInContainer(TW_LootableInventoryComponent container)
+	void SpawnLootInContainer(TW_LootableInventoryComponent container)
 	{
-		if(!IsLootEnabled) 
+		if(!m_Settings.IsLootEnabled) 
 			return;
 		
 		if(!container) 
@@ -644,37 +632,21 @@ sealed class TW_LootManager
 		return count;
 	}
 	
-	private static bool OutputLootTableFile()
+	private bool OutputLootTableFile()
 	{
-		ContainerSerializationSaveContext saveContext = new ContainerSerializationSaveContext();
-		PrettyJsonSaveContainer prettyContainer = new PrettyJsonSaveContainer();
-		saveContext.SetContainer(prettyContainer);
-		
-		saveContext.WriteValue("scavSettings", m_ScavSettings);
-		saveContext.WriteValue("magazineMinAmmoPercent", m_MinimumAmmoPercent);		
-		saveContext.WriteValue("magazineMaxAmmoPercent", m_MaximumAmmoPercent);
-		saveContext.WriteValue("shouldSpawnMagazine", ShouldSpawnMagazine);
-		saveContext.WriteValue("isLootEnabled", IsLootEnabled);
-		saveContext.WriteValue("isRespawnLootEnabled", m_IsLootRespawnable);
-		saveContext.WriteValue("gridSize", m_GridSize);
-		saveContext.WriteValue("deadZoneGridRadius", m_DeadZoneRadius);
-		saveContext.WriteValue("respawnLootTimerInSeconds", m_RespawnLootTimerInSeconds);
-		saveContext.WriteValue("respawnAfterLastInteractionInMinutes", m_RespawnAfterLastInteractionInMinutes);
-		saveContext.WriteValue("respawnLootItemThreshold", m_RespawnLootItemThreshold);
-		saveContext.WriteValue("respawnLootRadius", m_RespawnLootRadius);		
-		saveContext.WriteValue("unsearchedTimeRatio", m_UnlootedTimeRatio);
-		saveContext.WriteValue("searchedTimeRatio", m_SearchedTimeRatio);
-		saveContext.WriteValue("respawnLootProcessorBatchSize", m_RespawnLootProcessor_BatchSize);		
-		
+		if(!m_Settings.LootTable)
+			m_Settings.LootTable = new map<string, ref array<ref TW_LootConfigItem>>();
+		else 
+			m_Settings.LootTable.Clear();
+				
 		foreach(SCR_EArsenalItemType type, ref array<ref TW_LootConfigItem> items : s_LootTable)
 		{	
 			PrintFormat("TrainWreckLooting: Type: %1, Amount %2 -- Saving", TW_Util.ArsenalTypeAsString(type), items.Count());
-			
-			ref array<ref TW_LootConfigItem> typeLoot = {};			
-			saveContext.WriteValue(TW_Util.ArsenalTypeAsString(type), items);
+						
+			m_Settings.LootTable.Set(TW_Util.ArsenalTypeAsString(type), items);
 		}
 		
-		return prettyContainer.SaveToFile(LootFileName);
+		return TW_Util.SaveJsonFile(LootFileName, m_Settings, true);
 	}
 	
 	private static bool HasLootTable()
@@ -683,10 +655,10 @@ sealed class TW_LootManager
 		return loadContext.LoadFromFile(LootFileName);
 	}
 	
-	private static bool IngestLootTableFromFile()
+	private static bool IngestLootTableFromFile(out LootManagerSettings settings)
 	{
-		SCR_JsonLoadContext loadContext = new SCR_JsonLoadContext();
-		bool loadSuccess = loadContext.LoadFromFile(LootFileName);
+		SCR_JsonLoadContext context = TW_Util.LoadJsonFile(LootFileName, true);
+		bool loadSuccess = context.ReadValue("", settings);
 		
 		if(!loadSuccess)
 		{
@@ -696,69 +668,46 @@ sealed class TW_LootManager
 		
 		array<SCR_EArsenalItemType> itemTypes = {};
 		SCR_Enum.GetEnumValues(SCR_EArsenalItemType, itemTypes);
-		string name = string.Empty;
 		
-		loadContext.ReadValue("magazineMinAmmoPercent", m_MinimumAmmoPercent);
-		loadContext.ReadValue("magazineMaxAmmoPercent", m_MaximumAmmoPercent);
-		loadContext.ReadValue("shouldSpawnMagazine", ShouldSpawnMagazine);
-		loadContext.ReadValue("isLootEnabled", IsLootEnabled);
-		loadContext.ReadValue("isRespawnLootEnabled", m_IsLootRespawnable);
-		loadContext.ReadValue("gridSize", m_GridSize);
-		loadContext.ReadValue("deadZoneGridRadius", m_DeadZoneRadius);
-		loadContext.ReadValue("respawnLootTimerInSeconds", m_RespawnLootTimerInSeconds);
-		loadContext.ReadValue("respawnAfterLastInteractionInMinutes", m_RespawnAfterLastInteractionInMinutes);
-		loadContext.ReadValue("respawnLootItemThreshold", m_RespawnLootItemThreshold);
-		loadContext.ReadValue("respawnLootRadius", m_RespawnLootRadius);
-		loadContext.ReadValue("unsearchedTimeRatio", m_UnlootedTimeRatio);
-		loadContext.ReadValue("searchedTimeRatio", m_SearchedTimeRatio);
-		loadContext.ReadValue("respawnLootProcessorBatchSize", m_RespawnLootProcessor_BatchSize);
-		loadContext.ReadValue("scavSettings", m_ScavSettings);
+		ref map<string, SCR_EArsenalItemType> typeMap = new map<string, SCR_EArsenalItemType>();
+		foreach(SCR_EArsenalItemType type : itemTypes)
+			typeMap.Set(TW_Util.ArsenalTypeAsString(type), type);
 		
-		foreach(SCR_EArsenalItemType itemType : itemTypes)
+		foreach(string name, ref array<ref TW_LootConfigItem> items : settings.LootTable)
 		{
-			if(!LoadSection(loadContext, itemType))
+			if(!typeMap.Contains(name))
 			{
-				name = SCR_Enum.GetEnumName(SCR_EArsenalItemType, itemType);
-				Print(string.Format("TrainWreck: LootMap: Unable to load %1", name), LogLevel.ERROR);
+				PrintFormat("TrainWreck: JsonFile '%1' -> Invalid SCR_EArsenalItemType '%2'. Skipping Section...", LootFileName, name, LogLevel.ERROR);
+				continue;
 			}
-		}
-		
-		return true;
-	}
-	
-	private static bool LoadSection(notnull SCR_JsonLoadContext context, SCR_EArsenalItemType type)
-	{
-		ref array<ref TW_LootConfigItem> items = {};
-		string keyValue = TW_Util.ArsenalTypeAsString(type);
-		
-		bool success = context.ReadValue(keyValue, items);
-		
-		if(!success)
-		{
-			s_LootTable.Insert(type, {});
-			return false;
-		}
-		
-		if(!s_LootTable.Contains(type))
-			s_LootTable.Insert(type, {});
-		
-		foreach(TW_LootConfigItem item : items)
-		{
-			Resource resource = Resource.Load(item.resourceName);
-			if(resource.IsValid())
+			
+			
+			SCR_EArsenalItemType itemType = typeMap.Get(name);
+			
+			if(!s_LootTable.Contains(itemType))
+				s_LootTable.Insert(itemType, {});
+			
+			foreach(TW_LootConfigItem item : items)
 			{
+				Resource resource = Resource.Load(item.resourceName);
+				if(!resource.IsValid())
+				{
+					PrintFormat("TrainWreck: LootType('%1') -> Prefab Invalid: '%2'", name, item.resourceName, LogLevel.WARNING);
+					continue;
+				}		
+				
+				if(HasLoaded)
+					PrintFormat("TrainWreck: Item: %1, Chance: %2", item.resourceName, item.chanceToSpawn);
+				
 				if(!s_GlobalItems.Contains(item.resourceName))
 					s_GlobalItems.Insert(item.resourceName);
-				else
+				else 
 					continue;
 				
-				s_LootTable.Get(type).Insert(item);
+				s_LootTable.Get(itemType).Insert(item);
 			}
-			else
-				PrintFormat("TrainWreckLooting: The following resource is invalid (maybe mod is not loaded?): %1", item.resourceName, LogLevel.WARNING);
 		}
 		
-		PrintFormat("TrainWreckLooting: Type %1, Amount: %2", type, s_LootTable.Get(type).Count());
 		return true;
 	}
 };

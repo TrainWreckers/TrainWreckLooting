@@ -65,12 +65,12 @@ class TW_LootableInventoryComponent : ScriptComponent
 			if(!old)
 			{
 				TW_LootManager.RegisterInteractedContainer(this);
-				TW_LootManager.TrickleSpawnLootInContainer(this, TW_LootManager.GetRespawnLootItemThreshold());
+				TW_LootManager.GetInstance().TrickleSpawnLootInContainer(this, TW_LootManager.GetInstance().GetRespawnLootItemThreshold());
 			}
 			
 			// If we've interacted with we'll reset the timer
 			float elapsed = GetGameMode().GetElapsedTime();
-			m_RespawnLootAfterTime = elapsed + (TW_LootManager.GetRespawnAfterLastInteractionInMinutes() * 60);
+			m_RespawnLootAfterTime = elapsed + (TW_LootManager.GetInstance().GetRespawnAfterLastInteractionInMinutes() * 60);
 			GetOnLootReset().Invoke(true);
 			Rpc(RPCAsk_Broadcast_InteractionUpdate, m_Rpl.Id(), true);
 		}
@@ -159,7 +159,7 @@ class TW_LootableInventoryComponent : ScriptComponent
 			
 			if(magazine)
 			{
-				if(TW_LootManager.ShouldSpawnMagazine)
+				if(TW_LootManager.GetInstance().ShouldSpawnMagazine())
 				{
 					SCR_EntityHelper.DeleteEntityAndChildren(magazine.GetOwner());
 				}
@@ -178,7 +178,7 @@ class TW_LootableInventoryComponent : ScriptComponent
 			if(magazine)
 			{
 				int maxAmmo = magazine.GetMaxAmmoCount();
-				float percent = TW_LootManager.GetRandomAmmoPercent();
+				float percent = TW_LootManager.GetInstance().GetRandomAmmoPercent();
 				int ammo = Math.RandomIntInclusive(1, maxAmmo * percent);
 				magazine.SetAmmoCount(Math.ClampInt(ammo, 0, maxAmmo));
 			}

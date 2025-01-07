@@ -1,5 +1,7 @@
 modded class SCR_BaseGameMode
 {
+	ref TW_LootManager m_LootManager;
+	
 	override void EOnInit(IEntity owner)
 	{
 		super.EOnInit(owner);
@@ -16,6 +18,7 @@ modded class SCR_BaseGameMode
 	private void InitializeLootManager()
 	{
 		Print("TrainWreck: Initializing Loot Manager");
-		TW_LootManager.Initialize();
+		m_LootManager = new TW_LootManager();
+		m_LootManager.Initialize();
 	}
 };

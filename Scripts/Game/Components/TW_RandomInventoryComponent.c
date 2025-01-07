@@ -176,7 +176,7 @@ class TW_RandomInventoryComponent : ScriptComponent
 		if(footwearPrefab) m_StorageManager.TrySpawnPrefabToStorage(footwearPrefab);
 		if(shirtPrefab) m_StorageManager.TrySpawnPrefabToStorage(shirtPrefab);
 		
-		if(Math.RandomFloat01() < TW_LootManager.GetScavSettings().spawnWithBackpackChance)
+		if(Math.RandomFloat01() < TW_LootManager.GetInstance().GetScavSettings().spawnWithBackpackChance)
 		{
 			ResourceName backpackPrefab = m_BackpackPrefabs.GetRandomPrefab();
 			
@@ -186,14 +186,14 @@ class TW_RandomInventoryComponent : ScriptComponent
 			}
 		}
 		
-		if(Math.RandomFloat01() < TW_LootManager.GetScavSettings().spawnWithVestChance)
+		if(Math.RandomFloat01() < TW_LootManager.GetInstance().GetScavSettings().spawnWithVestChance)
 		{
 			ResourceName vestPrefab = m_VestPrefabs.GetRandomPrefab();
 			if(vestPrefab != string.Empty)
 				m_StorageManager.TrySpawnPrefabToStorage(vestPrefab, purpose: EStoragePurpose.PURPOSE_LOADOUT_PROXY);
 		}				
 		
-		if(Math.RandomFloat01() < TW_LootManager.GetScavSettings().spawnWithHealChance)
+		if(Math.RandomFloat01() < TW_LootManager.GetInstance().GetScavSettings().spawnWithHealChance)
 		{
 			int healCount = Math.RandomIntInclusive(0, 3);
 			for(int i = 0; i < healCount; i++)
@@ -217,7 +217,7 @@ class TW_RandomInventoryComponent : ScriptComponent
 			SpawnItem(magazinePrefab);
 		}
 		
-		if(Math.RandomFloat01() < TW_LootManager.GetScavSettings().spawnWithTwoWeaponsChance)
+		if(Math.RandomFloat01() < TW_LootManager.GetInstance().GetScavSettings().spawnWithTwoWeaponsChance)
 		{
 			weaponPrefab = m_WeaponPrefabs.GetRandomPrefab();		
 			magazinePrefab = GetMagazineFromWeapon(weaponPrefab);
