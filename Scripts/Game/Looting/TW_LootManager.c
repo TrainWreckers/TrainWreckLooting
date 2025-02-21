@@ -166,19 +166,15 @@ sealed class TW_LootManager
 		if(!IsDebug())
 			return;
 		
+		Print("------------------------");
 		Print("TrainWreck Loot Settings");
 		foreach(SCR_EArsenalItemType itemType : s_ArsenalItemTypes)
 		{
 			string typeName = SCR_Enum.GetEnumName(SCR_EArsenalItemType, itemType);
-			PrintFormat("Arsenal Category: %1", itemType);
-			
 			ref array<ref TW_LootConfigItem> items = s_LootTable.Get(itemType);
-			
-			foreach(TW_LootConfigItem item : items)
-			{
-				PrintFormat("\tItem: %1\n\tChance: %2\n\n", item.resourceName, item.chanceToSpawn);
-			}
+			PrintFormat("Arsenal Category: %1, Count: %2", typeName, items.Count());
 		}
+		Print("------------------------");
 	}
 	
 	int SelectRandomPrefabsFromType(SCR_EArsenalItemType flag, int randomCount, notnull array<ResourceName> selected)
@@ -640,11 +636,10 @@ sealed class TW_LootManager
 		foreach(SCR_EArsenalItemType flagType : s_ArsenalItemTypes)
 		{
 			if(SCR_Enum.HasFlag(type, flagType))
-			{
-				configs.Clear();
+			{				
 				configs = s_LootTable.Get(flagType);
 				
-				foreach(auto config : configs)
+				foreach(TW_LootConfigItem config : configs)
 				{
 					if(ensureHasComponent != string.Empty)
 					{
@@ -664,8 +659,6 @@ sealed class TW_LootManager
 	{
 		if(!m_Settings.LootTable)
 			m_Settings.LootTable = new map<string, ref array<ref TW_LootConfigItem>>();
-		else 
-			m_Settings.LootTable.Clear();
 				
 		foreach(SCR_EArsenalItemType type, ref array<ref TW_LootConfigItem> items : s_LootTable)
 		{	
@@ -708,7 +701,6 @@ sealed class TW_LootManager
 				PrintFormat("TrainWreck: JsonFile '%1' -> Invalid SCR_EArsenalItemType '%2'. Skipping Section...", LootFileName, name, LogLevel.ERROR);
 				continue;
 			}
-			
 			
 			SCR_EArsenalItemType itemType = typeMap.Get(name);
 			
