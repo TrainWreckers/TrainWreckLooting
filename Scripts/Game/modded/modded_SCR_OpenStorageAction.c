@@ -70,7 +70,7 @@ modded class SCR_OpenStorageAction
 		}
 		
 		manager.SetStorageToOpen(pOwnerEntity);
-		manager.OpenInventory();		
+		manager.OpenInventory();
 	}
 	
 	protected void OnLootReset(bool hasBeenSearched)

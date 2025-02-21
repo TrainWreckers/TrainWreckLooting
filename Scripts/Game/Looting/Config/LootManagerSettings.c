@@ -29,6 +29,7 @@ class LootManagerSettings
 {
 	bool ShouldSpawnMagazine;
 	bool IsLootEnabled;
+	bool ShowDebug;
 	
 	ref LootRespawnSettings RespawnSettings;
 	ref PercentageFieldSetting AmmoPercentageSetting;

@@ -25,5 +25,12 @@ modded class SCR_PlayerController
 		}
 		
 		container.SetInteractedWith(true);
+		
+		TW_LootManager lootManager = TW_LootManager.GetInstance();
+		
+		if(lootManager)
+		{
+			lootManager.PrintSettings();
+		}
 	}		
 };

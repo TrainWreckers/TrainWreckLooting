@@ -60,6 +60,14 @@ sealed class TW_LootManager
 	
 	ScavLootSettings GetScavSettings() { return m_Settings.ScavSettings; }
 	
+	bool IsDebug()
+	{
+		if(!m_Settings)
+			return false;
+		
+		return m_Settings.ShowDebug;
+	}
+	
 	float GetRandomAmmoPercent() { return m_Settings.AmmoPercentageSetting.GetRandomPercentage() / m_Settings.AmmoPercentageSetting.Max; }
 	
 	//! Time after last player interaction loot can start to respawn
@@ -151,6 +159,26 @@ sealed class TW_LootManager
 		// Subtracting what we have from the desired amount
 		if(selectedCount < count)
 			SelectRandomPrefabsFromFlags(flags, count - selectedCount, selected, type);
+	}
+	
+	void PrintSettings()
+	{
+		if(!IsDebug())
+			return;
+		
+		Print("TrainWreck Loot Settings");
+		foreach(SCR_EArsenalItemType itemType : s_ArsenalItemTypes)
+		{
+			string typeName = SCR_Enum.GetEnumName(SCR_EArsenalItemType, itemType);
+			PrintFormat("Arsenal Category: %1", itemType);
+			
+			ref array<ref TW_LootConfigItem> items = s_LootTable.Get(itemType);
+			
+			foreach(TW_LootConfigItem item : items)
+			{
+				PrintFormat("\tItem: %1\n\tChance: %2\n\n", item.resourceName, item.chanceToSpawn);
+			}
+		}
 	}
 	
 	int SelectRandomPrefabsFromType(SCR_EArsenalItemType flag, int randomCount, notnull array<ResourceName> selected)
@@ -306,7 +334,7 @@ sealed class TW_LootManager
 			for(int i = 0; i < count; i++)
 			{
 				ref TW_LootConfigItem configItem = items.Get(i);
-				if(configItem.isEnabled) 
+				if(configItem.isEnabled || configItem.chanceToSpawn <= 0) 
 					continue;
 				
 				PrintFormat("TrainWreck-Looting: Removing '%1'. Enabled(%2) | Chance(%3)", configItem.resourceName, configItem.isEnabled, configItem.chanceToSpawn);
@@ -342,7 +370,7 @@ sealed class TW_LootManager
 		{
 			GetGame().GetCallqueue().CallLater(CheckPlayerLocations, 1000 * 10, true);
 			GetGame().GetCallqueue().CallLater(RespawnLootProcessor, 1000 * GetRespawnCheckInterval(), true);
-		}
+		}		
 	}
 	
 	private static ref set<string> m_PlayerLocations = new set<string>();
