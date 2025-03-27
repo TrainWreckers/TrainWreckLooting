@@ -12,7 +12,6 @@ class TW_LootItem
 		m_ItemType = itemType;
 		m_ItemMode = itemMode;
 		m_ItemName = name;
-		m_EntityPrefab = prefab;
 	}
 	
 	ResourceName GetPrefab() { return m_EntityPrefab; }

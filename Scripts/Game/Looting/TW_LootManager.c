@@ -294,14 +294,14 @@ sealed class TW_LootManager
 				int defaultCount = 1;
 				int defaultChance = 25;
 				
-				if(SCR_BaseContainerTools.FindComponentSource(Resource.Load(prefab), "MagazineComponent"))
-					defaultCount = 4;
+				//if(SCR_BaseContainerTools.FindComponentSource(Resource.Load(prefab), "MagazineComponent"))
+				//	defaultCount = 4;
+								
+				//if(SCR_BaseContainerTools.FindComponentSource(Resource.Load(prefab), "SCR_RestrictedDeployableSpawnPointComponent"))
+				//	defaultChance = 5;	
 				
-				if(SCR_BaseContainerTools.FindComponentSource(Resource.Load(prefab), "SCR_RestrictedDeployableSpawnPointComponent"))
-					defaultChance = 5;	
-				
-				if(prefab.Contains("RearmingKit") || prefab.Contains("MedicalKit"))
-					arsenalItem.SetShouldSpawn(false);		
+				//if(prefab.Contains("RearmingKit") || prefab.Contains("MedicalKit"))
+				//	arsenalItem.SetShouldSpawn(false);
 				
 				arsenalItem.SetItemMaxSpawnCount(defaultCount);
 				arsenalItem.SetItemChanceToSpawn(defaultChance);
