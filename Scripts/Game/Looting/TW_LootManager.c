@@ -4,6 +4,13 @@ enum TW_ResourceNameType
 	DisplayName
 };
 
+class TW_LootSettingsInterface : TW_SettingsInterface<LootManagerSettings>
+{
+	
+}
+
+typedef TW_SettingsManager<ref TW_LootSettingsInterface<LootManagerSettings>> LootSettingsManager;
+
 
 sealed class TW_LootManager 
 {
