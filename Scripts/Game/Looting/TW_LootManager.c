@@ -4,6 +4,13 @@ enum TW_ResourceNameType
 	DisplayName
 };
 
+class TW_LootSettingsInterface : TW_SettingsInterface<LootManagerSettings>
+{
+	
+}
+
+typedef TW_SettingsManager<ref TW_LootSettingsInterface<LootManagerSettings>> LootSettingsManager;
+
 
 sealed class TW_LootManager 
 {
@@ -34,6 +41,7 @@ sealed class TW_LootManager
 	static const string LootFileName = "$profile:lootmap.json";	
 	
 	private ref LootManagerSettings m_Settings;
+	private SCR_BaseGameMode m_GameMode;
 		
 	LootManagerSettings GetLootSettings() { return m_Settings; }
 	bool ShouldSpawnMagazine() { return m_Settings.ShouldSpawnMagazine; }
@@ -342,30 +350,77 @@ sealed class TW_LootManager
 		
 	}
 	
+	
 	//! Initialize the entire loot system
 	void Initialize()
 	{
-		SCR_BaseGameMode gameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());
+		m_GameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());
 		
-		gameMode.GetOnInitializePlugins().Insert(InitializeLootTable);
-		gameMode.GetOnGameStart().Insert(DelayInitialize);
+		ref TW_MonitorPositions monitor = TW_MonitorPositions.GetInstance();
+		
+		if(!monitor)
+		{
+			Print("TrainWreck: Position monitor is null. Unable to initialize Loot Manager", LogLevel.ERROR);
+			return;
+		}
+		
+		monitor.GetOnGridSystemChanged().Insert(OnPositionMonitorChanged);
+		m_GameMode.GetOnInitializePlugins().Insert(AddListeners);
+		
+		m_GameMode.GetOnGameStarted().Insert(DelayInitialize);
 	}
 	
-	private void DelayInitialize()
+	private void AddListeners()
+	{
+		ref TW_MonitorPositions monitor = TW_MonitorPositions.GetInstance();
+		
+		InitializeLootTable();
+		
+		monitor.AddGridSystem(m_Settings.RespawnSettings.GridSize, m_Settings.RespawnSettings.RespawnLootRadius, m_Settings.RespawnSettings.DeadZoneRadius);
+		
+		m_GameMode.GetOnPlayerPositionsUpdated(m_Settings.RespawnSettings.GridSize).Insert(OnPlayerPositionsChanged);
+		monitor.GetGridUpdate(m_Settings.RespawnSettings.GridSize).Insert(OnPlayerPositionsChanged);
+	}
+	
+	private void OnPlayerPositionsChanged(GridUpdateEvent gridInfo)
+	{
+		m_AntiSpawnPlayerLocations.Clear();
+		m_AntiSpawnPlayerLocations.Copy(gridInfo.GetAntiChunks());
+		m_PlayerLocations.Clear();
+		m_PlayerLocations.Copy(gridInfo.GetPlayerChunks());
+	}
+	
+	//! This should keep
+	private void OnPositionMonitorChanged(int oldSize, int newSize, TW_Grid newGrid)
 	{
 		ref array<TW_LootableInventoryComponent> entries = {};
 		int count = s_GlobalContainerGrid.GetAllItems(entries);
 		
-		s_GlobalContainerGrid = new TW_GridCoordArrayManager<TW_LootableInventoryComponent>(m_Settings.RespawnSettings.GridSize);
+		s_GlobalContainerGrid = new TW_GridCoordArrayManager<TW_LootableInventoryComponent>(newGrid.GetGridSize());
 		
 		foreach(TW_LootableInventoryComponent container : entries)
 			if(container)
 				s_GlobalContainerGrid.InsertByWorld(container.GetOwner().GetOrigin(), container);
+	}
+	
+	private void DelayInitialize()
+	{
+		if(IsDebug())
+			Print("TrainWreck: Initializing Loot System");
+		
+		ref TW_OnPlayerPositionsChangedInvoker invoker = m_GameMode.GetOnPlayerPositionsUpdated(m_Settings.RespawnSettings.GridSize);
 		
 		if(m_Settings.RespawnSettings.IsLootRespawnable)
 		{
-			GetGame().GetCallqueue().CallLater(CheckPlayerLocations, 1000 * 10, true);
+			if(IsDebug())
+				Print("TrainWreck: Loot Respawn System Enabled...");
+			
 			GetGame().GetCallqueue().CallLater(RespawnLootProcessor, 1000 * GetRespawnCheckInterval(), true);
+		}
+		else
+		{
+			if(invoker)
+				invoker.Remove(OnPlayerPositionsChanged);
 		}		
 	}
 	
@@ -389,57 +444,6 @@ sealed class TW_LootManager
 			m_InteractedWithContainers.RemoveItem(container);
 			container.SetInteractedWith(false);
 		}		
-	}
-	
-	private void CheckPlayerLocations()
-	{
-		ref set<string> currentPlayerChunks = new set<string>();
-		
-		m_PlayerIds.Clear();
-		GetGame().GetPlayerManager().GetPlayers(m_PlayerIds);
-		
-		IEntity player;
-		
-		ref set<string> chunksAroundPlayer = new set<string>();
-		bool locationsChanged = false;
-		
-		// Figure out where players are
-		foreach(int playerId : m_PlayerIds)
-		{
-			player = GetGame().GetPlayerManager().GetPlayerControlledEntity(playerId);
-			
-			if(!player)
-				continue;
-			
-			chunksAroundPlayer.Clear();
-			TW_Util.AddSurroundingGridSquares(m_AntiSpawnPlayerLocations, player.GetOrigin(), m_Settings.RespawnSettings.DeadZoneRadius, m_Settings.RespawnSettings.GridSize);
-			TW_Util.AddSurroundingGridSquares(chunksAroundPlayer, player.GetOrigin(), m_Settings.RespawnSettings.RespawnLootRadius, m_Settings.RespawnSettings.GridSize);	
-			
-			foreach(string chunk : chunksAroundPlayer)
-			{
-				if(!m_PlayerLocations.Contains(chunk))
-				{
-					locationsChanged = true;
-					m_PlayerLocations.Insert(chunk);
-				}
-				
-				if(!currentPlayerChunks.Contains(chunk))
-					currentPlayerChunks.Insert(chunk);
-			}
-		}
-		
-		// Remove old positions that aren't in use anymore
-		int count = m_PlayerLocations.Count();
-		for(int i = 0; i < count; i++)
-		{
-			string chunk = m_PlayerLocations.Get(i);
-			if(!currentPlayerChunks.Contains(chunk))
-			{
-				m_PlayerLocations.Remove(i);
-				i -= 1;
-				count -= 1;
-			}
-		}				
 	}
 	
 	private static int GetNextIndex(int current, int length)
@@ -466,6 +470,11 @@ sealed class TW_LootManager
 	{
 		int length = m_InteractedWithContainers.Count();
 		
+		if(TW_LootManager.GetInstance().IsDebug())
+		{
+			PrintFormat("TrainWreck: # of looted containers: %1", length);
+		}
+		
 		// Nothing to process if we don't have containers to check
 		if(length == 0) 
 			return;	
@@ -484,9 +493,36 @@ sealed class TW_LootManager
 			
 			if(!container)
 			{
+				if(TW_LootManager.GetInstance().IsDebug())
+				{
+					Print("TrainWreck: Loot Container is null: removing from list...", LogLevel.WARNING);
+				}
+				
 				m_InteractedWithContainers.Remove(m_RespawnLootProcessor_ContainerIndex);
 				length -= 1;
 				m_RespawnLootProcessor_ContainerIndex = GetPreviousIndex(m_RespawnLootProcessor_ContainerIndex, length);
+				continue;
+			}
+			
+			if(TW_LootManager.GetInstance().IsDebug())
+			{
+				Print("TrainWreck: Can spawn loot: %1", container.CanRespawnLoot());
+			}
+			
+			string coordinate = TW_Util.ToGridText(container.GetOwner().GetOrigin(), TW_LootManager.GetInstance().GetLootSettings().RespawnSettings.GridSize);
+			
+			if(TW_LootManager.GetInstance().IsDebug())
+			{
+				PrintFormat("TrainWreck: Loot Container Coordinate: %1", coordinate);
+			}
+			
+			if(m_AntiSpawnPlayerLocations.Contains(coordinate))
+			{
+				if(TW_LootManager.GetInstance().IsDebug())
+				{
+					PrintFormat("TrainWreck: %1 - is within a no-respawn area around a player", coordinate, LogLevel.WARNING);
+				}
+				
 				continue;
 			}
 			

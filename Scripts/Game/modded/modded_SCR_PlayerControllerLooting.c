@@ -2,7 +2,10 @@ modded class SCR_PlayerController
 {
 	void OnOpenLootableStorageContainer(TW_LootableInventoryComponent component)
 	{		
-		Rpc(RplAsk_Server_OpenStorageContainer, TW_Global.GetEntityRplId(component.GetOwner()));
+		if(Replication.IsClient())
+			Rpc(RplAsk_Server_OpenStorageContainer, TW_Global.GetEntityRplId(component.GetOwner()));
+		else
+			SetContainerInteraction(component);
 	}
 	
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
@@ -24,13 +27,23 @@ modded class SCR_PlayerController
 			return;
 		}
 		
-		container.SetInteractedWith(true);
-		
+		SetContainerInteraction(container);
+	}
+	
+	private void SetContainerInteraction(TW_LootableInventoryComponent container)
+	{
 		TW_LootManager lootManager = TW_LootManager.GetInstance();
 		
 		if(lootManager)
 		{
 			lootManager.PrintSettings();
+			
+			if(lootManager.IsDebug())
+			{
+				Print("TrainWreck: Setting container interacted with to true");
+			}
 		}
-	}		
+		
+		container.SetInteractedWith(true);
+	}
 };
