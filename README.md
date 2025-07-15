@@ -1,1 +1,1 @@
-Checkout our documentation at https://trainwreckers.github.io/TrainWreckLooting/
+Documentation - https://trainwreckers.github.io/documentation
