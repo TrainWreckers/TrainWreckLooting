@@ -356,19 +356,19 @@ sealed class TW_LootManager
 	{
 		m_GameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());
 		
-		ref TW_MonitorPositions monitor = TW_MonitorPositions.GetInstance();
-		
-		if(!monitor)
+		if(!TW_MonitorPositions.GetInstance())
 		{
 			Print("TrainWreck: Position monitor is null. Unable to initialize Loot Manager", LogLevel.ERROR);
 			return;
 		}
 		
-		monitor.GetOnGridSystemChanged().Insert(OnPositionMonitorChanged);
 		m_GameMode.GetOnInitializePlugins().Insert(AddListeners);
 		
 		m_GameMode.GetOnGameStarted().Insert(DelayInitialize);
 	}
+	
+	const string LootSpawnRadius = "TRAINWRECK_LOOT_RADIUS";
+	const string LootAntiSpawnRadius = "TRAINWRECK_LOOT_ANTIRADIUS";
 	
 	private void AddListeners()
 	{
@@ -376,31 +376,41 @@ sealed class TW_LootManager
 		
 		InitializeLootTable();
 		
-		monitor.AddGridSystem(m_Settings.RespawnSettings.GridSize, m_Settings.RespawnSettings.RespawnLootRadius, m_Settings.RespawnSettings.DeadZoneRadius);
-		
-		m_GameMode.GetOnPlayerPositionsUpdated(m_Settings.RespawnSettings.GridSize).Insert(OnPlayerPositionsChanged);
-		monitor.GetGridUpdate(m_Settings.RespawnSettings.GridSize).Insert(OnPlayerPositionsChanged);
+		if(m_Settings.RespawnSettings.IsLootRespawnable)
+		{
+			ref TW_OnPlayerPositionsChangedInvoker onRadiusCallback = monitor.AddGridSubscription(LootSpawnRadius, m_Settings.RespawnSettings.GridSize, m_Settings.RespawnSettings.RespawnLootRadius);
+			ref TW_OnPlayerPositionsChangedInvoker onAntiRadiusCallback = monitor.AddGridSubscription(LootAntiSpawnRadius, m_Settings.RespawnSettings.GridSize, m_Settings.RespawnSettings.DeadZoneRadius);
+			
+			onRadiusCallback.Insert(OnPlayerPositionsChanged);
+			onAntiRadiusCallback.Insert(OnPlayerPositionsChanged_AntiRadius);
+		}
 	}
 	
 	private void OnPlayerPositionsChanged(GridUpdateEvent gridInfo)
 	{
-		m_AntiSpawnPlayerLocations.Clear();
-		m_AntiSpawnPlayerLocations.Copy(gridInfo.GetAntiChunks());
 		m_PlayerLocations.Clear();
 		m_PlayerLocations.Copy(gridInfo.GetPlayerChunks());
 	}
 	
+	private void OnPlayerPositionsChanged_AntiRadius(GridUpdateEvent gridInfo)
+	{
+		m_AntiSpawnPlayerLocations.Clear();
+		m_AntiSpawnPlayerLocations.Copy(gridInfo.GetPlayerChunks());
+	}
+	
 	//! This should keep
-	private void OnPositionMonitorChanged(int oldSize, int newSize, TW_Grid newGrid)
+	private void OnLootGridSizeChanged(int oldSize, int newSize)
 	{
 		ref array<TW_LootableInventoryComponent> entries = {};
 		int count = s_GlobalContainerGrid.GetAllItems(entries);
 		
-		s_GlobalContainerGrid = new TW_GridCoordArrayManager<TW_LootableInventoryComponent>(newGrid.GetGridSize());
+		/*
+			s_GlobalContainerGrid = new TW_GridCoordArrayManager<TW_LootableInventoryComponent>(newGrid.GetGridSize());
 		
 		foreach(TW_LootableInventoryComponent container : entries)
 			if(container)
 				s_GlobalContainerGrid.InsertByWorld(container.GetOwner().GetOrigin(), container);
+		*/
 	}
 	
 	private void DelayInitialize()
@@ -408,20 +418,13 @@ sealed class TW_LootManager
 		if(IsDebug())
 			Print("TrainWreck: Initializing Loot System");
 		
-		ref TW_OnPlayerPositionsChangedInvoker invoker = m_GameMode.GetOnPlayerPositionsUpdated(m_Settings.RespawnSettings.GridSize);
-		
 		if(m_Settings.RespawnSettings.IsLootRespawnable)
 		{
 			if(IsDebug())
 				Print("TrainWreck: Loot Respawn System Enabled...");
 			
 			GetGame().GetCallqueue().CallLater(RespawnLootProcessor, 1000 * GetRespawnCheckInterval(), true);
-		}
-		else
-		{
-			if(invoker)
-				invoker.Remove(OnPlayerPositionsChanged);
-		}		
+		}	
 	}
 	
 	private static ref set<string> m_PlayerLocations = new set<string>();
