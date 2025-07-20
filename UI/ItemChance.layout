@@ -1,0 +1,114 @@
+FrameWidgetClass {
+ Name "rootFrame"
+ components {
+  TW_LootItemChanceHandler "{65E6A11D8C795741}" {
+  }
+ }
+ {
+  PanelWidgetClass "{65E34CD81829B3B9}" {
+   Name "Panel0"
+   Slot FrameWidgetSlot "{65652BDDAA10ADD6}" {
+    PositionX 0
+    OffsetLeft 0
+    PositionY 0
+    OffsetTop 0
+    SizeX 144.56
+    OffsetRight -144.56
+    SizeY 64
+    OffsetBottom -64
+    SizeToContent 1
+   }
+   {
+    ButtonWidgetClass "{65E8A97A5140CAAD}" : "{5D5055E10FD00549}UI/layouts/WidgetLibrary/ToolBoxes/WLib_Checkbox.layout" {
+     Name "EnabledCheckbox"
+     Slot FrameWidgetSlot "{65E8A97A5140CAB3}" {
+      PositionX 484.994
+      OffsetLeft 484.994
+      PositionY 8.395
+      OffsetTop 8.395
+      SizeX 306.749
+      OffsetRight -791.743
+      SizeY 56
+      OffsetBottom -64.395
+     }
+     components {
+      SCR_CheckboxComponent "{546A9B7B0A8AD927}" {
+       m_sLabel "Is Enabled"
+      }
+     }
+    }
+    ButtonWidgetClass "{65E34CD81829B3B8}" : "{4A41296C0E9A889F}UI/layouts/WidgetLibrary/WLib_Slider.layout" {
+     Name "ChanceSlider"
+     Slot FrameWidgetSlot "{65AE1770EB7F0A64}" {
+      PositionX 483.613
+      OffsetLeft 483.613
+      PositionY 124.104
+      OffsetTop 124.104
+      SizeX 312.842
+      OffsetRight -796.455
+      SizeY 56
+      OffsetBottom -180.104
+     }
+     components {
+      SCR_SliderComponent "{548294960C7399D9}" {
+       m_sLabel "Weight"
+       m_fValue 0
+       m_fMaxValue 100
+       m_fStep 1
+       m_sFormatText "%1"
+      }
+     }
+    }
+    TextWidgetClass "{65E34CD81829B3A4}" {
+     Name "ItemName"
+     Slot FrameWidgetSlot "{65652BDDA07CE2CC}" {
+      PositionX 21.783
+      OffsetLeft 21.783
+      PositionY 10.232
+      OffsetTop 10.232
+      SizeX 514.367
+      OffsetRight -536.15
+      SizeY 30
+      OffsetBottom -40.232
+      SizeToContent 1
+     }
+    }
+    ItemPreviewWidgetClass "{65E8A1457EDF200F}" {
+     Name "ItemPreview"
+     Slot FrameWidgetSlot "{65E8A1434FDD5B5E}" {
+      PositionX 12.451
+      OffsetLeft 12.451
+      PositionY 41.268
+      OffsetTop 41.268
+      SizeX 462.348
+      OffsetRight -474.799
+      SizeY 128.61
+      OffsetBottom -169.877
+     }
+    }
+    ButtonWidgetClass "{65E6A1164EE94B46}" : "{4A41296C0E9A889F}UI/layouts/WidgetLibrary/WLib_Slider.layout" {
+     Name "AmountSlider"
+     Slot FrameWidgetSlot "{65AE1770EB7F0A64}" {
+      PositionX 482.706
+      OffsetLeft 482.706
+      PositionY 66.03
+      OffsetTop 66.03
+      SizeX 312.842
+      OffsetRight -795.548
+      SizeY 56
+      OffsetBottom -122.03
+     }
+     components {
+      SCR_SliderComponent "{548294960C7399D9}" {
+       m_sLabel "Amount"
+       m_fValue 0
+       m_fMaxValue 100
+       m_fStep 1
+       m_sFormatText "%1"
+      }
+     }
+    }
+   }
+  }
+ }
+}

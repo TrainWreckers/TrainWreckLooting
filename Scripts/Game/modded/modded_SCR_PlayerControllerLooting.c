@@ -46,4 +46,22 @@ modded class SCR_PlayerController
 		
 		container.SetInteractedWith(true);
 	}
+	
+	void UpdateLootSettings(LootManagerSettings settings)
+	{
+		// If Server --> We don't have to RPC
+		if(Replication.IsServer())
+		{
+			Print("TrainWreck: PlayerController-UpdateLootSettings - Must be called by client", LogLevel.WARNING);
+			return;
+		}
+		
+		Rpc(Rpc_Server_OnLootSettingsChanged, TW_Util.ToJson(settings, true));
+	}
+	
+	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
+	private void Rpc_Server_OnLootSettingsChanged(string settings)
+	{
+		GetGameMode().UpdateLootSettings(LootManagerSettings.LoadFromFile(settings));
+	}
 };

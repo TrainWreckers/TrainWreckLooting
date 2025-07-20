@@ -1,0 +1,165 @@
+FrameWidgetClass {
+ Name "rootFrame"
+ {
+  HorizontalLayoutWidgetClass "{65E34CD81021DD20}" {
+   Name "Window"
+   Slot FrameWidgetSlot "{56EEDE05AD6DF1E2}" {
+    Anchor 0 0 1 1
+    PositionX -1.099
+    PositionY 0
+    OffsetTop 0
+    SizeX 0
+    OffsetRight 0
+    SizeY 0
+    OffsetBottom 0
+   }
+   {
+    OverlayWidgetClass "{65E34CD81021DD23}" {
+     Name "Content"
+     Slot LayoutSlot "{56EEDE05BFED5D35}" {
+      SizeMode Fill
+     }
+     {
+      ImageWidgetClass "{65E34CD81021DD22}" {
+       Name "Background"
+       Slot OverlayWidgetSlot "{56EEDE05C871C02C}" {
+        HorizontalAlign 3
+        VerticalAlign 3
+       }
+       Opacity 0.5
+       Color 0 0 0 1
+      }
+      BlurWidgetClass "{65E34CD81021DD2D}" {
+       Name "Blur"
+       Slot OverlayWidgetSlot "{56EEDE05D754F42B}" {
+        HorizontalAlign 3
+        VerticalAlign 3
+       }
+       Color 0.305 0.305 0.305 1
+       Intensity 0.7
+      }
+      ImageWidgetClass "{65E34CD810214E6A}" {
+       Name "Stripe"
+       Slot OverlayWidgetSlot "{56EEDE05C871C02C}" {
+        HorizontalAlign 3
+        VerticalAlign 0
+       }
+       Color 0.761 0.392 0.08 1
+       components {
+        SCR_SetModeColorEditorUIComponent "{56FB36E8579C2A5F}" {
+         m_bUpdateOnModeChanged 1
+        }
+       }
+       Size 4 4
+      }
+      HorizontalLayoutWidgetClass "{65E34CD810214E68}" {
+       Name "SpaceLayout"
+       Slot OverlayWidgetSlot "{5720DE53ABB7CBED}" {
+        Padding 0 72 0 72
+       }
+       {
+        FrameWidgetClass "{65E34CD810215690}" {
+         Name "SpaceLeft"
+         Slot LayoutSlot "{5720ECBBBD66ED2B}" {
+          SizeMode Fill
+          FillWeight 0.025
+         }
+        }
+        SizeLayoutWidgetClass "{65E34CD810215691}" {
+         Name "Alignment"
+         Slot LayoutSlot "{5720DE53A848E0CC}" {
+          SizeMode Fill
+         }
+         AllowWidthOverride 1
+         WidthOverride 1344
+         AllowHeightOverride 1
+         HeightOverride 936
+         {
+          VerticalLayoutWidgetClass "{65E34CD810215696}" {
+           Name "ContentLayout"
+           Slot AlignableSlot "{56EEDE0403BED8AE}" {
+            HorizontalAlign 3
+            VerticalAlign 3
+           }
+           "Fill Origin" Center
+           {
+            HorizontalLayoutWidgetClass "{65E34CD81022B554}" {
+             Name "HorizontalLayout1"
+             Slot LayoutSlot "{65AEA9AD8A392B2A}" {
+             }
+             {
+              TextWidgetClass "{65E34CD81022B555}" : "{9D643D214767D616}UI/layouts/WidgetLibrary/TextWidgets/Text_Heading2.layout" {
+               Name "Title"
+               Slot LayoutSlot "{56EEDE046853BD3D}" {
+                Padding 0 0 0 12
+               }
+               Text "Train Wreck Loot Settings"
+              }
+              HorizontalLayoutWidgetClass "{65E34CD81022B556}" {
+               Name "HorizontalLayout0"
+               Slot LayoutSlot "{65AEA9AE1104DC94}" {
+                SizeMode Fill
+               }
+              }
+              ButtonWidgetClass "{65E34CD810222ADD}" : "{0114A06AD44D49BD}UI/layouts/WidgetLibrary/Buttons/DialogButtonCancel.layout" {
+               Name "SaveButton"
+               Slot LayoutSlot "{5CC2F7A314C9440B}" {
+                HorizontalAlign 1
+               }
+               components {
+                SCR_InputButtonComponent "{5D346C3DD81D95CD}" {
+                 m_sLabel "Save & Exit"
+                }
+               }
+              }
+             }
+            }
+            ImageWidgetClass "{65E34CD810222AC5}" {
+             Name "UpperStripe"
+             Slot LayoutSlot "{56EEDE07C9F827C2}" {
+              Padding 0 0 0 12
+             }
+             Color 0.761 0.392 0.08 1
+             Image ""
+             Size 128 2
+            }
+            ScrollLayoutWidgetClass "{65E34CD81022030A}" {
+             Name "ScrollLayout0"
+             Slot LayoutSlot "{65CCA1FF1F386D8D}" {
+              SizeMode Fill
+             }
+             {
+              VerticalLayoutWidgetClass "{65E34CD81022030B}" {
+               Name "ContentArea"
+               Slot AlignableSlot "{65CCA1FF908EAD1A}" {
+               }
+              }
+             }
+            }
+            ImageWidgetClass "{65E34CD810220304}" {
+             Name "LowerStripe"
+             Slot LayoutSlot "{56EEDE06187FACF9}" {
+              Padding 0 12 0 24
+             }
+             Opacity 0.1
+             Size 2 2
+            }
+           }
+          }
+         }
+        }
+        FrameWidgetClass "{65E34CD81023ACCF}" {
+         Name "SpaceRight"
+         Slot LayoutSlot "{5720ECBBBD66ED2B}" {
+          SizeMode Fill
+          FillWeight 0.025
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+}

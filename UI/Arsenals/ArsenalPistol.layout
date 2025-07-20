@@ -1,0 +1,35 @@
+FrameWidgetClass "{65E564272C43FA39}" {
+ Name "rootFrame"
+ {
+  SizeLayoutWidgetClass "{65E564272C43FA3E}" {
+   Name "SizeLayout0"
+   Slot FrameWidgetSlot "{65CCA1C83DB39ADF}" {
+    SizeToContent 1
+   }
+   AllowHeightOverride 1
+   HeightOverride 780
+   {
+    HorizontalLayoutWidgetClass "{65E564272C43FA3C}" {
+     Name "HorizontalLayout0"
+     Slot AlignableSlot "{65CCA1C83EF4C6BA}" {
+     }
+     {
+      ScrollLayoutWidgetClass "{65E564272C43FA3D}" {
+       Name "ScrollLayout0"
+       Slot LayoutSlot "{65E564269414A010}" {
+        SizeMode Fill
+       }
+       {
+        VerticalLayoutWidgetClass "{65E564272C43FA42}" {
+         Name "ContentArea"
+         Slot AlignableSlot "{65CCA1CD3AC05F0C}" {
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+}

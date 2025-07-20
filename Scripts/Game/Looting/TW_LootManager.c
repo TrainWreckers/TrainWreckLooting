@@ -4,14 +4,6 @@ enum TW_ResourceNameType
 	DisplayName
 };
 
-class TW_LootSettingsInterface : TW_SettingsInterface<LootManagerSettings>
-{
-	
-}
-
-typedef TW_SettingsManager<ref TW_LootSettingsInterface<LootManagerSettings>> LootSettingsManager;
-
-
 sealed class TW_LootManager 
 {
 	private static TW_LootManager s_Instance;
@@ -254,9 +246,19 @@ sealed class TW_LootManager
 		return entries;
 	}
 	
-	void InitializeLootTable()
+	void InitializeLootTable(LootManagerSettings incomingSettings = null)
 	{
-		SCR_Enum.GetEnumValues(SCR_EArsenalItemType, s_ArsenalItemTypes);
+		if(s_ArsenalItemTypes.IsEmpty())
+			SCR_Enum.GetEnumValues(SCR_EArsenalItemType, s_ArsenalItemTypes);
+		
+		if(incomingSettings)
+		{
+			if(!LootManagerSettings.SaveToFile(incomingSettings))
+			{
+				PrintFormat("TrainWreck: Failed to save incoming loot settings\n%1", TW_Util.ToJson(incomingSettings), LogLevel.ERROR);
+				return;
+			}
+		}
 		
 		// If lootmap already exists -- load everything from file
 		// Then merge things that are in-game
