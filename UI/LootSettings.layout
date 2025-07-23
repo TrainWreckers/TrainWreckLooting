@@ -112,6 +112,27 @@ FrameWidgetClass {
                 }
                }
               }
+              ButtonWidgetClass "{65E8E89067AF862F}" : "{51898FF369FE5EB8}UI/layouts/WidgetLibrary/Buttons/DialogButtonConfirm.layout" {
+               Name "ResetButton"
+               Slot LayoutSlot "{5CC2F7A314C9440B}" {
+               }
+               components {
+                SCR_InputButtonComponent "{5D346C3DD81D95CD}" {
+                 m_sLabel "Reset to Default"
+                }
+               }
+               {
+                HorizontalLayoutWidgetClass "{5DB89B776AA9CEFF}" {
+                 Prefab "{5DB89B776AA9CEFF}"
+                 {
+                  RichTextWidgetClass "{5DB89B776317E2A7}" {
+                   Prefab "{5DB89B776317E2A7}"
+                   Text "Reset to Default"
+                  }
+                 }
+                }
+               }
+              }
              }
             }
             ImageWidgetClass "{65E34CD810222AC5}" {

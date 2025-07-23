@@ -59,9 +59,31 @@ modded class SCR_PlayerController
 		Rpc(Rpc_Server_OnLootSettingsChanged, TW_Util.ToJson(settings, true));
 	}
 	
+	void ResetLootSettings()
+	{
+		if(Replication.IsServer())
+		{
+			Print("TrainWreck: PlayerController->ResetLootSettings - must be called by client", LogLevel.WARNING);
+			return;
+		}
+		
+		Rpc(Rpc_Server_OnResetLootSettings);
+	}
+	
+	private SCR_BaseGameMode GetGameMode()
+	{
+		return SCR_BaseGameMode.Cast(GetGame().GetGameMode());
+	}
+	
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	private void Rpc_Server_OnLootSettingsChanged(string settings)
 	{
 		GetGameMode().UpdateLootSettings(LootManagerSettings.LoadFromFile(settings));
+	}
+	
+	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
+	private void Rpc_Server_OnResetLootSettings()
+	{
+		GetGameMode().ResetLootSettings();
 	}
 };

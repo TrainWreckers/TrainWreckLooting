@@ -47,15 +47,21 @@ modded class SCR_BaseGameMode
 		
 		Print("TrainWreck: Updating Loot settings");
 		
-		if(!LootManagerSettings.SaveToFile(settings))
+		TW_LootManager.GetInstance().InitializeLootTable(settings);
+		Rpc(Rpc_Broadcast_LootManagerSettings, TW_Util.ToJson(TW_LootManager.GetInstance().GetLootSettings(), true));
+	}
+	
+	void ResetLootSettings()
+	{
+		if(Replication.IsClient())
 		{
-			PrintFormat("TrainWreck: UpdateLootSettings<SaveToFile> - Failed. %1", TW_Util.ToJson(settings, true));
+			Print("TrainWreck: Unable to reset loot settings - Invoked from client");
 			return;
 		}
 		
-		TW_LootManager.GetInstance().InitializeLootTable(settings);
-		ref LootManagerSettings fromFile = LootManagerSettings.LoadFromFile();
-		Rpc(Rpc_Broadcast_LootManagerSettings, TW_Util.ToJson(fromFile, true));
+		Print("TrainWreck: Resetting loot settings");
+		TW_LootManager.GetInstance().InitializeLootTable(resetSettings: true);
+		Rpc(Rpc_Broadcast_LootManagerSettings, TW_Util.ToJson(TW_LootManager.GetInstance().GetLootSettings(), true));
 	}
 	
 	[RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]

@@ -34,6 +34,18 @@ class TW_LootSettingsProxyInterface : TW_SettingsInterface<LootManagerSettings>
 	
 	LootManagerSettings GetLootSettings() { return _lootSettings; }
 	
+	void Reset()
+	{
+		if(!Replication.IsClient())
+		{
+			PrintFormat("TrainWreck: TW_LootSettingsProxyInterface: Reset must be invoked by client", LogLevel.ERROR);
+			return;
+		}
+		
+		SCR_PlayerController player = SCR_PlayerController.Cast(GetGame().GetPlayerController());
+		player.ResetLootSettings();
+	}
+	
 	override void SaveSettings()
 	{
 		if(!Replication.IsClient())

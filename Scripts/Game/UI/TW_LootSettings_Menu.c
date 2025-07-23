@@ -6,6 +6,7 @@ class TW_LootSettings_Menu: MenuBase
 	private Widget _contentArea;
 	
 	private SCR_InputButtonComponent saveButton;
+	private SCR_InputButtonComponent resetButton;
 	
 	protected override void OnMenuOpen()
 	{
@@ -25,6 +26,7 @@ class TW_LootSettings_Menu: MenuBase
 		_contentArea = rootWidget.FindAnyWidget("ContentArea");
 		
 		saveButton = SCR_InputButtonComponent.Cast(rootWidget.FindAnyWidget("SaveButton").FindHandler(SCR_InputButtonComponent));
+		resetButton = SCR_InputButtonComponent.Cast(rootWidget.FindAnyWidget("ResetButton").FindHandler(SCR_InputButtonComponent));
 		
 		AddListeners();
 		Initialize();
@@ -75,6 +77,17 @@ class TW_LootSettings_Menu: MenuBase
 	
 	private void Reset()
 	{
+		if(Replication.IsServer())
+		{
+			SCR_BaseGameMode gameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());
+			gameMode.ResetLootSettings();
+		}
+		else
+		{
+			ref TW_LootSettingsProxyInterface<LootManagerSettings> interface = TW_SettingsManager<ref TW_LootSettingsProxyInterface<LootManagerSettings>>.GetInstance().GetInterface();
+			interface.Reset();
+		}
+		
 		Close();
 	}
 	
@@ -86,6 +99,7 @@ class TW_LootSettings_Menu: MenuBase
 	private void AddListeners()
 	{
 		saveButton.m_OnClicked.Insert(Save);
+		resetButton.m_OnClicked.Insert(Reset);
 		
 		InputManager manager = GetGame().GetInputManager();
 		if(!manager) return;
@@ -95,6 +109,8 @@ class TW_LootSettings_Menu: MenuBase
 	private void RemoveListeners()
 	{
 		saveButton.m_OnClicked.Remove(Save);
+		resetButton.m_OnClicked.Remove(Reset);
+		
 		InputManager manager = GetGame().GetInputManager();
 		if(!manager) return;
 		manager.ResetContext("TrainWreckLootingSettings");

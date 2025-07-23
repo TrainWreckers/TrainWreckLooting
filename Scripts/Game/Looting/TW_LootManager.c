@@ -200,6 +200,13 @@ sealed class TW_LootManager
 			
 			count++;
 			indicies.Insert(randomIndex);
+			
+			ref TW_LootConfigItem currentItem = items.Get(randomIndex);
+			if(!currentItem.isEnabled || currentItem.chanceToSpawn <= 0)
+			{
+				count -= 1;
+			}
+			
 			selected.Insert(items.Get(randomIndex).resourceName);
 		}
 		
@@ -246,10 +253,19 @@ sealed class TW_LootManager
 		return entries;
 	}
 	
-	void InitializeLootTable(LootManagerSettings incomingSettings = null)
+	void InitializeLootTable(LootManagerSettings incomingSettings = null, bool resetSettings=false)
 	{
 		if(s_ArsenalItemTypes.IsEmpty())
 			SCR_Enum.GetEnumValues(SCR_EArsenalItemType, s_ArsenalItemTypes);
+		
+		s_GlobalItems.Clear();
+		s_LootTable.Clear();
+		
+		if(resetSettings)
+		{
+			ref LootManagerSettings temp = new LootManagerSettings();
+			LootManagerSettings.SaveToFile(temp);
+		}
 		
 		if(incomingSettings)
 		{
@@ -267,7 +283,8 @@ sealed class TW_LootManager
 			Print(string.Format("TrainWreck: Detected loot table %1", LootFileName));
 			IngestLootTableFromFile(m_Settings);
 		}
-		else m_Settings = new LootManagerSettings();			
+		else 
+			m_Settings = new LootManagerSettings();			
 		
 		ref array<SCR_EntityCatalogEntry> catalogItems = GetMergedFactionCatalogs();
 		int entityCount = catalogItems.Count();
@@ -340,9 +357,6 @@ sealed class TW_LootManager
 			for(int i = 0; i < count; i++)
 			{
 				ref TW_LootConfigItem configItem = items.Get(i);
-				if(configItem.isEnabled || configItem.chanceToSpawn <= 0) 
-					continue;
-				
 				PrintFormat("TrainWreck-Looting: Removing '%1'. Enabled(%2) | Chance(%3)", configItem.resourceName, configItem.isEnabled, configItem.chanceToSpawn);
 				items.RemoveItem(configItem);
 				i -= 1;
@@ -719,6 +733,9 @@ sealed class TW_LootManager
 	
 	private static bool IngestLootTableFromFile(out LootManagerSettings settings)
 	{
+		s_LootTable.Clear();
+		s_GlobalItems.Clear();
+		
 		SCR_JsonLoadContext context = TW_Util.LoadJsonFile(LootFileName, true);
 		bool loadSuccess = context.ReadValue("", settings);
 		
