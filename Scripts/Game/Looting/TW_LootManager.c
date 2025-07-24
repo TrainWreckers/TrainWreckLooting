@@ -4,9 +4,16 @@ enum TW_ResourceNameType
 	DisplayName
 };
 
-sealed class TW_LootManager 
+/*!
+	TrainWreck Loot Manager
+	- Manages spawning loot into containers
+	- Manages respawning loot into containers that have been searched, so long as players aren't nearby nor interacted with the container in a period of time.				
+*/
+class TW_LootManager 
 {
 	private static TW_LootManager s_Instance;
+	
+	//! Singleton, return the active LootManager
 	static TW_LootManager GetInstance() { return s_Instance; }
 	
 	void TW_LootManager()
@@ -20,23 +27,36 @@ sealed class TW_LootManager
 		s_Instance = this;
 	}
 	
-	// Provide the ability to grab 
+	// Provide the ability to grab loot items by category type
 	private static ref map<SCR_EArsenalItemType, ref array<ref TW_LootConfigItem>> s_LootTable = new map<SCR_EArsenalItemType, ref array<ref TW_LootConfigItem>>();
 	
 	// This should contain the resource names of all items that are valid for saving/loading 
 	private static ref set<string> s_GlobalItems = new set<string>();
+	
+	//! Grid manager for loot containers
 	private static ref TW_GridCoordArrayManager<TW_LootableInventoryComponent> s_GlobalContainerGrid = new TW_GridCoordArrayManager<TW_LootableInventoryComponent>(100);
+	
+	//! All arsenal item types
 	private static ref array<SCR_EArsenalItemType> s_ArsenalItemTypes = {};
+	
+	//! Retrieve the grid manager for loot containers
 	static TW_GridCoordArrayManager<TW_LootableInventoryComponent> GetContainerGrid() { return s_GlobalContainerGrid; }
 	
 	private static bool HasLoaded = false;
+	
+	//! Path to lootmap.json file
 	static const string LootFileName = "$profile:lootmap.json";	
 	
 	private ref LootManagerSettings m_Settings;
 	private SCR_BaseGameMode m_GameMode;
-		
+	
+	//! Retrieve the LootManagerSettings	
 	LootManagerSettings GetLootSettings() { return m_Settings; }
+	
+	//! Can magazines spawn within weapons
 	bool ShouldSpawnMagazine() { return m_Settings.ShouldSpawnMagazine; }
+	
+	//! Retrieve the time ratio for containers that have not been searched
 	float GetUnlootedTimeRatio() 
 	{ 
 		if(!m_Settings || !m_Settings.RespawnSettings)
@@ -47,6 +67,8 @@ sealed class TW_LootManager
 		
 		return m_Settings.RespawnSettings.UnlootedTimeRatio; 
 	}
+	
+	//! Retrieve the time ratio for containers that have been searched
 	float GetSearchedTimeRatio() 
 	{ 
 		if(!m_Settings || !m_Settings.RespawnSettings)
@@ -58,6 +80,7 @@ sealed class TW_LootManager
 		return m_Settings.RespawnSettings.SearchedTimeRatio; 
 	}
 	
+	//! Retrieve Scav settings
 	ScavLootSettings GetScavSettings() { return m_Settings.ScavSettings; }
 	
 	bool IsDebug()
@@ -68,6 +91,7 @@ sealed class TW_LootManager
 		return m_Settings.ShowDebug;
 	}
 	
+	//! Returns a random percentage for ammo to spawn in magazine (based on configuration)
 	float GetRandomAmmoPercent() { return m_Settings.AmmoPercentageSetting.GetRandomPercentage() / m_Settings.AmmoPercentageSetting.Max; }
 	
 	//! Time after last player interaction loot can start to respawn
@@ -76,14 +100,17 @@ sealed class TW_LootManager
 	//! Number of items that can respawn, at most, overtime
 	int GetRespawnLootItemThreshold() { return m_Settings.RespawnSettings.NumberOfItemsToSpawnPerContainer; }
 	
+	//! Returns how often to process loot respawn check
 	int GetRespawnCheckInterval() { return m_Settings.RespawnSettings.RespawnLootTimerInSeconds; }
 
+	//! Register a lootable container
 	static void RegisterLootableContainer(TW_LootableInventoryComponent container)
 	{
 		if(s_GlobalContainerGrid)
 			s_GlobalContainerGrid.InsertByWorld(container.GetOwner().GetOrigin(), container);
 	}
 	
+	//! Remove a lootable container
 	static void UnregisterLootableContainer(TW_LootableInventoryComponent container)
 	{
 		if(s_GlobalContainerGrid)
@@ -96,6 +123,7 @@ sealed class TW_LootManager
 		return s_GlobalItems.Contains(resource);
 	}
 	
+	//! Does the flag contain the resource
 	static bool FlagHasResource(SCR_EArsenalItemType flags, ResourceName resource)
 	{
 		if(resource.IsEmpty())
@@ -120,6 +148,7 @@ sealed class TW_LootManager
 		return false;
 	}
 			
+	//! Return an aggregate list of prefabs based on the selected flags.
 	void SelectRandomPrefabsFromFlags(SCR_EArsenalItemType flags, int count, notnull map<string, int> selected, TW_ResourceNameType type = TW_ResourceNameType.DisplayName)
 	{
 		int selectedCount = 0;
@@ -161,6 +190,7 @@ sealed class TW_LootManager
 			SelectRandomPrefabsFromFlags(flags, count - selectedCount, selected, type);
 	}
 	
+	//! Print the lootmap to console
 	void PrintSettings()
 	{
 		if(!IsDebug())
@@ -177,6 +207,7 @@ sealed class TW_LootManager
 		Print("------------------------");
 	}
 	
+	//! Select random prefabs from category N amount of times
 	int SelectRandomPrefabsFromType(SCR_EArsenalItemType flag, int randomCount, notnull array<ResourceName> selected)
 	{
 		if(!s_LootTable.Contains(flag))
@@ -213,6 +244,7 @@ sealed class TW_LootManager
 		return count;
 	}
 	
+	//! Return an aggregate list of Items from each faction
 	array<SCR_EntityCatalogEntry> GetMergedFactionCatalogs()
 	{		
 		SCR_FactionManager manager = SCR_FactionManager.Cast(GetGame().GetFactionManager());
@@ -253,6 +285,9 @@ sealed class TW_LootManager
 		return entries;
 	}
 	
+	/*!
+		
+	*/
 	void InitializeLootTable(LootManagerSettings incomingSettings = null, bool resetSettings=false)
 	{
 		if(s_ArsenalItemTypes.IsEmpty())
