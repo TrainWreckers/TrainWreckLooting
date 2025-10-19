@@ -49,7 +49,7 @@ class LootManagerSettings
 		AmmoPercentageSetting.Max = 100;
 	}
 
-	static void GetDefaultChanceForItem(SCR_ArsenalItem arsenalItem)
+	static int GetDefaultChanceForItem(SCR_ArsenalItem arsenalItem)
 	{
 		return 25;
 	}
