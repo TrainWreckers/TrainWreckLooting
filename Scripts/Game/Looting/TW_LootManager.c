@@ -300,7 +300,7 @@ sealed class TW_LootManager
 				arsenalItem.SetItemPrefab(prefab);
 				
 				int defaultCount = 1;
-				int defaultChance = 25;
+				int defaultChance = LootManagerSettings.GetDefaultChanceForItem(arsenalItem);
 				
 				//if(SCR_BaseContainerTools.FindComponentSource(Resource.Load(prefab), "MagazineComponent"))
 				//	defaultCount = 4;
