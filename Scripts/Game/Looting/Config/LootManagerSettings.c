@@ -48,4 +48,9 @@ class LootManagerSettings
 		AmmoPercentageSetting.Min = 80;
 		AmmoPercentageSetting.Max = 100;
 	}
+
+	static void GetDefaultChanceForItem(SCR_ArsenalItem arsenalItem)
+	{
+		return 25;
+	}
 };
